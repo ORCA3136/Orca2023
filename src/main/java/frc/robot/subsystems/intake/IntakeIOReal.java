@@ -8,7 +8,7 @@ public class IntakeIOReal implements IntakeIO
 {
     private DoubleSolenoid openSolenoid =new DoubleSolenoid(PneumaticsModuleType.REVPH, 5, 16);
     private boolean isOpen = false;
-    private  PneumaticHub m_ph = new PneumaticHub(1);
+    private  PneumaticHub m_ph = new PneumaticHub(5);
 
     public void open()
     {

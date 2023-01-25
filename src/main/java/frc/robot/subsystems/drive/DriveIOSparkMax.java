@@ -17,13 +17,13 @@ public class DriveIOSparkMax implements DriveIO {
   private final RelativeEncoder leftEncoder;
   private final RelativeEncoder rightEncoder;
 
-  private final Pigeon2 gyro;
+  //private final Pigeon2 gyro;
 
   public DriveIOSparkMax() {
     leftLeader = new CANSparkMax(2, MotorType.kBrushless);
     rightLeader = new CANSparkMax(3, MotorType.kBrushless);
     leftFollower = new CANSparkMax(4, MotorType.kBrushless);
-    rightFollower = new CANSparkMax(5, MotorType.kBrushless);
+    rightFollower = new CANSparkMax(6, MotorType.kBrushless);
 
     leftEncoder = leftLeader.getEncoder();
     rightEncoder = rightLeader.getEncoder();
@@ -48,7 +48,7 @@ public class DriveIOSparkMax implements DriveIO {
     leftFollower.burnFlash();
     rightFollower.burnFlash();
 
-    gyro = new Pigeon2(0);
+   // gyro = new Pigeon2(0);
   }
 
   @Override
@@ -59,7 +59,7 @@ public class DriveIOSparkMax implements DriveIO {
         leftEncoder.getVelocity() / GEAR_RATIO);
     inputs.rightVelocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(
         rightEncoder.getVelocity() / GEAR_RATIO);
-    inputs.gyroYawRad = gyro.getYaw();
+   // inputs.gyroYawRad = gyro.getYaw();
   }
 
   @Override
