@@ -19,4 +19,14 @@ public class Intake extends SubsystemBase {
   
     }
 
+    public void open()
+    {
+        io.open();
+    }
+
+    public void close()
+    {
+        io.close();
+    }
+
 }

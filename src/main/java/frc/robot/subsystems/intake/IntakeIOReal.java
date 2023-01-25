@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 public class IntakeIOReal implements IntakeIO
 {
-    private  PneumaticHub m_ph = new PneumaticHub(5);
+    private  PneumaticHub m_ph = new PneumaticHub(1);
     private DoubleSolenoid openSolenoid =m_ph.makeDoubleSolenoid(14, 15);
     private boolean isOpen = false;
  

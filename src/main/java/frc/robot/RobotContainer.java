@@ -97,8 +97,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     drive.setDefaultCommand(
         new RunCommand(() -> drive.drivePercent(-controller.getLeftY(), controller.getRightY()), drive));
-    //controller.a()
-    //    .whileTrue(new StartEndCommand(() -> flywheel.runVelocity(flywheelSpeedInput.get()), flywheel::stop, flywheel));
+    controller.a()
+        .whileTrue(new InstantCommand(() -> intake.open(), intake));
   }
 
   
