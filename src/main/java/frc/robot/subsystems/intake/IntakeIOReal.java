@@ -6,9 +6,10 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 public class IntakeIOReal implements IntakeIO
 {
-    private DoubleSolenoid openSolenoid =new DoubleSolenoid(PneumaticsModuleType.REVPH, 5, 16);
-    private boolean isOpen = false;
     private  PneumaticHub m_ph = new PneumaticHub(5);
+    private DoubleSolenoid openSolenoid =m_ph.makeDoubleSolenoid(14, 15);
+    private boolean isOpen = false;
+ 
 
     public void open()
     {

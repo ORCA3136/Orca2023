@@ -21,8 +21,8 @@ public class DriveIOSparkMax implements DriveIO {
 
   public DriveIOSparkMax() {
     leftLeader = new CANSparkMax(2, MotorType.kBrushless);
-    rightLeader = new CANSparkMax(3, MotorType.kBrushless);
-    leftFollower = new CANSparkMax(4, MotorType.kBrushless);
+    rightLeader = new CANSparkMax(4, MotorType.kBrushless);
+    leftFollower = new CANSparkMax(3, MotorType.kBrushless);
     rightFollower = new CANSparkMax(6, MotorType.kBrushless);
 
     leftEncoder = leftLeader.getEncoder();
