@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drive extends SubsystemBase {
-  public static final double WHEEL_RADIUS_METERS = Units.inchesToMeters(3.0);
+  public static final double WHEEL_RADIUS_METERS = Units.inchesToMeters(6.0);
 
   private final DriveIO io;
   private final DriveIOInputsAutoLogged inputs = new DriveIOInputsAutoLogged();
@@ -33,7 +33,7 @@ public class Drive extends SubsystemBase {
 
   /** Run open loop at the specified percentage. */
   public void drivePercent(double leftPercent, double rightPercent) {
-    io.setVoltage(leftPercent * 12.0, rightPercent * 12.0);
+    io.setVoltage(trueLeft(leftPercent) * 12.0, trueRight(rightPercent) * 12.0);
   }
 
   /** Run open loop based on stick positions. */
@@ -71,4 +71,35 @@ public class Drive extends SubsystemBase {
   public double getRightVelocityMeters() {
     return inputs.rightVelocityRadPerSec * WHEEL_RADIUS_METERS;
   }
+
+  /**
+     * Handles deadband of the right stick
+     * @param RY
+     * @return
+     */
+  public double trueRight(double right) 
+    {
+        double stick = right;
+        stick *= Math.abs(stick);
+        if (Math.abs(stick) < 0.1) {
+            stick = 0;
+        }
+        return stick;
+    }
+    
+    /**
+     * handles deadband on the left stick
+     * @param LY
+     * @return
+     */
+    public double trueLeft(double left) 
+    {
+        double stick = left;
+        stick *= Math.abs(stick);
+        if(Math.abs(stick) < 0.1) {
+            stick = 0;
+        }
+        return stick;
+
+    }
 }
