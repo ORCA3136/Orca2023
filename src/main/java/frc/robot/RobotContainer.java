@@ -99,6 +99,8 @@ public class RobotContainer {
         new RunCommand(() -> drive.drivePercent(-controller.getLeftY(), controller.getRightY()), drive));
     controller.a()
         .whileTrue(new InstantCommand(() -> intake.open(), intake));
+    controller.b()
+        .whileTrue(new InstantCommand(() -> intake.close(), intake));
   }
 
   
