@@ -7,27 +7,29 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 public class IntakeIOReal implements IntakeIO
 {
-    private  PneumaticHub m_ph = new PneumaticHub(1);
-    //private DoubleSolenoid openSolenoid =m_ph.makeDoubleSolenoid(0, 1);
+    private  PneumaticHub m_ph; 
+    private DoubleSolenoid openSolenoid; 
     private boolean isOpen = false;
-    
-    private DoubleSolenoid test = new DoubleSolenoid(PneumaticsModuleType.REVPH,0,1);
+    public IntakeIOReal(){
+        m_ph = new PneumaticHub(1);
+        m_ph.enableCompressorAnalog(90.0,105.00);
+        openSolenoid =m_ph.makeDoubleSolenoid(0, 1);
+        openSolenoid.set(DoubleSolenoid.Value.kOff);
+    }
 
     public void open()
     {     
         System.out.println(">>OPEN");
-        test.toggle();
+        openSolenoid.set(DoubleSolenoid.Value.kForward);
         isOpen = true;
-        m_ph.enableCompressorAnalog(90.0,105.00);
         System.out.println("<<OPEN");
     }
 
     public void close()
     {
         System.out.println(">>CLOSE");
-        test.toggle();
+        openSolenoid.set(DoubleSolenoid.Value.kReverse);
         isOpen = false;
-        m_ph.disableCompressor();
         System.out.println("<<CLOSE");
     }
 
