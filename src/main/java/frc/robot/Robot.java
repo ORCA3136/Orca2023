@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
@@ -32,6 +34,8 @@ public class Robot extends LoggedRobot {
   @Override
   public void robotInit() {
     Logger logger = Logger.getInstance();
+   
+    CameraServer.startAutomaticCapture(0);
 
     // Record metadata
     logger.recordMetadata("ProjectName", BuildConstants.MAVEN_NAME);
@@ -80,6 +84,7 @@ public class Robot extends LoggedRobot {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
+
   }
 
   /** This function is called periodically during all modes. */
