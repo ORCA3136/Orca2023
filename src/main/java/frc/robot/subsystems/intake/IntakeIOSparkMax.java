@@ -1,5 +1,6 @@
 package frc.robot.subsystems.intake;
 
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -8,27 +9,32 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
 
 import edu.wpi.first.math.util.Units;
+import frc.robot.Constants;
 
 public class IntakeIOSparkMax implements IntakeIO {
     private static final double GEAR_RATIO = 1.5;
-
-    private final CANSparkMax leader;
-    private final CANSparkMax follower;
+    
+    private final VictorSPX chomp;
+    private final CANSparkMax leftSide;
+    private final CANSparkMax rightSide;
     private final RelativeEncoder encoder;
     private final SparkMaxPIDController pid;
 
+
     public IntakeIOSparkMax() {
-        leader = new CANSparkMax(1, MotorType.kBrushless);
-        follower = new CANSparkMax(2, MotorType.kBrushless);
+        leftSide = new CANSparkMax(Constants.intakeLeft, MotorType.kBrushless);
+        rightSide = new CANSparkMax(Constants.intakeRight, MotorType.kBrushless);
+        chomp = new VictorSPX(Constants.intakeChomp);
+        encoder = leftSide.getEncoder();
+        pid = leftSide.getPIDController();
 
-        encoder = leader.getEncoder();
-        pid = leader.getPIDController();
+        leftSide.restoreFactoryDefaults();
+        rightSide.restoreFactoryDefaults();
 
-        leader.restoreFactoryDefaults();
-        follower.restoreFactoryDefaults();
+        rightSide.follow(leftSide);
 
-        leader.burnFlash();
-        follower.burnFlash();
+        leftSide.burnFlash();
+        rightSide.burnFlash();
     }
 
   private void enableVoltageCompensation() {
@@ -43,7 +49,7 @@ public void setVelocity(double velocityRadPerSec, double ffVolts) {
 
 
   public void stop() {
-    leader.stopMotor();
+    leftSide.stopMotor();
   }
 
   public void configurePID(double kP, double kI, double kD) {

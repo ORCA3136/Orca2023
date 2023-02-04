@@ -1,4 +1,5 @@
 package frc.robot.subsystems.Elevator;
+import frc.robot.Constants;
 import frc.robot.subsystems.Elevator.ElevatorIO;
 import frc.robot.subsystems.drive.DriveIO.DriveIOInputs;
 
@@ -23,8 +24,8 @@ public class ElevatorSparkMax implements ElevatorIO{
 
 
   public ElevatorSparkMax() {
-    elevatorMotor1 = new CANSparkMax(8, MotorType.kBrushless);
-    elevatorMotor2 = new CANSparkMax(7, MotorType.kBrushless);
+    elevatorMotor1 = new CANSparkMax(Constants.elevatorMotor1, MotorType.kBrushless);
+    elevatorMotor2 = new CANSparkMax(Constants.elevatorMotor2, MotorType.kBrushless);
 
     leftEncoder = elevatorMotor1.getEncoder();
     rightEncoder = elevatorMotor2.getEncoder();
