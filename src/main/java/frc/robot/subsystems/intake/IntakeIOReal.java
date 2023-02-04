@@ -13,7 +13,7 @@ public class IntakeIOReal implements IntakeIO
     public IntakeIOReal(){
         m_ph = new PneumaticHub(1);
         m_ph.enableCompressorAnalog(90.0,105.00);
-        DoubleSolenoid w=m_ph.makeDoubleSolenoid(0, 1);
+        DoubleSolenoid openSolenoid=m_ph.makeDoubleSolenoid(0, 1);
         openSolenoid.set(DoubleSolenoid.Value.kOff);
     }
 

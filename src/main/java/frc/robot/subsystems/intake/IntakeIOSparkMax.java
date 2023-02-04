@@ -8,7 +8,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
 
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.RobotController;
 
 public class IntakeIOSparkMax implements IntakeIO {
     private static final double GEAR_RATIO = 1.5;
