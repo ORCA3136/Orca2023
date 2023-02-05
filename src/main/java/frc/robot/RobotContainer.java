@@ -97,10 +97,38 @@ public class RobotContainer {
   private void configureButtonBindings() {
     drive.setDefaultCommand(
         new RunCommand(() -> drive.drivePercent(-controller.getLeftY(), controller.getRightY()), drive));
-    controller.a()
+    
+    //intake related buttons
+    //A Opens the jaws
+    //B closes the jaws
+    //LB deploys the jaws
+    //RB retracts the jaws
+    //LT atracts
+    //RT repels
+        controller.a()
         .whileTrue(new InstantCommand(() -> intake.open(), intake));
     controller.b()
         .whileTrue(new InstantCommand(() -> intake.close(), intake));
+    controller.leftBumper()
+        .whileTrue(new InstantCommand(() -> intake.deploy(), intake));
+    controller.rightBumper()
+        .whileTrue(new InstantCommand(() -> intake.retract(), intake));
+    controller.leftTrigger()
+        .whileTrue(new InstantCommand(() -> intake.in(), intake));
+    controller.rightTrigger()
+        .whileTrue(new InstantCommand(() -> intake.out(), intake));
+    //Eleveator related buttons
+
+
+
+
+
+
+
+
+
+
+
   }
 
   
