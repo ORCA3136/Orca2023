@@ -37,6 +37,7 @@ public class IntakeIOSparkMax implements IntakeIO {
         rightSide.restoreFactoryDefaults();
 
         rightSide.follow(leftSide);
+        rightSide.setInverted(true);
 
         leftSide.burnFlash();
         rightSide.burnFlash();

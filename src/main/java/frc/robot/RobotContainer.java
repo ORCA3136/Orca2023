@@ -8,9 +8,13 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.DriveWithFlywheelAuto;
 import frc.robot.commands.SpinAuto;
+import frc.robot.subsystems.Elevator.Elevator;
+import frc.robot.subsystems.Elevator.ElevatorIO;
+import frc.robot.subsystems.Elevator.ElevatorSparkMax;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.DriveIO;
 import frc.robot.subsystems.drive.DriveIOSim;
@@ -40,9 +44,10 @@ public class RobotContainer {
   // Subsystems
   private final Drive drive;
   private final Intake intake;
+  private final Elevator elevator;
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
-
+  private final Joystick joystick = new Joystick(1);
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser = new LoggedDashboardChooser<>("Auto Choices");
  // private final LoggedDashboardNumber flywheelSpeedInput = new LoggedDashboardNumber("Flywheel Speed", 1500.0);
@@ -56,6 +61,7 @@ public class RobotContainer {
       case REAL:
         drive = new Drive(new DriveIOSparkMax());
         intake = new Intake(new IntakeIOReal());
+        elevator = new Elevator(new ElevatorSparkMax());
         //flywheel = new Flywheel(new FlywheelIOSparkMax());
         // drive = new Drive(new DriveIOFalcon500());
         // flywheel = new Flywheel(new FlywheelIOFalcon500());
@@ -65,6 +71,7 @@ public class RobotContainer {
       case SIM:
         drive = new Drive(new DriveIOSim());
         intake = new Intake(new IntakeIOSim());
+        elevator = new Elevator(new ElevatorSparkMax());
         //flywheel = new Flywheel(new FlywheelIOSim());
         break;
 
@@ -73,6 +80,8 @@ public class RobotContainer {
         drive = new Drive(new DriveIO() {
         });
         intake = new Intake(new IntakeIO() {
+        });
+        elevator = new Elevator(new ElevatorIO(){
         });
         //flywheel = new Flywheel(new FlywheelIO() {
         //});
@@ -118,7 +127,10 @@ public class RobotContainer {
     controller.rightTrigger()
         .whileTrue(new InstantCommand(() -> intake.out(), intake));
     //Eleveator related buttons
-
+    
+    //joystick.getRawButton(1)
+    //.whileTrue (new InstantCommand(() -> elevator.up(), elevator));
+    
 
 
 

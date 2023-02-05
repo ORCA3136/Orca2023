@@ -19,6 +19,8 @@ public class Elevator extends SubsystemBase{
   public void PIDPeriodic(){
 
   }
+  public void up(){
 
+  }
 
 }

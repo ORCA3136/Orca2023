@@ -21,6 +21,7 @@ public final class Constants {
 
 
 //CAN IDs
+
 public static final int kLeftleader = 2;
 public static final int kRightleader = 4;
 public static final int kLeftFollwer = 3;
@@ -31,7 +32,6 @@ public static final int intakeLeft=9;
 public static final int intakeRight=10;
 public static final int intakeChomp=11;
 public static final int miniVader=12;
-
 
 //Intake speeds
 public static final double chompSpeed=.1;
