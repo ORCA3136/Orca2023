@@ -19,6 +19,12 @@ public default void open() {
 }
 public default void close() {
 }
+public default void in() {
+
+}
+public default void out() {
+  
+}
 
 }
 

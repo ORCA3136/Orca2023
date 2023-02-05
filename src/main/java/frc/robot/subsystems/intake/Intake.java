@@ -18,6 +18,14 @@ public class Intake extends SubsystemBase {
       Logger.getInstance().processInputs("Intake", inputs);
   
     }
+    public void in()
+    {
+        io.in();
+    }
+    public void out()
+    {
+        io.out();
+    }
 
     public void open()
     {
