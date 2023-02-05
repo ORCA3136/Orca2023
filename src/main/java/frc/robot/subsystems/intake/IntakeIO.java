@@ -26,5 +26,12 @@ public default void out() {
   
 }
 
+public default void deploy() {
+
+}
+public default void retract() {
+  
+}
+
 }
 

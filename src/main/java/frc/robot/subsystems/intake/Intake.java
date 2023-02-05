@@ -37,4 +37,14 @@ public class Intake extends SubsystemBase {
         io.close();
     }
 
+    public void deploy()
+    {
+        io.open();
+    }
+
+    public void retract()
+    {
+        io.close();
+    }
+
 }
