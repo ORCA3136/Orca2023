@@ -22,14 +22,14 @@ public final class Constants {
 
 //CAN IDs
 
-public static final int kLeftleader = 2;
+//public static final int kLeftleader = 2;
 public static final int kRightleader = 4;
 public static final int kLeftFollwer = 3;
 public static final int kRightFollwer = 6;
 public static final int elevatorMotor1=7;
 public static final int elevatorMotor2=8;
 public static final int intakeLeft=9;
-public static final int intakeRight=10;
+public static final int intakeRight=2;
 public static final int intakeChomp=11;
 public static final int miniVader=12;
 
@@ -37,6 +37,8 @@ public static final int miniVader=12;
 public static final double chompSpeed=.1;
 public static final double miniVaderSpeed=.1;
 public static final double intakeSpeed=.1;
+
+public static final double breakMotorSpeed = .2;
 
 
 

@@ -126,6 +126,8 @@ public class RobotContainer {
         .whileTrue(new InstantCommand(() -> intake.in(), intake));
     controller.rightTrigger()
         .whileTrue(new InstantCommand(() -> intake.out(), intake));
+    controller.x()
+        .whileTrue(new InstantCommand(() -> intake.stop(), intake));
     //Eleveator related buttons
     
     //joystick.getRawButton(1)

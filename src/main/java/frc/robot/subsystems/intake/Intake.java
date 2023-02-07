@@ -46,5 +46,9 @@ public class Intake extends SubsystemBase {
     {
         io.close();
     }
-
+    public void stop()
+    {
+        io.stop();
+    }
 }
+

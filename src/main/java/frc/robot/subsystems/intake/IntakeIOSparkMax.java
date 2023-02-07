@@ -49,7 +49,7 @@ public class IntakeIOSparkMax implements IntakeIO {
 //MAIN INTAKE FUNCTIONS
 
 public void IntakeIn(){
-  rightSide.set(Constants.intakeSpeed);
+  rightSide.set(Constants.breakMotorSpeed);
 }
 public void IntakeOut(){
   rightSide.set(-1 * Constants.intakeSpeed);
@@ -66,9 +66,11 @@ public void IntakeOpen(){
 public void IntakeClose(){
   chomp.set(VictorSPXControlMode.PercentOutput, Constants.chompSpeed);
 }
-public void stop() {
-    leftSide.stopMotor();
+public void stop(){
+  leftSide.stopMotor();
+  rightSide.stopMotor();
 }
+
 
 
 

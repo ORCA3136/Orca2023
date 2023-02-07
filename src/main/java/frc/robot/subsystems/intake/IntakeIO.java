@@ -32,6 +32,9 @@ public default void deploy() {
 public default void retract() {
   
 }
+public default void stop() {
+  
+}
 
 }
 
