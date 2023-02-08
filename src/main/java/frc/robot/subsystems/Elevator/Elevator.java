@@ -10,6 +10,7 @@ import edu.wpi.first.math.util.Units;
 
 public class Elevator extends SubsystemBase{
   private final ElevatorIO io;
+  private final ElevatorIOInputsAutoLogged inputs = new ElevatorIOInputsAutoLogged();
 
   /** Creates a new Drive. */
   public Elevator(ElevatorIO io) {
@@ -21,6 +22,12 @@ public class Elevator extends SubsystemBase{
   }
   public void up(){
 
+  }
+
+  @Override
+  public void periodic() {
+    io.updateInputs(inputs);
+    Logger.getInstance().processInputs("Elevator", inputs);
   }
 
 }

@@ -1,5 +1,5 @@
 package frc.robot.subsystems.Elevator;
-import frc.robot.Constants;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.Elevator.ElevatorIO;
 import frc.robot.subsystems.drive.DriveIO.DriveIOInputs;
 
@@ -24,8 +24,10 @@ public class ElevatorSparkMax implements ElevatorIO{
 
 
   public ElevatorSparkMax() {
-    elevatorMotor1 = new CANSparkMax(Constants.elevatorMotor1, MotorType.kBrushless);
-    elevatorMotor2 = new CANSparkMax(Constants.elevatorMotor2, MotorType.kBrushless);
+
+    double targetPosition = 0.0;
+    elevatorMotor1 = new CANSparkMax(ElevatorConstants.kElevator1, MotorType.kBrushless);
+    elevatorMotor2 = new CANSparkMax(ElevatorConstants.kElevator2, MotorType.kBrushless);
 
     leftEncoder = elevatorMotor1.getEncoder();
     rightEncoder = elevatorMotor2.getEncoder();
@@ -37,6 +39,9 @@ public class ElevatorSparkMax implements ElevatorIO{
     elevatorMotor2.enableVoltageCompensation(12.0);
     elevatorMotor1.setSmartCurrentLimit(30);
     elevatorMotor2.setSmartCurrentLimit(30);
+
+    //Note one of these will need to be inverted!!!
+
 
     elevatorMotor1.burnFlash();
     elevatorMotor2.burnFlash();
@@ -140,6 +145,18 @@ public class ElevatorSparkMax implements ElevatorIO{
     SmartDashboard.putNumber("ProcessVariable", rightEncoder.getPosition());
 
   }
+
+  public void updateInputs(ElevatorIOInputs inputs) {
+    inputs.leftPositionRad = Units.rotationsToRadians(leftEncoder.getPosition());
+    inputs.rightPositionRad = Units.rotationsToRadians(rightEncoder.getPosition());
+    inputs.leftVelocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(
+        leftEncoder.getVelocity());
+    inputs.rightVelocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(
+        rightEncoder.getVelocity());
+    
+
+   // inputs.gyroYawRad = gyro.getYaw();
+  }
  
   
     @Override
@@ -147,6 +164,9 @@ public class ElevatorSparkMax implements ElevatorIO{
       elevatorMotor1.setVoltage(leftVolts);
       elevatorMotor2.setVoltage(rightVolts);
     }
+
+    //NOTES - nowhere does the PID actually execute - so please add in the code that will
+    //execute and update the PID controller to the target position
 
 
     

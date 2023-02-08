@@ -7,8 +7,7 @@ public interface IntakeIO {
   public static class IntakeIOInputs {
 
     public boolean open = false;
-    public double pressure = 0.0;
-    public boolean compressor = false;
+
 
   }
 

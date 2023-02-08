@@ -12,6 +12,11 @@ public interface ElevatorIO {
     public double rightPositionRad = 0.0;
     public double rightVelocityRadPerSec = 0.0;
     public double gyroYawRad = 0.0;
+    public double targetPosition = 0.0;
+  }
+
+  /** Updates the set of loggable inputs. */
+  public default void updateInputs(ElevatorIOInputs inputs) {
   }
 
   /** Updates the set of loggable inputs. */

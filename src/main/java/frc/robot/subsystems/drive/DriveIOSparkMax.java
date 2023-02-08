@@ -5,7 +5,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.util.Units;
-import frc.robot.Constants;
+import frc.robot.Constants.DrivetrainConstants;;
 
 public class DriveIOSparkMax implements DriveIO {
   private static final double GEAR_RATIO = 10.96;
@@ -20,10 +20,10 @@ public class DriveIOSparkMax implements DriveIO {
   //private final Pigeon2 gyro;
 
   public DriveIOSparkMax() {
-    leftLeader = new CANSparkMax(Constants.kLeftleader, MotorType.kBrushless);
-    rightLeader = new CANSparkMax(Constants.kRightleader, MotorType.kBrushless);
-    leftFollower = new CANSparkMax(Constants.kLeftFollwer, MotorType.kBrushless);
-    rightFollower = new CANSparkMax(Constants.kRightFollwer, MotorType.kBrushless);
+    leftLeader = new CANSparkMax(DrivetrainConstants.kLeftleader, MotorType.kBrushless);
+    rightLeader = new CANSparkMax(DrivetrainConstants.kRightleader, MotorType.kBrushless);
+    leftFollower = new CANSparkMax(DrivetrainConstants.kLeftFollower, MotorType.kBrushless);
+    rightFollower = new CANSparkMax(DrivetrainConstants.kRightFollower, MotorType.kBrushless);
 
     leftEncoder = leftLeader.getEncoder();
     rightEncoder = rightLeader.getEncoder();

@@ -10,7 +10,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
 
 import edu.wpi.first.math.util.Units;
-import frc.robot.Constants;
+import frc.robot.Constants.IntakeConstants;;
 
 public class IntakeIOSparkMax implements IntakeIO {
     private static final double GEAR_RATIO = 1.5;
@@ -24,10 +24,10 @@ public class IntakeIOSparkMax implements IntakeIO {
 
 
     public IntakeIOSparkMax() {
-        leftSide = new CANSparkMax(Constants.intakeLeft, MotorType.kBrushless);
-        rightSide = new CANSparkMax(Constants.intakeRight, MotorType.kBrushless);
-        miniVader = new CANSparkMax(Constants.miniVader, MotorType.kBrushless);
-        chomp = new VictorSPX(Constants.intakeChomp);
+        leftSide = new CANSparkMax(IntakeConstants.intakeLeft, MotorType.kBrushless);
+        rightSide = new CANSparkMax(IntakeConstants.intakeRight, MotorType.kBrushless);
+        miniVader = new CANSparkMax(IntakeConstants.miniVader, MotorType.kBrushless);
+        chomp = new VictorSPX(IntakeConstants.intakeChomp);
         
         encoder = leftSide.getEncoder();
         pid = leftSide.getPIDController();
@@ -49,22 +49,16 @@ public class IntakeIOSparkMax implements IntakeIO {
 //MAIN INTAKE FUNCTIONS
 
 public void IntakeIn(){
-  rightSide.set(Constants.breakMotorSpeed);
 }
 public void IntakeOut(){
-  rightSide.set(-1 * Constants.intakeSpeed);
 }
 public void IntakeDeploy(){
-  miniVader.set( Constants.miniVaderSpeed);
 }
 public void IntakeRetract(){
-  miniVader.set(-1* Constants.miniVaderSpeed);
 }
 public void IntakeOpen(){
-  chomp.set(VictorSPXControlMode.PercentOutput, Constants.chompSpeed);
 }
 public void IntakeClose(){
-  chomp.set(VictorSPXControlMode.PercentOutput, Constants.chompSpeed);
 }
 public void stop(){
   leftSide.stopMotor();
