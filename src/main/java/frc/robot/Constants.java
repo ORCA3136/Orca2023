@@ -22,7 +22,7 @@ public final class Constants {
 
 //CAN IDs
 
-//public static final int kLeftleader = 2;
+public static final int kLeftleader = 2;
 public static final int kRightleader = 4;
 public static final int kLeftFollwer = 3;
 public static final int kRightFollwer = 6;
