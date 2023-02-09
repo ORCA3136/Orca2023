@@ -1,8 +1,7 @@
-package frc.robot.subsystems.Elevator;
+package frc.robot.subsystems.elevator;
 
 import org.littletonrobotics.junction.AutoLog;
 
-import frc.robot.subsystems.drive.DriveIOInputsAutoLogged;
 
 public interface ElevatorIO {
   @AutoLog
@@ -20,7 +19,7 @@ public interface ElevatorIO {
   }
 
   /** Updates the set of loggable inputs. */
-  public default void PIDPeriodic(ElevatorSparkMax elevatorSparkMax) {
+  public default void PIDPeriodic(ElevatorIOReal elevatorSparkMax) {
   }
 
   /** Run open loop at the specified voltage. */

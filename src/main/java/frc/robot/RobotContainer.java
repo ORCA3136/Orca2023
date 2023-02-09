@@ -11,17 +11,21 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.SpinAuto;
-import frc.robot.subsystems.Elevator.Elevator;
-import frc.robot.subsystems.Elevator.ElevatorIO;
-import frc.robot.subsystems.Elevator.ElevatorSparkMax;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.DriveIO;
 import frc.robot.subsystems.drive.DriveIOSim;
 import frc.robot.subsystems.drive.DriveIOSparkMax;
+import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.elevator.ElevatorIO;
+import frc.robot.subsystems.elevator.ElevatorIOReal;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.IntakeIO;
 import frc.robot.subsystems.intake.IntakeIOReal;
 import frc.robot.subsystems.intake.IntakeIOSim;
+import frc.robot.subsystems.limeLight.Limelight;
+import frc.robot.subsystems.limeLight.LimelightIO;
+import frc.robot.subsystems.limeLight.LimelightIOReal;
+import frc.robot.subsystems.limeLight.LimelightIOSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -39,6 +43,7 @@ public class RobotContainer {
   private final Drive drive;
   private final Intake intake;
   private final Elevator elevator;
+  private final Limelight limelight;
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
  // private final Joystick joystick = new Joystick(1);
@@ -55,7 +60,8 @@ public class RobotContainer {
       case REAL:
         drive = new Drive(new DriveIOSparkMax());
         intake = new Intake(new IntakeIOReal());
-        elevator = new Elevator(new ElevatorSparkMax());
+        elevator = new Elevator(new ElevatorIOReal());
+        limelight = new Limelight(new LimelightIOReal());
         //flywheel = new Flywheel(new FlywheelIOSparkMax());
         // drive = new Drive(new DriveIOFalcon500());
         // flywheel = new Flywheel(new FlywheelIOFalcon500());
@@ -65,7 +71,8 @@ public class RobotContainer {
       case SIM:
         drive = new Drive(new DriveIOSim());
         intake = new Intake(new IntakeIOSim());
-        elevator = new Elevator(new ElevatorSparkMax());
+        elevator = new Elevator(new ElevatorIOReal());
+        limelight = new Limelight(new LimelightIOSim());
         //flywheel = new Flywheel(new FlywheelIOSim());
         break;
 
@@ -77,8 +84,8 @@ public class RobotContainer {
         });
         elevator = new Elevator(new ElevatorIO(){
         });
-        //flywheel = new Flywheel(new FlywheelIO() {
-        //});
+        limelight = new Limelight(new LimelightIOReal());
+
         break;
     }
 

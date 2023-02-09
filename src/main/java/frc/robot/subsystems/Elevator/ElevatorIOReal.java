@@ -1,6 +1,7 @@
-package frc.robot.subsystems.Elevator;
+package frc.robot.subsystems.elevator;
+
 import frc.robot.Constants.ElevatorConstants;
-import frc.robot.subsystems.Elevator.ElevatorIO;
+import frc.robot.subsystems.elevator.ElevatorIO;
 import frc.robot.subsystems.drive.DriveIO.DriveIOInputs;
 
 import com.revrobotics.CANSparkMax;
@@ -12,7 +13,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class ElevatorSparkMax implements ElevatorIO{
+public class ElevatorIOReal implements ElevatorIO{
   private final CANSparkMax elevatorMotor1;
   private final CANSparkMax elevatorMotor2;  
   private final RelativeEncoder leftEncoder;
@@ -23,7 +24,7 @@ public class ElevatorSparkMax implements ElevatorIO{
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
 
 
-  public ElevatorSparkMax() {
+  public ElevatorIOReal() {
 
     double targetPosition = 0.0;
     elevatorMotor1 = new CANSparkMax(ElevatorConstants.kElevator1, MotorType.kBrushless);
