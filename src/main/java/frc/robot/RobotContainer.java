@@ -100,8 +100,13 @@ public class RobotContainer {
   private void configureButtonBindings() {
     drive.setDefaultCommand(
         new RunCommand(() -> drive.drivePercent(-controller.getLeftY(), controller.getRightY()), drive));
+    intake.setDefaultCommand(new RunCommand(()->intake.stop(), intake));
+
     controller.a().toggleOnTrue(new RunCommand(() ->drive.drivePercent(.5,.5),drive));
     controller.b().whileTrue(new RunCommand(() ->drive.stop(),drive));
+
+    controller.x().whileTrue(new RunCommand(() -> intake.open(),intake ));
+    controller.y().whileTrue(new RunCommand(()-> intake.close(), intake));
 
     //intake related buttons
     //A Opens the jaws
