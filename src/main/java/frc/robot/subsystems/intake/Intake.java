@@ -13,7 +13,8 @@ public class Intake extends SubsystemBase {
         this.io = io;
     }
     @Override
-    public void periodic() {
+    public void periodic() 
+    {
       io.updateInputs(inputs);
       Logger.getInstance().processInputs("Intake", inputs);
   
@@ -27,28 +28,33 @@ public class Intake extends SubsystemBase {
         io.out();
     }
 
-    public void open()
+    public void open(double speed)
     {
-        io.open();
+        io.open(speed);
     }
 
-    public void close()
+    public void close(double speed)
     {
-        io.close();
+        io.close(speed);
     }
 
     public void deploy()
     {
-        io.open();
+        io.deploy();
     }
 
     public void retract()
     {
-        io.close();
+        io.retract();
     }
     public void stop()
     {
         io.stop();
+    }
+
+    public double getDistance()
+    {
+        return io.getDistance();
     }
 }
 

@@ -12,9 +12,9 @@ public interface IntakeIO {
 /** Updates the set of loggable inputs. */
 public default void updateInputs(IntakeIOInputs inputs) {}
 
-public default void open() {
+public default void open(double speed) {
 }
-public default void close() {
+public default void close(double speed) {
 }
 public default void in() {
 
@@ -31,6 +31,10 @@ public default void retract() {
 }
 public default void stop() {
   
+}
+
+public default double getDistance(){
+  return 0.0;
 }
 
 }

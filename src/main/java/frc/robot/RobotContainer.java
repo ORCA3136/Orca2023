@@ -10,6 +10,8 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Constants.IntakeConstants;
+import frc.robot.commands.OpenIntake;
 import frc.robot.commands.SpinAuto;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.DriveIO;
@@ -112,9 +114,11 @@ public class RobotContainer {
     controller.a().toggleOnTrue(new RunCommand(() ->drive.drivePercent(.5,.5),drive));
     controller.b().whileTrue(new RunCommand(() ->drive.stop(),drive));
 
-    controller.x().whileTrue(new RunCommand(() -> intake.open(),intake ));
-    controller.y().whileTrue(new RunCommand(()-> intake.close(), intake));
+    controller.x().whileTrue(new RunCommand(() -> intake.open(IntakeConstants.chompSpeed),intake ));
+    controller.y().whileTrue(new RunCommand(()-> intake.close(IntakeConstants.chompSpeed), intake));
 
+    controller.rightBumper().onTrue(new OpenIntake(3,intake));
+    controller.leftBumper().onTrue(new OpenIntake(0, intake));
     //intake related buttons
     //A Opens the jaws
     //B closes the jaws

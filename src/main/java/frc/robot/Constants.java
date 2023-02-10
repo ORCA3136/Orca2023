@@ -41,27 +41,23 @@ public static final class IntakeConstants
   public static final int intakeRight=2;
   public static final int intakeChomp=11;
   public static final int miniVader=12;
-  public static final double chompSpeed=.1;
+  public static final double chompSpeed=.3;
   public static final double miniVaderSpeed=.1;
   public static final double intakeSpeed=.1;
 
+  public static final double chompkP = 0.6; 
+  public static final double chompkI = 1e-4;
+  public static final double chompkD = .01; 
+  public static final double kOpenTolerance = 0.1;
+
+  
 }
-
-
-//Intake speeds
-
-
-
-
-
-
 
 
   public static enum Mode {
     /** Running on a real robot. */
     REAL,
 
-  
     /** Running a physics simulator. */
     SIM,
 
