@@ -21,28 +21,28 @@ public final class Constants
 //DRIVE TRAIN
 public static final class DrivetrainConstants
 {
-  public static final int kLeftleader = 2;
-  public static final int kRightleader = 4;
-  public static final int kLeftFollower = 3;
-  public static final int kRightFollower = 6;
+  public static final int kLeftleader = 1;
+  public static final int kRightleader = 3;
+  public static final int kLeftFollower = 4;
+  public static final int kRightFollower = 5;
 }
 
 //ELEVATOR
 public static final class ElevatorConstants
 {
-  public static final int kElevator1=7;
-  public static final int kElevator2=8;
+  public static final int kElevator1=6;
+  public static final int kElevator2=7;
 
-  public static final double elevatorSpeed = 0.4;
+  public static final double elevatorSpeed = 0.2;
 }
 
 //INTAKE CONSTANTS
 public static final class IntakeConstants
 {
-  public static final int intakeLeft=9;
-  public static final int intakeRight=2;
+  public static final int intakeLeft=8;
+  public static final int intakeRight=9;
   public static final int intakeChomp=11;
-  public static final int miniVader=12;
+  public static final int miniVader=10;
   public static final double chompSpeed=.3;
   public static final double miniVaderSpeed=.1;
   public static final double intakeSpeed=.1;

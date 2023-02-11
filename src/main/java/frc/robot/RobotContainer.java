@@ -119,7 +119,7 @@ public class RobotContainer {
     controller.y().whileTrue(new RunCommand(()-> intake.close(IntakeConstants.chompSpeed), intake));
 
     if (joystick.getRawButton(1)) {
-      intake.IntakeInny(0);(IntakeConstants.intakeSloth);
+      intake.IntakeInny(IntakeConstants.intakeSloth);
    } else {
       intake.stop();
    }
