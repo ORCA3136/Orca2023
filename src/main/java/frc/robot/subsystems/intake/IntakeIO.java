@@ -16,17 +16,15 @@ public default void open(double speed) {
 }
 public default void close(double speed) {
 }
-public default void in() {
-
+public default void IntakeInny(double speed) {
 }
-public default void out() {
-  
+public default void IntakeOuty(double speed) {
 }
 
-public default void deploy() {
+public default void IntakeDeployey(double speed) {
 
 }
-public default void retract() {
+public default void IntakeRetractey(double speed) {
   
 }
 public default void stop() {

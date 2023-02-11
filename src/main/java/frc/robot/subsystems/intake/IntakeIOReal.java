@@ -3,6 +3,9 @@ package frc.robot.subsystems.intake;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.Encoder;
@@ -15,7 +18,10 @@ public class IntakeIOReal implements IntakeIO {
     private double distance;
     Encoder counter;
 
-    
+    private final CANSparkMax intakeMotor1;
+    private final CANSparkMax intakeMotor2;  
+    private final RelativeEncoder leftEncoder;
+    private final RelativeEncoder rightEncoder;
     private VictorSPX chomp;
 
 
@@ -31,7 +37,26 @@ public class IntakeIOReal implements IntakeIO {
        // rightSide = new CANSparkMax(IntakeConstants.intakeRight, MotorType.kBrushless);
       //  miniVader = new CANSparkMax(IntakeConstants.miniVader, MotorType.kBrushless);
         chomp = new VictorSPX(IntakeConstants.intakeChomp);
-  
+        intakeMotor1 = new CANSparkMax(IntakeConstants.intakeLeft, MotorType.kBrushless);
+        intakeMotor2 = new CANSparkMax(IntakeConstants.intakeRight, MotorType.kBrushless);
+    
+        leftEncoder = intakeMotor1.getEncoder();
+        rightEncoder = intakeMotor2.getEncoder();
+    
+        intakeMotor1.restoreFactoryDefaults();
+        intakeMotor2.restoreFactoryDefaults();
+    
+        intakeMotor1.enableVoltageCompensation(12.0);
+        intakeMotor2.enableVoltageCompensation(12.0);
+        intakeMotor1.setSmartCurrentLimit(30);
+        intakeMotor2.setSmartCurrentLimit(30);
+    
+        //Note one of these will need to be inverted!!!
+    
+    
+        intakeMotor1.burnFlash();
+        intakeMotor2.burnFlash();
+    
 
 
         //counter for the intake chomper - will act as our encoder
@@ -59,14 +84,24 @@ public class IntakeIOReal implements IntakeIO {
     }
 //MAIN INTAKE FUNCTIONS
 
-public void IntakeIn(){
+public void IntakeInny(double flywheelspeed){
+  intakeMotor1.set(flywheelspeed);
+  intakeMotor2.set(flywheelspeed);
 }
-public void IntakeOut(){
+public void IntakeOuty(double flywheelspeed){
+  intakeMotor1.set(-1 * flywheelspeed);
+  intakeMotor2.set(-1 * flywheelspeed);
 }
-public void IntakeDeploy(){
+
+public void IntakeDeployey(double miniVaderSpeed){
+  intakeMotor1.set(miniVaderSpeed);
+  intakeMotor2.set(miniVaderSpeed);
 }
-public void IntakeRetract(){
+public void IntakeRetractey(double miniVaderSpeed){
+  intakeMotor1.set(-1 * miniVaderSpeed);
+  intakeMotor2.set(-1 * miniVaderSpeed);
 }
+
 public void IntakeOpen(){
 }
 public void IntakeClose(){
@@ -77,6 +112,8 @@ public void stop(){
   //System.out.println("STOP COUNT: "+counter.get());
  // leftSide.stopMotor();
  // rightSide.stopMotor();
+ intakeMotor1.set(0);
+ intakeMotor2.set(0);
 }
 
 public void open(double speed)

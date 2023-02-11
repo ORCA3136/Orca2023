@@ -18,8 +18,13 @@ public class Elevator extends SubsystemBase{
   public void PIDPeriodic(){
 
   }
-  public void up(){
 
+  public void moveitMoveitElevatorUp(double speed){
+    io.moveitMoveitElevatorUp(speed);
+  }
+
+  public void moveitMoveitElevatorDown(double speed){
+    io.moveitMoveitElevatorDown(speed);
   }
 
   @Override

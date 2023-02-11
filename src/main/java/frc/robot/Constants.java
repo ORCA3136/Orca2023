@@ -32,6 +32,8 @@ public static final class ElevatorConstants
 {
   public static final int kElevator1=7;
   public static final int kElevator2=8;
+
+  public static final double elevatorSpeed = 0.4;
 }
 
 //INTAKE CONSTANTS
@@ -49,6 +51,9 @@ public static final class IntakeConstants
   public static final double chompkI = 1e-4;
   public static final double chompkD = .01; 
   public static final double kOpenTolerance = 0.1;
+
+  public static final double intakeSloth = 0.2;
+  public static final double intakeZoom = 0.5;
 
   
 }

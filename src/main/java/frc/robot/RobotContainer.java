@@ -10,6 +10,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.OpenIntake;
 import frc.robot.commands.SpinAuto;
@@ -48,7 +49,7 @@ public class RobotContainer {
   private final Limelight limelight;
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
- // private final Joystick joystick = new Joystick(1);
+  private final Joystick joystick = new Joystick(1);
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser = new LoggedDashboardChooser<>("Auto Choices");
  // private final LoggedDashboardNumber flywheelSpeedInput = new LoggedDashboardNumber("Flywheel Speed", 1500.0);
@@ -117,6 +118,43 @@ public class RobotContainer {
     controller.x().whileTrue(new RunCommand(() -> intake.open(IntakeConstants.chompSpeed),intake ));
     controller.y().whileTrue(new RunCommand(()-> intake.close(IntakeConstants.chompSpeed), intake));
 
+    if (joystick.getRawButton(1)) {
+      intake.IntakeInny(0);(IntakeConstants.intakeSloth);
+   } else {
+      intake.stop();
+   }
+
+   if (joystick.getRawButton(2)) {
+    intake.IntakeOuty(IntakeConstants.intakeSloth);
+   } else {
+    intake.stop();
+   }
+
+   if (joystick.getRawButton(3)) {
+    intake.deploy(IntakeConstants.intakeSloth);
+   } else {
+    intake.stop();
+   }
+
+   if (joystick.getRawButton(4)) {
+    intake.retract(IntakeConstants.intakeSloth);
+   } else {
+    intake.stop();
+   }  
+
+   if (joystick.getRawButton(5)) {
+    elevator.moveitMoveitElevatorUp(ElevatorConstants.elevatorSpeed);
+   } else {
+    intake.stop();
+   }
+
+   if (joystick.getRawButton(6)) {
+    elevator.moveitMoveitElevatorDown(ElevatorConstants.elevatorSpeed);
+   } else {
+    intake.stop();
+   }  
+
+
     controller.rightBumper().onTrue(new OpenIntake(3,intake));
     controller.leftBumper().onTrue(new OpenIntake(0, intake));
     //intake related buttons
@@ -143,7 +181,7 @@ public class RobotContainer {
         */
     //Eleveator related buttons
     
-    //joystick.getRawButton(1)
+    joystick.getRawButton(1);
     //.whileTrue (new InstantCommand(() -> elevator.up(), elevator));
     
 
