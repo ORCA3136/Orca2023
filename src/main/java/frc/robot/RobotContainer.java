@@ -42,6 +42,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  boolean toggle = false;
   // Subsystems
   private final Drive drive;
   private final Intake intake;
@@ -112,47 +113,56 @@ public class RobotContainer {
         new RunCommand(() -> drive.drivePercent(-controller.getLeftY(), controller.getRightY()), drive));
     intake.setDefaultCommand(new RunCommand(()->intake.stop(), intake));
 
-    controller.a().toggleOnTrue(new RunCommand(() ->drive.drivePercent(.5,.5),drive));
-    controller.b().whileTrue(new RunCommand(() ->drive.stop(),drive));
+   // controller.a().toggleOnTrue(new RunCommand(() ->drive.drivePercent(.5,.5),drive));
+   // controller.b().whileTrue(new RunCommand(() ->drive.stop(),drive));
 
-    controller.x().whileTrue(new RunCommand(() -> intake.open(IntakeConstants.chompSpeed),intake ));
-    controller.y().whileTrue(new RunCommand(()-> intake.close(IntakeConstants.chompSpeed), intake));
+    //controller.x().whileTrue(new RunCommand(() -> intake.open(IntakeConstants.chompSpeed),intake ));
+    //controller.y().whileTrue(new RunCommand(()-> intake.close(IntakeConstants.chompSpeed), intake));
 
-    if (joystick.getRawButton(1)) {
-      intake.IntakeInny(IntakeConstants.intakeSloth);
-   } else {
-      intake.stop();
-   }
+    controller.a().whileTrue(new RunCommand(() ->intake.IntakeInny(IntakeConstants.intakeSloth),intake));
+    controller.b().whileTrue(new RunCommand(() ->intake.IntakeOuty(IntakeConstants.intakeSloth),intake));
 
-   if (joystick.getRawButton(2)) {
-    intake.IntakeOuty(IntakeConstants.intakeSloth);
-   } else {
-    intake.stop();
-   }
+    controller.x().whileTrue(new RunCommand(() -> elevator.moveitMoveitElevatorUp(ElevatorConstants.elevatorSpeed),elevator ));
+    controller.x().whileFalse(new RunCommand(() -> elevator.antiMoveitMoveit(),elevator ));
+    controller.y().whileTrue(new RunCommand(() -> elevator.moveitMoveitElevatorDown(ElevatorConstants.elevatorSpeed),elevator ));
+    controller.y().whileFalse(new RunCommand(() -> elevator.antiMoveitMoveit(),elevator ));
 
-   if (joystick.getRawButton(3)) {
-    intake.deploy(IntakeConstants.intakeSloth);
-   } else {
-    intake.stop();
-   }
 
-   if (joystick.getRawButton(4)) {
-    intake.retract(IntakeConstants.intakeSloth);
-   } else {
-    intake.stop();
-   }  
+  //  if (joystick.getRawButtonPressed(1)) { 
+  //    intake.IntakeInny(IntakeConstants.intakeSloth);
+  // } else {
+  //    intake.stop();
+  // }
+  //
+  // if (joystick.getRawButtonPressed(2)) {
+  //  intake.IntakeOuty(IntakeConstants.intakeSloth);
+  // } else {
+  //  intake.stop();
+  // }
 
-   if (joystick.getRawButton(5)) {
-    elevator.moveitMoveitElevatorUp(ElevatorConstants.elevatorSpeed);
-   } else {
-    intake.stop();
-   }
+  // if (joystick.getRawButtonPressed(3)) {
+  //  intake.deploy(IntakeConstants.intakeSloth);
+  // } else {
+  //  intake.stop();
+  // }
 
-   if (joystick.getRawButton(6)) {
-    elevator.moveitMoveitElevatorDown(ElevatorConstants.elevatorSpeed);
-   } else {
-    intake.stop();
-   }  
+   //if (joystick.getRawButtonPressed(4)) {
+   // intake.retract(IntakeConstants.intakeSloth);
+   //} else {
+   // intake.stop();
+   //}  
+   //low g
+   //if (joystick.getRawButtonPressed(5)) {
+   // elevator.moveitMoveitElevatorUp(ElevatorConstants.elevatorSpeed);
+   //} else {
+   // intake.stop();
+   //}
+   //clmb brake
+   //if (joystick.getRawButtonPressed(6)) {
+   // elevator.moveitMoveitElevatorDown(ElevatorConstants.elevatorSpeed);
+   //} else {
+   // intake.stop();
+   //}  
 
 
     controller.rightBumper().onTrue(new OpenIntake(3,intake));
@@ -181,12 +191,17 @@ public class RobotContainer {
         */
     //Eleveator related buttons
     
-    joystick.getRawButton(1);
-    //.whileTrue (new InstantCommand(() -> elevator.up(), elevator));
-    
-
-
-
+    if (joystick.getRawButtonPressed(1)) {
+      if (toggle) {
+         // Current state is true so turn off
+         elevator.moveitMoveitElevatorUp(ElevatorConstants.elevatorSpeed);
+         toggle = false;
+      } else {
+         // Current state is false so turn on
+         elevator.moveitMoveitElevatorDown(ElevatorConstants.elevatorSpeed);
+         toggle = true;
+      }
+   }
 
 
 

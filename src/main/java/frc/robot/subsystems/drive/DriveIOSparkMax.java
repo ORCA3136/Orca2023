@@ -33,7 +33,7 @@ public class DriveIOSparkMax implements DriveIO {
     leftFollower.restoreFactoryDefaults();
     rightFollower.restoreFactoryDefaults();
 
-    leftLeader.setInverted(false);
+    leftLeader.setInverted(true);
     rightLeader.setInverted(true);
     leftFollower.follow(leftLeader, false);
     rightFollower.follow(rightLeader, false);

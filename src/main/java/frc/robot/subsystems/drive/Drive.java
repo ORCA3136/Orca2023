@@ -33,7 +33,7 @@ public class Drive extends SubsystemBase {
 
   /** Run open loop at the specified percentage. */
   public void drivePercent(double leftPercent, double rightPercent) {
-    io.setVoltage(trueLeft(leftPercent) * 12.0, trueRight(rightPercent) * 12.0);
+    io.setVoltage((trueLeft(leftPercent) * 12.0) * 0.5, ((trueRight(rightPercent) * 12.0 )) * 0.5 ) ;
   }
 
   /** Run open loop based on stick positions. */

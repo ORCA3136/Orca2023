@@ -22,9 +22,9 @@ public final class Constants
 public static final class DrivetrainConstants
 {
   public static final int kLeftleader = 1;
-  public static final int kRightleader = 3;
-  public static final int kLeftFollower = 4;
-  public static final int kRightFollower = 5;
+  public static final int kRightleader = 2;
+  public static final int kLeftFollower = 3;
+  public static final int kRightFollower = 4;
 }
 
 //ELEVATOR
@@ -52,7 +52,7 @@ public static final class IntakeConstants
   public static final double chompkD = .01; 
   public static final double kOpenTolerance = 0.1;
 
-  public static final double intakeSloth = 0.2;
+  public static final double intakeSloth = 0.5;
   public static final double intakeZoom = 0.5;
 
   

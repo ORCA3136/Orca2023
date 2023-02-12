@@ -27,6 +27,10 @@ public class Elevator extends SubsystemBase{
     io.moveitMoveitElevatorDown(speed);
   }
 
+  public void antiMoveitMoveit(){
+    io.moveitMoveitElevatorDown(0);
+  }
+
   @Override
   public void periodic() {
     io.updateInputs(inputs);

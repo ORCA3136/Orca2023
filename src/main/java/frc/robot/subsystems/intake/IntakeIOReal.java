@@ -57,6 +57,7 @@ public class IntakeIOReal implements IntakeIO {
         intakeMotor1.burnFlash();
         intakeMotor2.burnFlash();
     
+      
 
 
         //counter for the intake chomper - will act as our encoder
@@ -85,8 +86,8 @@ public class IntakeIOReal implements IntakeIO {
 //MAIN INTAKE FUNCTIONS
 
 public void IntakeInny(double flywheelspeed){
-  intakeMotor1.set(flywheelspeed);
-  intakeMotor2.set(flywheelspeed);
+  intakeMotor1.set(IntakeConstants.intakeSloth);
+  intakeMotor2.set(IntakeConstants.intakeSloth);
 }
 public void IntakeOuty(double flywheelspeed){
   intakeMotor1.set(-1 * flywheelspeed);
