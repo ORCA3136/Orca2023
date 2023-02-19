@@ -19,4 +19,8 @@ public interface DriveIO {
   /** Run open loop at the specified voltage. */
   public default void setVoltage(double leftVolts, double rightVolts) {
   }
+
+  public default void slewRate(double forward, double turn){
+    
+  }
 }

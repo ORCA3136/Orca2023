@@ -42,7 +42,7 @@ public static final class IntakeConstants
   public static final int intakeLeft=8;
   public static final int intakeRight=9;
   public static final int intakeChomp=11;
-  public static final int miniVader=10;
+  public static final int miniVader=5;
   public static final double chompSpeed=.3;
   public static final double miniVaderSpeed=.1;
   public static final double intakeSpeed=.1;

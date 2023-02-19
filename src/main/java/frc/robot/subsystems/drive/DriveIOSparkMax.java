@@ -69,13 +69,14 @@ public class DriveIOSparkMax implements DriveIO {
     rightLeader.setVoltage(rightVolts);
   }
 
+  @Override
   public void slewRate(double forward, double turn){
+    // Creates a SlewRateLimiter that limits the rate of change of the signal to 0.5 units per second
+    SlewRateLimiter filter = new SlewRateLimiter(0.5);
+
     // Ordinary call with no ramping applied
     //DriveIOSparkMax.setVoltage(forward, turn);
     setVoltage(forward, turn);
-
-    // Creates a SlewRateLimiter that limits the rate of change of the signal to 0.5 units per second
-    SlewRateLimiter filter = new SlewRateLimiter(0.5);
 
     // Slew-rate limits the forward/backward input, limiting forward/backward acceleration
     setVoltage(filter.calculate(forward), turn);
