@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.util.Units;
 import frc.robot.Constants.DrivetrainConstants;;
 
@@ -66,5 +67,17 @@ public class DriveIOSparkMax implements DriveIO {
   public void setVoltage(double leftVolts, double rightVolts) {
     leftLeader.setVoltage(leftVolts);
     rightLeader.setVoltage(rightVolts);
+  }
+
+  public void slewRate(double forward, double turn){
+    // Ordinary call with no ramping applied
+    //DriveIOSparkMax.setVoltage(forward, turn);
+    setVoltage(forward, turn);
+
+    // Creates a SlewRateLimiter that limits the rate of change of the signal to 0.5 units per second
+    SlewRateLimiter filter = new SlewRateLimiter(0.5);
+
+    // Slew-rate limits the forward/backward input, limiting forward/backward acceleration
+    setVoltage(filter.calculate(forward), turn);
   }
 }
