@@ -200,17 +200,17 @@ public class ElevatorIOReal implements ElevatorIO{
   //SmartDashboard.putNumber("ProcessVariable", rightEncoder.getPosition());
 //}
 
-public void moveitMoveitElevatorUp(double elevatorspeed){
+public void elevatorUp(double elevatorspeed){
   elevatorMotor1.set(elevatorspeed);
   elevatorMotor2.set(-1* elevatorspeed);
 }
 
-public void moveitMoveitElevatorDown(double elevatorspeed){
+public void elevatorDown(double elevatorspeed){
   elevatorMotor1.set(-1 * elevatorspeed);
   elevatorMotor2.set(elevatorspeed);
   }
   
-public void antiMoveitMoveit(){
+public void notElevator(){
   elevatorMotor1.set(0);
   elevatorMotor2.set(0);
 }

@@ -119,13 +119,13 @@ public class RobotContainer {
     //controller.x().whileTrue(new RunCommand(() -> intake.open(IntakeConstants.chompSpeed),intake ));
     //controller.y().whileTrue(new RunCommand(()-> intake.close(IntakeConstants.chompSpeed), intake));
 
-    controller.a().whileTrue(new RunCommand(() ->intake.IntakeInny(IntakeConstants.intakeSloth),intake));
-    controller.b().whileTrue(new RunCommand(() ->intake.IntakeOuty(IntakeConstants.intakeSloth),intake));
+    controller.a().whileTrue(new RunCommand(() ->intake.intakeIn(IntakeConstants.intakeSloth),intake));
+    controller.b().whileTrue(new RunCommand(() ->intake.intakeOut(IntakeConstants.intakeSloth),intake));
 
-    controller.x().whileTrue(new RunCommand(() -> elevator.moveitMoveitElevatorUp(ElevatorConstants.elevatorSpeed),elevator ));
-    controller.x().whileFalse(new RunCommand(() -> elevator.antiMoveitMoveit(),elevator ));
-    controller.y().whileTrue(new RunCommand(() -> elevator.moveitMoveitElevatorDown(ElevatorConstants.elevatorSpeed),elevator ));
-    controller.y().whileFalse(new RunCommand(() -> elevator.antiMoveitMoveit(),elevator ));
+    controller.x().whileTrue(new RunCommand(() -> elevator.elevatorUp(ElevatorConstants.elevatorSpeed),elevator ));
+    controller.x().whileFalse(new RunCommand(() -> elevator.notElevator(),elevator ));
+    controller.y().whileTrue(new RunCommand(() -> elevator.elevatorDown(ElevatorConstants.elevatorSpeed),elevator ));
+    controller.y().whileFalse(new RunCommand(() -> elevator.notElevator(),elevator ));
 
 
   //  if (joystick.getRawButtonPressed(1)) { 
@@ -194,11 +194,11 @@ public class RobotContainer {
     if (joystick.getRawButtonPressed(1)) {
       if (toggle) {
          // Current state is true so turn off
-         elevator.moveitMoveitElevatorUp(ElevatorConstants.elevatorSpeed);
+         elevator.elevatorUp(ElevatorConstants.elevatorSpeed);
          toggle = false;
       } else {
          // Current state is false so turn on
-         elevator.moveitMoveitElevatorDown(ElevatorConstants.elevatorSpeed);
+         elevator.elevatorDown(ElevatorConstants.elevatorSpeed);
          toggle = true;
       }
    }

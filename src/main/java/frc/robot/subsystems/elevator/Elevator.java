@@ -19,16 +19,16 @@ public class Elevator extends SubsystemBase{
 
   }
 
-  public void moveitMoveitElevatorUp(double speed){
-    io.moveitMoveitElevatorUp(speed);
+  public void elevatorUp(double speed){
+    io.elevatorUp(speed);
   }
 
-  public void moveitMoveitElevatorDown(double speed){
-    io.moveitMoveitElevatorDown(speed);
+  public void elevatorDown(double speed){
+    io.elevatorDown(speed);
   }
 
-  public void antiMoveitMoveit(){
-    io.moveitMoveitElevatorDown(0);
+  public void notElevator(){
+    io.notElevator(0);
   }
 
   @Override

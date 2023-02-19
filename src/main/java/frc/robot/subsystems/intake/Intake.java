@@ -19,13 +19,13 @@ public class Intake extends SubsystemBase {
       Logger.getInstance().processInputs("Intake", inputs);
   
     }
-    public void IntakeInny(double speed)
+    public void intakeIn(double speed)
     {
-        io.IntakeInny(speed);
+        io.intakeIn(speed);
     }
-    public void IntakeOuty(double speed)
+    public void intakeOut(double speed)
     {
-        io.IntakeOuty(speed);
+        io.intakeOut(speed);
     }
 
     public void open(double speed)
@@ -40,12 +40,12 @@ public class Intake extends SubsystemBase {
 
     public void deploy(double speed)
     {
-        io.IntakeDeployey(speed);
+        io.deployIntake(speed);
     }
 
     public void retract(double speed)
     {
-        io.IntakeRetractey(speed);
+        io.retractIntake(speed);
     }
     public void stop()
     {
