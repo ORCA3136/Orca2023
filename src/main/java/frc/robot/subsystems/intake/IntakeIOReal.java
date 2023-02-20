@@ -85,9 +85,9 @@ public class IntakeIOReal implements IntakeIO {
     }
 //MAIN INTAKE FUNCTIONS
 
-public void intakeIn(double flywheelspeed){
-  intakeMotor1.set(IntakeConstants.intakeSloth);
-  intakeMotor2.set(IntakeConstants.intakeSloth);
+public void intakeIn(double power){
+  intakeMotor1.set(power);
+  intakeMotor2.set(-1 * power);
 }
 public void intakeOut(double flywheelspeed){
   intakeMotor1.set(-1 * flywheelspeed);

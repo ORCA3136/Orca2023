@@ -14,6 +14,7 @@ import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.OpenIntake;
 import frc.robot.commands.PowerElevator;
+import frc.robot.commands.RunIntake;
 import frc.robot.commands.SpinAuto;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.DriveIO;
@@ -112,7 +113,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     drive.setDefaultCommand(
         new RunCommand(() -> drive.drivePercent(-controller.getLeftY(), controller.getRightY()), drive));
-    intake.setDefaultCommand(new RunCommand(()->intake.stop(), intake));
+  //  intake.setDefaultCommand(new RunCommand(()->intake.stop(), intake));
     //elevator.setDefaultCommand(new RunCommand(()->elevator.notElevator(),elevator));
 
    // controller.a().toggleOnTrue(new RunCommand(() ->drive.drivePercent(.5,.5),drive));
@@ -122,14 +123,15 @@ public class RobotContainer {
     //controller.y().whileTrue(new RunCommand(()-> intake.close(IntakeConstants.chompSpeed), intake));
 
 
-    controller.a().whileTrue(new InstantCommand(() ->intake.intakeIn(IntakeConstants.intakeSloth),intake));
-    controller.b().whileTrue(new RunCommand(() ->intake.intakeOut(IntakeConstants.intakeSloth),intake));
+    controller.a().onTrue(new RunIntake(Constants.IntakeConstants.intakeSloth, intake));
+    controller.a().onFalse(new RunIntake(0, intake));
+
+    //controller.b().whileTrue(new RunCommand(() ->intake.intakeOut(IntakeConstants.intakeSloth),intake));
 
     controller.x().onTrue(new PowerElevator(Constants.ElevatorConstants.elevatorSpeed, elevator));
     controller.x().onFalse(new PowerElevator(0, elevator));
 
-    controller.y().whileTrue(new RunCommand(() -> elevator.elevatorDown(ElevatorConstants.downelElevatorSpeed),elevator ));
-    //controller.y().whileFalse(new RunCommand(() -> elevator.notElevator(),elevator ));
+
 
 
   //  if (joystick.getRawButtonPressed(1)) { 
