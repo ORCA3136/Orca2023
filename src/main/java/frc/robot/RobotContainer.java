@@ -15,6 +15,7 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.Minivader;
 import frc.robot.commands.OpenIntake;
 import frc.robot.commands.PowerElevator;
+import frc.robot.commands.RunChomp;
 import frc.robot.commands.RunIntake;
 import frc.robot.commands.SpinAuto;
 import frc.robot.subsystems.drive.Drive;
@@ -123,11 +124,11 @@ public class RobotContainer {
     //controller.x().whileTrue(new RunCommand(() -> intake.open(IntakeConstants.chompSpeed),intake ));
     //controller.y().whileTrue(new RunCommand(()-> intake.close(IntakeConstants.chompSpeed), intake));
 
-    controller.a().onTrue(new Minivader(-1 * Constants.IntakeConstants.miniVaderSpeed, intake));
-    controller.a().onFalse(new Minivader(0, intake));
+    controller.a().onTrue(new RunIntake(-1 * Constants.IntakeConstants.intakeSloth, intake));
+    controller.a().onFalse(new RunIntake(0, intake));
 
-    controller.b().onTrue(new Minivader(Constants.IntakeConstants.miniVaderSpeed, intake));
-    controller.b().onFalse(new Minivader(0, intake));
+    controller.b().onTrue(new RunIntake(Constants.IntakeConstants.intakeSloth, intake));
+    controller.b().onFalse(new RunIntake(0, intake));
 
     //controller.b().whileTrue(new RunCommand(() ->intake.intakeOut(IntakeConstants.intakeSloth),intake));
 
@@ -177,8 +178,9 @@ public class RobotContainer {
    //}  
 
 
-    controller.rightBumper().onTrue(new OpenIntake(0.2,intake));
-    controller.leftBumper().onTrue(new OpenIntake(0, intake));
+    controller.rightBumper().onTrue(new RunChomp(Constants.IntakeConstants.chompSpeed,intake));
+    controller.leftBumper().onTrue(new RunChomp(-1 * Constants.IntakeConstants.chompSpeed,intake));
+
     //intake related buttons
     //A Opens the jaws
     //B closes the jaws
