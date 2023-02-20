@@ -112,20 +112,21 @@ public class RobotContainer {
     drive.setDefaultCommand(
         new RunCommand(() -> drive.drivePercent(-controller.getLeftY(), controller.getRightY()), drive));
     intake.setDefaultCommand(new RunCommand(()->intake.stop(), intake));
+    elevator.setDefaultCommand(new RunCommand(()->elevator.notElevator(),elevator));
 
    // controller.a().toggleOnTrue(new RunCommand(() ->drive.drivePercent(.5,.5),drive));
    // controller.b().whileTrue(new RunCommand(() ->drive.stop(),drive));
-
+                                                                                                                                       
     //controller.x().whileTrue(new RunCommand(() -> intake.open(IntakeConstants.chompSpeed),intake ));
     //controller.y().whileTrue(new RunCommand(()-> intake.close(IntakeConstants.chompSpeed), intake));
 
-    controller.a().whileTrue(new RunCommand(() ->intake.intakeIn(IntakeConstants.intakeSloth),intake));
+    controller.a().whileTrue(new InstantCommand(() ->intake.intakeIn(IntakeConstants.intakeSloth),intake));
     controller.b().whileTrue(new RunCommand(() ->intake.intakeOut(IntakeConstants.intakeSloth),intake));
 
-    controller.x().whileTrue(new RunCommand(() -> elevator.elevatorUp(ElevatorConstants.elevatorSpeed),elevator ));
-    controller.x().whileFalse(new RunCommand(() -> elevator.notElevator(),elevator ));
-    controller.y().whileTrue(new RunCommand(() -> elevator.elevatorDown(ElevatorConstants.elevatorSpeed),elevator ));
-    controller.y().whileFalse(new RunCommand(() -> elevator.notElevator(),elevator ));
+    controller.x().onTrue(new InstantCommand(() -> elevator.elevatorUp(ElevatorConstants.elevatorSpeed),elevator ));
+    controller.x().onFalse(new InstantCommand(() -> elevator.notElevator(),elevator ));
+    controller.y().whileTrue(new RunCommand(() -> elevator.elevatorDown(ElevatorConstants.downelElevatorSpeed),elevator ));
+    //controller.y().whileFalse(new RunCommand(() -> elevator.notElevator(),elevator ));
 
 
   //  if (joystick.getRawButtonPressed(1)) { 
@@ -165,7 +166,7 @@ public class RobotContainer {
    //}  
 
 
-    controller.rightBumper().onTrue(new OpenIntake(3,intake));
+    controller.rightBumper().onTrue(new OpenIntake(0.2,intake));
     controller.leftBumper().onTrue(new OpenIntake(0, intake));
     //intake related buttons
     //A Opens the jaws

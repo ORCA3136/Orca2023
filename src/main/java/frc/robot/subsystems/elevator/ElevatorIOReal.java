@@ -51,7 +51,6 @@ public class ElevatorIOReal implements ElevatorIO{
 
     //Note one of these will need to be inverted!!!
 
-
     elevatorMotor1.burnFlash();
     elevatorMotor2.burnFlash();
 
@@ -196,18 +195,18 @@ public class ElevatorIOReal implements ElevatorIO{
 
 
   //SmartDashboard.putNumber("SetPoint", rotations);
-  //SmartDashboard.putNumber("ProcessVariable", leftEncoder.getPosition());
+  //SmartDashboard. putNumber("ProcessVariable", leftEncoder.getPosition());
   //SmartDashboard.putNumber("ProcessVariable", rightEncoder.getPosition());
 //}
 
 public void elevatorUp(double elevatorspeed){
-  elevatorMotor1.set(elevatorspeed);
-  elevatorMotor2.set(-1* elevatorspeed);
+  elevatorMotor1.set(-1* elevatorspeed);
+  elevatorMotor2.set(elevatorspeed);
 }
 
 public void elevatorDown(double elevatorspeed){
-  elevatorMotor1.set(-1 * elevatorspeed);
-  elevatorMotor2.set(elevatorspeed);
+  elevatorMotor1.set (elevatorspeed);
+  elevatorMotor2.set(-1 * elevatorspeed);
   }
   
 public void notElevator(){
