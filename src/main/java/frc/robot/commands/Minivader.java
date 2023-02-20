@@ -5,12 +5,12 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.Constants.IntakeConstants;
 
 
-public class RunIntake extends CommandBase{
+public class Minivader extends CommandBase{
     private final Intake m_intake;
 
     private double m_power = 0.0;
 
-    public RunIntake(double power, Intake intake ){
+    public Minivader(double power, Intake intake ){
         m_intake = intake;
         m_power = power;
         System.out.println("RUNINTAKE");
@@ -20,7 +20,7 @@ public class RunIntake extends CommandBase{
     @Override
     public void initialize(){
         System.out.println("RUNINTAKE: INITIALIZED : "+m_power);
-        m_intake.intakeWheelPower(m_power);
+        m_intake.miniVaderPower(m_power);
     }
 
     @Override

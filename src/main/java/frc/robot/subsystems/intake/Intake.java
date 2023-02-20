@@ -19,13 +19,9 @@ public class Intake extends SubsystemBase {
       Logger.getInstance().processInputs("Intake", inputs);
   
     }
-    public void intakeIn(double speed)
+    public void intakeWheelPower(double speed)
     {
-        io.intakeIn(speed);
-    }
-    public void intakeOut(double speed)
-    {
-        io.intakeOut(speed);
+        io.intakeWheelPower(speed);
     }
 
     public void open(double speed)
@@ -38,15 +34,11 @@ public class Intake extends SubsystemBase {
         io.close(speed);
     }
 
-    public void deploy(double speed)
+    public void miniVaderPower(double speed)
     {
-        io.deployIntake(speed);
+        io.miniVaderPower(speed);
     }
 
-    public void retract(double speed)
-    {
-        io.retractIntake(speed);
-    }
     public void stop()
     {
         io.stop();

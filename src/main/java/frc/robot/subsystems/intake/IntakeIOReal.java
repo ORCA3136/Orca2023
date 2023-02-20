@@ -9,7 +9,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.Encoder;
-import frc.robot.Constants.IntakeConstants;;
+import frc.robot.Constants.IntakeConstants;
+import frc.robot.commands.Minivader;;
 
 public class IntakeIOReal implements IntakeIO {
   //  private static final double GEAR_RATIO = 1.5;
@@ -19,7 +20,8 @@ public class IntakeIOReal implements IntakeIO {
     Encoder counter;
 
     private final CANSparkMax intakeMotor1;
-    private final CANSparkMax intakeMotor2;  
+    private final CANSparkMax intakeMotor2;
+    private final CANSparkMax miniVader;  
     private final RelativeEncoder leftEncoder;
     private final RelativeEncoder rightEncoder;
     private VictorSPX chomp;
@@ -37,12 +39,14 @@ public class IntakeIOReal implements IntakeIO {
        // rightSide = new CANSparkMax(IntakeConstants.intakeRight, MotorType.kBrushless);
       //  miniVader = new CANSparkMax(IntakeConstants.miniVader, MotorType.kBrushless);
         chomp = new VictorSPX(IntakeConstants.intakeChomp);
+        miniVader = new CANSparkMax(IntakeConstants.miniVader, MotorType.kBrushless);
         intakeMotor1 = new CANSparkMax(IntakeConstants.intakeLeft, MotorType.kBrushless);
         intakeMotor2 = new CANSparkMax(IntakeConstants.intakeRight, MotorType.kBrushless);
     
         leftEncoder = intakeMotor1.getEncoder();
         rightEncoder = intakeMotor2.getEncoder();
     
+        miniVader.restoreFactoryDefaults();
         intakeMotor1.restoreFactoryDefaults();
         intakeMotor2.restoreFactoryDefaults();
     
@@ -50,13 +54,18 @@ public class IntakeIOReal implements IntakeIO {
         intakeMotor2.enableVoltageCompensation(12.0);
         intakeMotor1.setSmartCurrentLimit(30);
         intakeMotor2.setSmartCurrentLimit(30);
-    
+        miniVader.enableVoltageCompensation(12.0);
+        miniVader.setSmartCurrentLimit(30);
+
+        
+
         //Note one of these will need to be inverted!!!
     
     
         intakeMotor1.burnFlash();
         intakeMotor2.burnFlash();
-    
+        miniVader.burnFlash();
+
       
 
 
@@ -85,22 +94,13 @@ public class IntakeIOReal implements IntakeIO {
     }
 //MAIN INTAKE FUNCTIONS
 
-public void intakeIn(double power){
+public void intakeWheelPower(double power){
   intakeMotor1.set(power);
   intakeMotor2.set(-1 * power);
 }
-public void intakeOut(double flywheelspeed){
-  intakeMotor1.set(-1 * flywheelspeed);
-  intakeMotor2.set(-1 * flywheelspeed);
-}
 
-public void deployIntake(double miniVaderSpeed){
-  intakeMotor1.set(miniVaderSpeed);
-  intakeMotor2.set(miniVaderSpeed);
-}
-public void retractIntake(double miniVaderSpeed){
-  intakeMotor1.set(-1 * miniVaderSpeed);
-  intakeMotor2.set(-1 * miniVaderSpeed);
+public void miniVaderPower(double miniVaderSpeed){
+  miniVader.set(miniVaderSpeed);
 }
 
 public void IntakeOpen(){

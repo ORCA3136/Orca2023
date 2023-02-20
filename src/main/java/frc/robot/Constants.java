@@ -45,7 +45,7 @@ public static final class IntakeConstants
   public static final int intakeChomp=11;
   public static final int miniVader=5;
   public static final double chompSpeed=.3;
-  public static final double miniVaderSpeed=.1;
+  public static final double miniVaderSpeed=.3;
   public static final double intakeSpeed=.1;
 
   public static final double chompkP = 0.6; 

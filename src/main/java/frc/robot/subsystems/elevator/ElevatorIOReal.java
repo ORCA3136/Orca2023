@@ -5,6 +5,7 @@ import frc.robot.Constants.ElevatorConstants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -50,6 +51,9 @@ public class ElevatorIOReal implements ElevatorIO{
     elevatorMotor2.setSmartCurrentLimit(30);
 
     //Note one of these will need to be inverted!!!
+
+    elevatorMotor1.setIdleMode(IdleMode.kBrake);
+    elevatorMotor2.setIdleMode(IdleMode.kBrake);
 
     elevatorMotor1.burnFlash();
     elevatorMotor2.burnFlash();
