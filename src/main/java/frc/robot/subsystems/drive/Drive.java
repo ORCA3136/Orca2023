@@ -26,14 +26,15 @@ public class Drive extends SubsystemBase {
     io.updateInputs(inputs);
     Logger.getInstance().processInputs("Drive", inputs);
 
-    // Update odometry and log the new pose
+    // Update odometry and log the          pose
     odometry.update(new Rotation2d(-inputs.gyroYawRad), getLeftPositionMeters(), getRightPositionMeters());
     Logger.getInstance().recordOutput("Odometry", getPose());
   }
 
   /** Run open loop at the specified percentage. */
   public void drivePercent(double leftPercent, double rightPercent) {
-    io.setVoltage(trueLeft(leftPercent) * 12.0, trueRight(rightPercent) * 12.0);
+   io.setVoltage((trueLeft(leftPercent) * 12.0) * 0.5, ((trueRight(rightPercent) * 12.0 )) * 0.5 ) ;
+   // io.slewRate((trueLeft(leftPercent) * 12.0), ((trueRight(rightPercent) * 12.0 ))  ) ;
   }
 
   /** Run open loop based on stick positions. */

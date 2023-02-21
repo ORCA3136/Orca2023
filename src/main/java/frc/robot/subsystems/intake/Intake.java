@@ -13,42 +13,40 @@ public class Intake extends SubsystemBase {
         this.io = io;
     }
     @Override
-    public void periodic() {
+    public void periodic() 
+    {
       io.updateInputs(inputs);
       Logger.getInstance().processInputs("Intake", inputs);
   
     }
-    public void in()
+    public void intakeWheelPower(double speed)
     {
-        io.in();
-    }
-    public void out()
-    {
-        io.out();
+        io.intakeWheelPower(speed);
     }
 
-    public void open()
+    public void open(double speed)
     {
-        io.open();
+        io.open(speed);
     }
 
-    public void close()
+    public void close(double speed)
     {
-        io.close();
+        io.close(speed);
     }
 
-    public void deploy()
+    public void miniVaderPower(double speed)
     {
-        io.open();
+        io.miniVaderPower(speed);
     }
 
-    public void retract()
-    {
-        io.close();
-    }
     public void stop()
     {
         io.stop();
+    }
+
+    public double getDistance()
+    {
+        return io.getDistance();
     }
 }
 
