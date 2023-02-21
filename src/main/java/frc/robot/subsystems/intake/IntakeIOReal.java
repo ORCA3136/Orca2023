@@ -57,42 +57,18 @@ public class IntakeIOReal implements IntakeIO {
         miniVader.enableVoltageCompensation(12.0);
         miniVader.setSmartCurrentLimit(30);
 
-        
-
-        //Note one of these will need to be inverted!!!
-    
-    
         intakeMotor1.burnFlash();
         intakeMotor2.burnFlash();
         miniVader.burnFlash();
 
-      
 
+        counter = new Encoder(0, 1, true, Encoder.EncodingType.k4X);
+        counter.setDistancePerPulse(1.0/44.4);      
 
-        //counter for the intake chomper - will act as our encoder
-        //counter = new Counter(Counter.Mode.kTwoPulse);
-        counter = new Encoder(1, 2, true, Encoder.EncodingType.k4X);
-        counter.setDistancePerPulse(1.0/44.4);
-        //counter.setMaxPeriod(.1);
-        
-
-
-
-        
-       // encoder = leftSide.getEncoder();
-       // pid = leftSide.getPIDController();
-        
-
-       // leftSide.restoreFactoryDefaults();
-       // rightSide.restoreFactoryDefaults();
-
-       // rightSide.follow(leftSide);
-       // rightSide.setInverted(true);
-
-       // leftSide.burnFlash();
-       // rightSide.burnFlash();
     }
-//MAIN INTAKE FUNCTIONS
+
+        
+       
 
 public void intakeWheelPower(double power){
   intakeMotor1.set(power);

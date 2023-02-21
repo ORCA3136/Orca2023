@@ -114,15 +114,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     drive.setDefaultCommand(
         new RunCommand(() -> drive.drivePercent(-controller.getLeftY(), controller.getRightY()), drive));
-  //  intake.setDefaultCommand(new RunCommand(()->intake.stop(), intake));
-    //elevator.setDefaultCommand(new RunCommand(()->elevator.notElevator(),elevator));
-
-   // controller.a().toggleOnTrue(new RunCommand(() ->drive.drivePercent(.5,.5),drive));
-   // controller.b().whileTrue(new RunCommand(() ->drive.stop(),drive));
-                                                                                                                                       
-    //controller.x().whileTrue(new RunCommand(() -> intake.open(IntakeConstants.chompSpeed),intake ));
-    //controller.y().whileTrue(new RunCommand(()-> intake.close(IntakeConstants.chompSpeed), intake));
-
+ 
     controller.a().onTrue(new Minivader(-1 * Constants.IntakeConstants.miniVaderSpeed, intake));
     controller.a().onFalse(new Minivader(0, intake));
 
@@ -141,68 +133,8 @@ public class RobotContainer {
     controller.rightTrigger().onFalse(new PowerElevator(0, elevator));
 
 
-  //  if (joystick.getRawButtonPressed(1)) { 
-  //    intake.IntakeInny(IntakeConstants.intakeSloth);
-  // } else {
-  //    intake.stop();
-  // }
-  //
-  // if (joystick.getRawButtonPressed(2)) {
-  //  intake.IntakeOuty(IntakeConstants.intakeSloth);
-  // } else {
-  //  intake.stop();
-  // }
-
-  // if (joystick.getRawButtonPressed(3)) {
-  //  intake.deploy(IntakeConstants.intakeSloth);
-  // } else {
-  //  intake.stop();
-  // }
-
-   //if (joystick.getRawButtonPressed(4)) {
-   // intake.retract(IntakeConstants.intakeSloth);
-   //} else {
-   // intake.stop();
-   //}  
-   //low g
-   //if (joystick.getRawButtonPressed(5)) {
-   // elevator.moveitMoveitElevatorUp(ElevatorConstants.elevatorSpeed);
-   //} else {
-   // intake.stop();
-   //}
-   //clmb brake
-   //if (joystick.getRawButtonPressed(6)) {
-   // elevator.moveitMoveitElevatorDown(ElevatorConstants.elevatorSpeed);
-   //} else {
-   // intake.stop();
-   //}  
-
-
     controller.rightBumper().onTrue(new OpenIntake(0.2,intake));
     controller.leftBumper().onTrue(new OpenIntake(0, intake));
-    //intake related buttons
-    //A Opens the jaws
-    //B closes the jaws
-    //LB deploys the jaws
-    //RB retracts the jaws
-    //LT atracts
-    //RT repels
-    /**   controller.a()
-        .whileTrue(new InstantCommand(() -> intake.open(), intake));
-    controller.b()
-        .whileTrue(new InstantCommand(() -> intake.close(), intake));
-    controller.leftBumper()
-        .whileTrue(new InstantCommand(() -> intake.deploy(), intake));
-    controller.rightBumper()
-        .whileTrue(new InstantCommand(() -> intake.retract(), intake));
-    controller.leftTrigger()
-        .whileTrue(new InstantCommand(() -> intake.in(), intake));
-    controller.rightTrigger()
-        .whileTrue(new InstantCommand(() -> intake.out(), intake));
-    controller.x()
-        .whileTrue(new InstantCommand(() -> intake.stop(), intake));
-        */
-    //Eleveator related buttons
     
     if (joystick.getRawButtonPressed(1)) {
       if (toggle) {
