@@ -62,7 +62,7 @@ public class IntakeIOReal implements IntakeIO {
         miniVader.burnFlash();
 
 
-        counter = new Encoder(0, 1, true, Encoder.EncodingType.k4X);
+        counter = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
         counter.setDistancePerPulse(1.0/44.4);      
 
     }

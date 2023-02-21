@@ -9,7 +9,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Drive extends SubsystemBase {
+public class Drive extends SubsystemBase implements DriveIO {
   public static final double WHEEL_RADIUS_METERS = Units.inchesToMeters(6.0);
 
   private final DriveIO io;
@@ -20,6 +20,7 @@ public class Drive extends SubsystemBase {
   public Drive(DriveIO io) {
     this.io = io;
   }
+  
 
   @Override
   public void periodic() {

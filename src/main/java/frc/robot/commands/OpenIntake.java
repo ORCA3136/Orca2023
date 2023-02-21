@@ -20,7 +20,7 @@ public class OpenIntake extends PIDCommand {
     @Override
     public boolean isFinished() {
       System.out.println("STOPPED OPEN INTAKE "+getController().atSetpoint());
-      // End when the controller is at the reference.
+      // End when the    is at the reference.
       return getController().atSetpoint();
     }
 }

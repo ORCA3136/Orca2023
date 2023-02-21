@@ -27,6 +27,8 @@ public static final class DrivetrainConstants
   public static final int kRightFollower = 4;
 
   public static final double slewRate = 4.0;
+  public static final double kLeftAuto = -.5;
+  public static final double kRightAuto = -.5;
 }
 
 //ELEVATOR
@@ -46,7 +48,8 @@ public static final class IntakeConstants
   public static final int intakeRight=9;
   public static final int intakeChomp=11;
   public static final int miniVader=5;
-  public static final double chompSpeed=.3;
+  public static final double chompSpeed= .8;
+
   public static final double miniVaderSpeed=.3;
   public static final double intakeSpeed=.1;
 

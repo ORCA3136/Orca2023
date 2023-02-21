@@ -23,4 +23,8 @@ public interface DriveIO {
   public default void slewRate(double forward, double turn){
 
   }
+
+  public default void drivePercent(double leftPercent, double rightPercent){
+
+  }
 }
