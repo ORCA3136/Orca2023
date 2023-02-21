@@ -15,6 +15,7 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.Minivader;
 import frc.robot.commands.OpenIntake;
 import frc.robot.commands.PowerElevator;
+import frc.robot.commands.RunChomp;
 import frc.robot.commands.RunIntake;
 import frc.robot.commands.SpinAuto;
 import frc.robot.subsystems.drive.Drive;
@@ -137,8 +138,11 @@ public class RobotContainer {
     controller.y().onTrue(new PowerElevator(-1 * Constants.ElevatorConstants.elevatorSpeed, elevator));
     controller.y().onFalse(new PowerElevator(0, elevator));
 
-    controller.rightTrigger().onTrue(new PowerElevator(Constants.ElevatorConstants.elevatorSpeed, elevator));
-    controller.rightTrigger().onFalse(new PowerElevator(0, elevator));
+    controller.rightTrigger().onTrue(new RunIntake(Constants.IntakeConstants.intakeSloth, intake));
+    controller.rightTrigger().onFalse(new RunIntake(0, intake));
+
+    controller.leftTrigger().onTrue(new RunIntake(-1 * Constants.IntakeConstants.intakeSloth, intake));
+    controller.leftTrigger().onFalse(new RunIntake(0, intake));
 
 
   //  if (joystick.getRawButtonPressed(1)) { 
@@ -178,8 +182,8 @@ public class RobotContainer {
    //}  
 
 
-    controller.rightBumper().onTrue(new OpenIntake(0.2,intake));
-    controller.leftBumper().onTrue(new OpenIntake(0, intake));
+    controller.rightBumper().onTrue(new RunChomp(Constants.IntakeConstants.chompSpeed,intake));
+    controller.leftBumper().onTrue(new RunChomp(-1 * Constants.IntakeConstants.chompSpeed, intake));
     //intake related buttons
     //A Opens the jaws
     //B closes the jaws

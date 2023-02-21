@@ -17,6 +17,8 @@ public class DriveIOSparkMax implements DriveIO {
   private final CANSparkMax rightFollower;
   private final RelativeEncoder leftEncoder;
   private final RelativeEncoder rightEncoder;
+  SlewRateLimiter filterLeft = new SlewRateLimiter(2.0); 
+  SlewRateLimiter filterRight = new SlewRateLimiter(2.0); 
 
   //private final Pigeon2 gyro;
 
@@ -50,6 +52,8 @@ public class DriveIOSparkMax implements DriveIO {
     rightFollower.burnFlash();
 
    // gyro = new Pigeon2(0);
+       // Creates a SlewRateLimiter that limits the rate of change of the signal to 0.5 units per second
+ 
   }
 
   @Override
@@ -70,16 +74,8 @@ public class DriveIOSparkMax implements DriveIO {
   }
 
   @Override
-  public void slewRate(double forward, double turn){
-    // Creates a SlewRateLimiter that limits the rate of change of the signal to 0.5 units per second
-    SlewRateLimiter filter = new SlewRateLimiter(0.5); 
-    
-
-   // Ordinary call with no ramping applied
-    setVoltage(forward, turn);
-    setVoltage(forward, turn);
-
+  public void slewRate(double right, double left){
     // Slew-rate limits the forward/backward input, limiting forward/backward acceleration
-    setVoltage(filter.calculate(forward), turn);
+    setVoltage(filterLeft.calculate(left), filterRight.calculate(right));
   }
 }
