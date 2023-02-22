@@ -18,7 +18,7 @@ public class DriveIOSim implements DriveIO {
     inputs.rightPositionRad = sim.getRightPositionMeters() / Drive.WHEEL_RADIUS_METERS;
     inputs.rightVelocityRadPerSec = sim.getRightVelocityMetersPerSecond() / Drive.WHEEL_RADIUS_METERS;
     inputs.gyroYawRad = sim.getHeading().getRadians() * -1;
-  }
+    }
 
   @Override
   public void setVoltage(double leftVolts, double rightVolts) {

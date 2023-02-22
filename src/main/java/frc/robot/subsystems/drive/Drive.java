@@ -38,6 +38,11 @@ public class Drive extends SubsystemBase implements DriveIO {
     //if you want to use slew rate uncomment below
     //io.slewRate((trueLeft(leftPercent) * 12.0), ((trueRight(rightPercent) * 12.0 ))  ) ;
   }
+  
+  public boolean specificDrive(double distance){
+    io.specificDrive(distance);
+    return false;
+  }
 
   /** Run open loop based on stick positions. */
   public void driveArcade(double xSpeed, double zRotation) {

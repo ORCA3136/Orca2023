@@ -27,8 +27,10 @@ public static final class DrivetrainConstants
   public static final int kRightFollower = 4;
 
   public static final double slewRate = 4.0;
-  public static final double kLeftAuto = -.5;
-  public static final double kRightAuto = -.5;
+  public static final double kLeftAuto = -.2;
+  public static final double kRightAuto = .2;
+
+  public static final double kAutoDistance = 5;
 }
 
 //ELEVATOR

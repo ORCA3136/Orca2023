@@ -24,7 +24,8 @@ public class DriveIOSparkMax implements DriveIO {
   private final CANSparkMax rightFollower;
   private final RelativeEncoder leftEncoder;
   private final RelativeEncoder rightEncoder;
-
+  private double totalRev = 0.0;
+  private double currentRev = 0.0;
 
   private final AHRS gyro = new AHRS(SPI.Port.kMXP);
 
@@ -75,7 +76,10 @@ public class DriveIOSparkMax implements DriveIO {
         leftEncoder.getVelocity() / GEAR_RATIO);
     inputs.rightVelocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(
         rightEncoder.getVelocity() / GEAR_RATIO);
-   // inputs.gyroYawRad = gyro.getYaw();
+    inputs.currentRevs = currentRev;
+    inputs.totalRevs = totalRev;
+    
+    inputs.gyroYawRad = gyro.getYaw();
   }
 
   @Override
@@ -99,9 +103,16 @@ public class DriveIOSparkMax implements DriveIO {
   public RelativeEncoder getLeftEncoder(){
       return rightEncoder;
   }
+
+  public void drivePercent(double leftPercent, double rightPercent) {
+    setVoltage(((leftPercent) * 12.0) * 0.3, (((rightPercent) * 12.0 )) * 0.3 ) ;
+    //if you want to use slew rate uncomment below
+    //io.slewRate((trueLeft(leftPercent) * 12.0), ((trueRight(rightPercent) * 12.0 ))  ) ;
+  }
   
   public boolean specificDrive(double distance) 
   {
+      System.out.println("SpecificDrive>>");
       double kP = 0.05;
       double startHeading = gyro.getAngle();
       
@@ -117,31 +128,42 @@ public class DriveIOSparkMax implements DriveIO {
       int perRev =  getLeftEncoder().getCountsPerRevolution();
       double totalRevolutions = distance*perRev;
       double currentRevolutions = 0;
+      System.out.println("SpecificDrive -beforewhile");
       while(currentRevolutions<totalRevolutions)
       {
+          totalRev = totalRevolutions;
+          System.out.println("SpecificDrive -inwhile");
           SmartDashboard.putNumber("Current Heading: ", gyro.getAngle());
           SmartDashboard.putNumber("Heading eror: ", error);
-          if(error<0)
+          System.out.println("SpecificDrive -beforeif");
+/*           if(error<0)
           {
-              drivePercent(frc.robot.Constants.DrivetrainConstants.kLeftAuto-(kP*error), frc.robot.Constants.DrivetrainConstants.kLeftAuto+(kP*error));
+            System.out.println("SpecificDrive -error<0: "+error);
+              drivePercent(DrivetrainConstants.kLeftAuto-(kP*error), DrivetrainConstants.kLeftAuto+(kP*error));
 
           }
           else if(error>0)
           {
-              drivePercent(frc.robot.Constants.DrivetrainConstants.kLeftAuto+(kP*error), frc.robot.Constants.DrivetrainConstants.kRightAuto-(kP*error));
+            System.out.println("SpecificDrive -error>0: "+error);
+              drivePercent(DrivetrainConstants.kLeftAuto+(kP*error), DrivetrainConstants.kRightAuto-(kP*error));
 
           }
           else
-          {
-              drivePercent(frc.robot.Constants.DrivetrainConstants.kLeftAuto, frc.robot.Constants.DrivetrainConstants.kRightAuto);
-          }
+          {*/
+            System.out.println("SpecificDrive -else: "+error);
+              drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
+          //}
           //set the motors to running - comment out for a bit
           //error = startHeading - gyro.getAngle();
           currentRevolutions = (-1*getLeftEncoder().getPosition()) * perRev;
+          currentRev = currentRevolutions;
           SmartDashboard.putNumber("Current Revs", currentRevolutions);
           
           SmartDashboard.putNumber("Total Revs", totalRevolutions);
+          
       }
+      System.out.println("SpecificDrive<<");
+
       complete = true;
 
       return complete;

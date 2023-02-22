@@ -10,14 +10,17 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.commands.AutoMove;
 import frc.robot.commands.Minivader;
 import frc.robot.commands.OpenIntake;
 import frc.robot.commands.PowerElevator;
 import frc.robot.commands.RunChomp;
 import frc.robot.commands.RunIntake;
 import frc.robot.commands.SpinAuto;
+import frc.robot.commands.AutoMove;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.DriveIO;
 import frc.robot.subsystems.drive.DriveIOSim;
@@ -59,8 +62,11 @@ public class RobotContainer {
   private final LoggedDashboardChooser<Command> autoChooser = new LoggedDashboardChooser<>("Auto Choices");
  // private final LoggedDashboardNumber flywheelSpeedInput = new LoggedDashboardNumber("Flywheel Speed", 1500.0);
 
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+
   /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
+   * The container for the robot. Contains  subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     switch (Constants.currentMode) {
@@ -98,8 +104,9 @@ public class RobotContainer {
     }
 
     // Set up auto routines
-    autoChooser.addDefaultOption("Do Nothing", new InstantCommand());
+    autoChooser.addOption("Do Nothing", new InstantCommand());
     autoChooser.addOption("Spin", new SpinAuto(drive));
+    autoChooser.addDefaultOption("Drive", new AutoMove(drive, intake, elevator));
   //  autoChooser.addOption("Drive With Flywheel", new DriveWithFlywheelAuto(drive, flywheel));
 
     // Configure the button bindings
@@ -142,7 +149,7 @@ public class RobotContainer {
     if (joystick.getRawButtonPressed(1)) {
       if (toggle) {
          // Current state is true so turn off
-         elevator.elevatorUp(ElevatorConstants.elevatorSpeed);
+         elevator.elevatorUp(ElevatorConstants.elevatorSpeed); 
          toggle = false;
       } else {
          // Current state is false so turn on
