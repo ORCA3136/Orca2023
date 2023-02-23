@@ -20,6 +20,7 @@ import frc.robot.commands.PowerElevator;
 import frc.robot.commands.RunChomp;
 import frc.robot.commands.RunIntake;
 import frc.robot.commands.SpinAuto;
+import frc.robot.commands.TurnToTarget;
 import frc.robot.commands.AutoMove;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.DriveIO;
@@ -130,7 +131,9 @@ public class RobotContainer {
 
     //BUTTONS FOR XBOX
 
-    controller.a().onTrue(new Minivader(-1 * Constants.IntakeConstants.miniVaderSpeed, intake));
+    controller.start().onTrue(new TurnToTarget(drive));
+
+ `   controller.a().onTrue(new Minivader(-1 * Constants.IntakeConstants.miniVaderSpeed, intake));
     controller.a().onFalse(new Minivader(0, intake));
 
     controller.b().onTrue(new Minivader(Constants.IntakeConstants.miniVaderSpeed, intake));
@@ -153,6 +156,8 @@ public class RobotContainer {
     
     //BUTTONS FOR JOYSTICK
 
+    
+
     //X Button
     joystickButton1.onTrue(new PowerElevator(-1 * Constants.ElevatorConstants.downelElevatorSpeed, elevator));
     joystickButton1.onFalse(new PowerElevator(0, elevator));
@@ -161,7 +166,7 @@ public class RobotContainer {
     joystickButton2.onTrue(new PowerElevator(Constants.ElevatorConstants.downelElevatorSpeed, elevator));
     joystickButton2.onFalse(new PowerElevator(0, elevator));
 
-
+    
 
   }
 

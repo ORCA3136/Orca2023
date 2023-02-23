@@ -48,7 +48,7 @@ public class DrivetrainAuto extends CommandBase {
 
   
   public boolean isFinished() {
-
+    new InstantCommand(driveTrain::stop, driveTrain);
     return complete;
   }
 }

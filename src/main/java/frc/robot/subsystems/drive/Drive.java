@@ -41,7 +41,7 @@ public class Drive extends SubsystemBase implements DriveIO {
   
   public boolean specificDrive(double distance){
     io.specificDrive(distance);
-    return true;
+    return false;
   }
 
   /** Run open loop based on stick positions. */

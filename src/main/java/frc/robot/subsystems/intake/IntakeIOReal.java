@@ -113,7 +113,7 @@ public void open(double speed)
 
 public void close(double speed)
 {
-  chomp.set(-1*speed);
+  chomp.set(speed);
   isOpen = false;
   System.out.println("CLOSE COUNT: "+counter.get());
   System.out.println("DIRECTION: "+ counter.getDirection());
