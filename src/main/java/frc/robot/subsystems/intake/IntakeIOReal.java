@@ -2,6 +2,7 @@ package frc.robot.subsystems.intake;
 
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.MotorCommutation;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -10,7 +11,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.commands.Minivader;;
+import frc.robot.commands.Minivader;
 
 public class IntakeIOReal implements IntakeIO {
   //  private static final double GEAR_RATIO = 1.5;
@@ -24,7 +25,8 @@ public class IntakeIOReal implements IntakeIO {
     private final CANSparkMax miniVader;  
     private final RelativeEncoder leftEncoder;
     private final RelativeEncoder rightEncoder;
-    private VictorSPX chomp;
+    private final RelativeEncoder chompEncoder;
+    private final CANSparkMax chomp;
 
 
         /**
@@ -38,14 +40,16 @@ public class IntakeIOReal implements IntakeIO {
        // leftSide = new CANSparkMax(IntakeConstants.intakeLeft, MotorType.kBrushless);
        // rightSide = new CANSparkMax(IntakeConstants.intakeRight, MotorType.kBrushless);
       //  miniVader = new CANSparkMax(IntakeConstants.miniVader, MotorType.kBrushless);
-        chomp = new VictorSPX(IntakeConstants.intakeChomp);
+        chomp = new CANSparkMax(IntakeConstants.intakeChomp, MotorType.kBrushless);
         miniVader = new CANSparkMax(IntakeConstants.miniVader, MotorType.kBrushless);
         intakeMotor1 = new CANSparkMax(IntakeConstants.intakeLeft, MotorType.kBrushless);
         intakeMotor2 = new CANSparkMax(IntakeConstants.intakeRight, MotorType.kBrushless);
     
+        chompEncoder = chomp.getEncoder();
         leftEncoder = intakeMotor1.getEncoder();
         rightEncoder = intakeMotor2.getEncoder();
     
+        chomp.restoreFactoryDefaults();
         miniVader.restoreFactoryDefaults();
         intakeMotor1.restoreFactoryDefaults();
         intakeMotor2.restoreFactoryDefaults();
@@ -56,7 +60,10 @@ public class IntakeIOReal implements IntakeIO {
         intakeMotor2.setSmartCurrentLimit(30);
         miniVader.enableVoltageCompensation(12.0);
         miniVader.setSmartCurrentLimit(30);
+        chomp.enableVoltageCompensation(12.0);
+        chomp.setSmartCurrentLimit(30);
 
+        chomp.burnFlash();
         intakeMotor1.burnFlash();
         intakeMotor2.burnFlash();
         miniVader.burnFlash();
@@ -84,7 +91,7 @@ public void IntakeOpen(){
 public void IntakeClose(){
 }
 public void stop(){
-  chomp.set(ControlMode.PercentOutput,0);
+  chomp.set(0);
   //counter.get();
   //System.out.println("STOP COUNT: "+counter.get());
  // leftSide.stopMotor();
@@ -95,7 +102,7 @@ public void stop(){
 
 public void open(double speed)
 {
-  chomp.set(ControlMode.PercentOutput,speed);
+  chomp.set(speed);
   isOpen = true;
   System.out.println("OPEN COUNT : "+counter.get());
   System.out.println("DIRECTION: "+ counter.getDirection());
@@ -106,7 +113,7 @@ public void open(double speed)
 
 public void close(double speed)
 {
-  chomp.set(ControlMode.PercentOutput, -1*speed);
+  chomp.set(-1*speed);
   isOpen = false;
   System.out.println("CLOSE COUNT: "+counter.get());
   System.out.println("DIRECTION: "+ counter.getDirection());

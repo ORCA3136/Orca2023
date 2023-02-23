@@ -40,7 +40,7 @@ public static final class ElevatorConstants
   public static final int kElevator2=7;
 
   public static final double elevatorSpeed = 0.3;
-  public static final double downelElevatorSpeed = 0.2;
+  public static final double downelElevatorSpeed = 0.1;
 }
 
 //INTAKE CONSTANTS
@@ -65,6 +65,20 @@ public static final class IntakeConstants
 
   
 }
+
+  public static final class ButtonConstants
+  {
+    public static final int kY = 4;
+    public static final int kX = 1;
+    public static final int kA = 2;
+    public static final int kB = 3;
+    public static final int kLB = 5;
+    public static final int kRB = 6;
+    public static final int kRT = 8;
+    public static final int kLT = 7;
+    public static final int kSelect = 11;
+    public static final int kStart = 12;
+  }
 
 
   public static enum Mode {

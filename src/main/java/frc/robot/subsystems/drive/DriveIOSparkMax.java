@@ -150,8 +150,8 @@ public class DriveIOSparkMax implements DriveIO {
           }
           else
           {*/
-            System.out.println("SpecificDrive -else: "+error);
-              drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
+          System.out.println("SpecificDrive -else: "+error);
+            drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
           //}
           //set the motors to running - comment out for a bit
           //error = startHeading - gyro.getAngle();

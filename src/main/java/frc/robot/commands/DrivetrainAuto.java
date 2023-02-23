@@ -36,10 +36,12 @@ public class DrivetrainAuto extends CommandBase {
 
   public void execute() {
     System.out.println("AUTODRIVE: EXECUTING");
+
     complete = driveTrain.specificDrive(driveDist);
   }
 
   public void end(boolean interrupted) {
+    System.out.println("AUTODRIVE: END");
     new InstantCommand(driveTrain::stop, driveTrain);
 
   }

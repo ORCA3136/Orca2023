@@ -40,6 +40,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -123,6 +125,8 @@ public class RobotContainer {
     drive.setDefaultCommand(
         new RunCommand(() -> drive.drivePercent(-controller.getLeftY(), controller.getRightY()), drive));
  
+    JoystickButton joystickButton1 = new JoystickButton(joystick, 1); 
+
     controller.a().onTrue(new Minivader(-1 * Constants.IntakeConstants.miniVaderSpeed, intake));
     controller.a().onFalse(new Minivader(0, intake));
 
@@ -134,7 +138,7 @@ public class RobotContainer {
     controller.x().onTrue(new PowerElevator(Constants.ElevatorConstants.elevatorSpeed, elevator));
     controller.x().onFalse(new PowerElevator(0, elevator));
     
-    controller.y().onTrue(new PowerElevator(-1 * Constants.ElevatorConstants.elevatorSpeed, elevator));
+    controller.y().onTrue(new PowerElevator(-1 * Constants.ElevatorConstants.downelElevatorSpeed, elevator));
     controller.y().onFalse(new PowerElevator(0, elevator));
 
     controller.rightTrigger().onTrue(new RunIntake(Constants.IntakeConstants.intakeSloth, intake));
@@ -144,20 +148,11 @@ public class RobotContainer {
     controller.leftTrigger().onFalse(new RunIntake(0, intake));
 
     controller.rightBumper().onTrue(new RunChomp(Constants.IntakeConstants.chompSpeed,intake));
-    controller.leftBumper().onTrue(new OpenIntake(-0.5, intake));
+    controller.leftBumper().onTrue(new RunChomp(-1 * Constants.IntakeConstants.chompSpeed,intake));
     
-    if (joystick.getRawButtonPressed(1)) {
-      if (toggle) {
-         // Current state is true so turn off
-         elevator.elevatorUp(ElevatorConstants.elevatorSpeed); 
-         toggle = false;
-      } else {
-         // Current state is false so turn on
-         elevator.elevatorDown(ElevatorConstants.elevatorSpeed);
-         toggle = true;
-      }
-   }
-
+    //X Button
+    joystickButton1.onTrue(new PowerElevator(-1 * Constants.ElevatorConstants.downelElevatorSpeed, elevator));
+    joystickButton1.onFalse(new PowerElevator(0, elevator));
 
 
 
