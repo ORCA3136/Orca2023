@@ -126,6 +126,9 @@ public class RobotContainer {
         new RunCommand(() -> drive.drivePercent(-controller.getLeftY(), controller.getRightY()), drive));
  
     JoystickButton joystickButton1 = new JoystickButton(joystick, 1); 
+    JoystickButton joystickButton2 = new JoystickButton(joystick, 2); 
+
+    //BUTTONS FOR XBOX
 
     controller.a().onTrue(new Minivader(-1 * Constants.IntakeConstants.miniVaderSpeed, intake));
     controller.a().onFalse(new Minivader(0, intake));
@@ -133,9 +136,7 @@ public class RobotContainer {
     controller.b().onTrue(new Minivader(Constants.IntakeConstants.miniVaderSpeed, intake));
     controller.b().onFalse(new Minivader(0, intake));
 
-    //controller.b().whileTrue(new RunCommand(() ->intake.intakeOut(IntakeConstants.intakeSloth),intake));
-
-    controller.x().onTrue(new PowerElevator(Constants.ElevatorConstants.elevatorSpeed, elevator));
+    controller.x().onTrue(new PowerElevator(Constants.ElevatorConstants.downelElevatorSpeed, elevator));
     controller.x().onFalse(new PowerElevator(0, elevator));
     
     controller.y().onTrue(new PowerElevator(-1 * Constants.ElevatorConstants.downelElevatorSpeed, elevator));
@@ -150,12 +151,15 @@ public class RobotContainer {
     controller.rightBumper().onTrue(new RunChomp(Constants.IntakeConstants.chompSpeed,intake));
     controller.leftBumper().onTrue(new RunChomp(-1 * Constants.IntakeConstants.chompSpeed,intake));
     
+    //BUTTONS FOR JOYSTICK
+
     //X Button
     joystickButton1.onTrue(new PowerElevator(-1 * Constants.ElevatorConstants.downelElevatorSpeed, elevator));
     joystickButton1.onFalse(new PowerElevator(0, elevator));
 
-
-
+    //A Button
+    joystickButton2.onTrue(new PowerElevator(Constants.ElevatorConstants.downelElevatorSpeed, elevator));
+    joystickButton2.onFalse(new PowerElevator(0, elevator));
 
 
 
