@@ -10,7 +10,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DrivetrainConstants;
-import frc.robot.commands.DrivetrainAuto;
+import frc.robot.commands.auto.DrivetrainAuto;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.subsystems.drive.Drive;
 

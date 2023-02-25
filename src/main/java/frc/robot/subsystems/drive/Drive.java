@@ -44,7 +44,11 @@ public class Drive extends SubsystemBase implements DriveIO {
     return false;
   }
 
-  /** Run open loop based on stick positions. */
+  public boolean autoBalance(double distance){
+    return io.autoBalancing(distance);
+  }
+
+    /** Run open loop based on stick positions. */
   public void driveArcade(double xSpeed, double zRotation) {
     var speeds = DifferentialDrive.arcadeDriveIK(xSpeed, zRotation, true);
     io.setVoltage(speeds.left * 12.0, speeds.right * 12.0);

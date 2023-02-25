@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -36,8 +36,7 @@ public class DrivetrainAuto extends CommandBase {
 
   public void execute() {
     System.out.println("AUTODRIVE: EXECUTING");
-
-    complete = driveTrain.specificDrive(driveDist);
+    driveTrain.drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
   }
 
   public void end(boolean interrupted) {
@@ -49,6 +48,7 @@ public class DrivetrainAuto extends CommandBase {
   
   public boolean isFinished() {
     new InstantCommand(driveTrain::stop, driveTrain);
+    System.out.println("AUTODRIVE: END");
     return complete;
   }
 }

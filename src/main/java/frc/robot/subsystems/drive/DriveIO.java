@@ -29,6 +29,10 @@ public interface DriveIO {
 
   }
 
+  public default boolean autoBalancing(double distance){
+    return true;
+  } 
+
   public default boolean specificDrive(double distance){
     return false;
   }
