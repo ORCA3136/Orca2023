@@ -34,6 +34,16 @@ public class Intake extends SubsystemBase {
         io.close(speed);
     }
 
+    public boolean isMiniVaderOut()
+    {
+        return io.isMiniVaderOut();
+    }
+
+    public boolean isMiniVaderIn()
+    {
+        return io.isMiniVaderOut();
+    }
+
     public void miniVaderPower(double speed)
     {
         io.miniVaderPower(speed);

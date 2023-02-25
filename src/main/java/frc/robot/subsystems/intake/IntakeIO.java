@@ -6,11 +6,22 @@ public interface IntakeIO {
   
   @AutoLog
   public static class IntakeIOInputs {
+    public double getPosition = 0.0;
     public boolean open = false;
   }
 
 /** Updates the set of loggable inputs. */
-public default void updateInputs(IntakeIOInputs inputs) {}
+public default void updateInputs(IntakeIOInputs inputs) {
+
+}
+
+public default boolean isMiniVaderIn(){
+  return false;
+}
+
+public default boolean isMiniVaderOut(){
+  return false;
+}
 
 public default void open(double speed) {
 }

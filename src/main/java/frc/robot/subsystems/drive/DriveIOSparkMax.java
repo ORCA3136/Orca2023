@@ -10,6 +10,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DrivetrainConstants;
+import frc.robot.commands.DrivetrainAuto;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.subsystems.drive.Drive;
 
@@ -26,6 +27,7 @@ public class DriveIOSparkMax implements DriveIO {
   private final RelativeEncoder rightEncoder;
   private double totalRev = 0.0;
   private double currentRev = 0.0;
+  private double getAngle;
 
   private final AHRS gyro = new AHRS(SPI.Port.kMXP);
 
@@ -41,6 +43,9 @@ public class DriveIOSparkMax implements DriveIO {
     rightLeader = new CANSparkMax(DrivetrainConstants.kRightleader, MotorType.kBrushless);
     leftFollower = new CANSparkMax(DrivetrainConstants.kLeftFollower, MotorType.kBrushless);
     rightFollower = new CANSparkMax(DrivetrainConstants.kRightFollower, MotorType.kBrushless);
+
+    boolean autoBalanceXMode;
+    boolean autoBalanceYMode;
 
     leftEncoder = leftLeader.getEncoder();
     rightEncoder = rightLeader.getEncoder();
@@ -65,6 +70,8 @@ public class DriveIOSparkMax implements DriveIO {
     leftFollower.burnFlash();
     rightFollower.burnFlash();
 
+    getAngle = gyro.getPitch();
+
    // gyro = new Pigeon2(0);
   }
 
@@ -78,6 +85,7 @@ public class DriveIOSparkMax implements DriveIO {
         rightEncoder.getVelocity() / GEAR_RATIO);
     inputs.currentRevs = currentRev;
     inputs.totalRevs = totalRev;
+    inputs.getPitch = gyro.getPitch();
     
     inputs.gyroYawRad = gyro.getYaw();
   }
@@ -86,6 +94,11 @@ public class DriveIOSparkMax implements DriveIO {
   public void setVoltage(double leftVolts, double rightVolts) {
     leftLeader.setVoltage(leftVolts);
     rightLeader.setVoltage(rightVolts);
+  }
+
+  public void stopDrive(double left, double right){
+    leftLeader.setVoltage(0);
+    rightLeader.setVoltage(0);
   }
 
   @Override
@@ -168,5 +181,24 @@ public class DriveIOSparkMax implements DriveIO {
 
       return complete;
 }
+
+    public boolean autoBalancing(){
+        getAngle = gyro.getPitch();
+        boolean complete = true;
+            if(getAngle > 2)
+            { 
+              drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
+            }
+            if (getAngle < 2)
+            {
+              drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
+            }
+            else
+            {
+               stopDrive(0, 0);
+            }
+
+            return complete;
+    } 
 
 }

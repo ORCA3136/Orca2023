@@ -48,9 +48,9 @@ public static final class IntakeConstants
 {
   public static final int intakeLeft=8;
   public static final int intakeRight=9;
-  public static final int intakeChomp=11;
+  public static final int intakeChomp=10;
   public static final int miniVader=5;
-  public static final double chompSpeed= .8;
+  public static final double chompSpeed= .4;
 
   public static final double miniVaderSpeed=.3;
   public static final double intakeSpeed=.1;
@@ -60,7 +60,7 @@ public static final class IntakeConstants
   public static final double chompkD = .01; 
   public static final double kOpenTolerance = 0.1;
 
-  public static final double intakeSloth = 0.2;
+  public static final double intakeSloth = 0.8;
   public static final double intakeZoom = 0.5;
 
   

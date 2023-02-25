@@ -133,13 +133,13 @@ public class RobotContainer {
 
     controller.start().onTrue(new TurnToTarget(drive));
 
- `   controller.a().onTrue(new Minivader(-1 * Constants.IntakeConstants.miniVaderSpeed, intake));
+    controller.a().onTrue(new Minivader(-1 * Constants.IntakeConstants.miniVaderSpeed, intake));
     controller.a().onFalse(new Minivader(0, intake));
 
     controller.b().onTrue(new Minivader(Constants.IntakeConstants.miniVaderSpeed, intake));
     controller.b().onFalse(new Minivader(0, intake));
 
-    controller.x().onTrue(new PowerElevator(Constants.ElevatorConstants.downelElevatorSpeed, elevator));
+    controller.x().onTrue(new PowerElevator(Constants.ElevatorConstants.elevatorSpeed, elevator));
     controller.x().onFalse(new PowerElevator(0, elevator));
     
     controller.y().onTrue(new PowerElevator(-1 * Constants.ElevatorConstants.downelElevatorSpeed, elevator));
@@ -151,8 +151,15 @@ public class RobotContainer {
     controller.leftTrigger().onTrue(new RunIntake(-1 * Constants.IntakeConstants.intakeSloth, intake));
     controller.leftTrigger().onFalse(new RunIntake(0, intake));
 
+    //CLOSE CHOMPER
     controller.rightBumper().onTrue(new RunChomp(Constants.IntakeConstants.chompSpeed,intake));
+    controller.rightBumper().onFalse(new RunChomp(0,intake));
+
+    //OPEN CHOMPER
     controller.leftBumper().onTrue(new RunChomp(-1 * Constants.IntakeConstants.chompSpeed,intake));
+    controller.leftBumper().onFalse(new RunChomp(0,intake));
+
+
     
     //BUTTONS FOR JOYSTICK
 
@@ -163,7 +170,7 @@ public class RobotContainer {
     joystickButton1.onFalse(new PowerElevator(0, elevator));
 
     //A Button
-    joystickButton2.onTrue(new PowerElevator(Constants.ElevatorConstants.downelElevatorSpeed, elevator));
+    joystickButton2.onTrue(new PowerElevator(Constants.ElevatorConstants.elevatorSpeed, elevator));
     joystickButton2.onFalse(new PowerElevator(0, elevator));
 
     

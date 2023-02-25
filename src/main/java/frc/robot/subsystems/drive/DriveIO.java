@@ -12,6 +12,7 @@ public interface DriveIO {
     public double gyroYawRad = 0.0;
     public double currentRevs = 0.0;
     public double totalRevs = 0.0;
+    public double getPitch = 0.0;
     
   }
 

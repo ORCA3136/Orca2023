@@ -25,8 +25,10 @@ public class IntakeIOReal implements IntakeIO {
     private final CANSparkMax miniVader;  
     private final RelativeEncoder leftEncoder;
     private final RelativeEncoder rightEncoder;
+    private final RelativeEncoder vaderEncoder;
     private final RelativeEncoder chompEncoder;
     private final CANSparkMax chomp;
+    private double getPosition;
 
 
         /**
@@ -48,7 +50,8 @@ public class IntakeIOReal implements IntakeIO {
         chompEncoder = chomp.getEncoder();
         leftEncoder = intakeMotor1.getEncoder();
         rightEncoder = intakeMotor2.getEncoder();
-    
+        vaderEncoder = miniVader.getEncoder();
+            
         chomp.restoreFactoryDefaults();
         miniVader.restoreFactoryDefaults();
         intakeMotor1.restoreFactoryDefaults();
@@ -68,14 +71,36 @@ public class IntakeIOReal implements IntakeIO {
         intakeMotor2.burnFlash();
         miniVader.burnFlash();
 
-
-        counter = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-        counter.setDistancePerPulse(1.0/44.4);      
+    
 
     }
 
         
-       
+public boolean isMiniVaderIn(){
+  getPosition = vaderEncoder.getPosition();
+  if(getPosition > 2)
+  { 
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}     
+
+public boolean isMiniVaderOut(){
+  getPosition = vaderEncoder.getPosition();
+  if(getPosition < 2)
+  { 
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}     
+
+
 
 public void intakeWheelPower(double power){
   intakeMotor1.set(power);
@@ -104,29 +129,28 @@ public void open(double speed)
 {
   chomp.set(speed);
   isOpen = true;
-  System.out.println("OPEN COUNT : "+counter.get());
-  System.out.println("DIRECTION: "+ counter.getDirection());
-  System.out.println("RATE: "+ counter.getRate());
-  System.out.println("DISTANCE: "+ counter.getDistance());
-  setDistance(counter.getDistance());
+  System.out.println("OPEN COUNT : "+chompEncoder.getPosition());
+  System.out.println("RATE: "+ chompEncoder.getVelocity());
+  //System.out.println("DISTANCE: "+ chompEncoder.getPosition());
+  setDistance(chompEncoder.getPosition());
 }
 
 public void close(double speed)
 {
   chomp.set(speed);
   isOpen = false;
-  System.out.println("CLOSE COUNT: "+counter.get());
-  System.out.println("DIRECTION: "+ counter.getDirection());
-  System.out.println("RATE: "+ counter.getRate());
-  System.out.println("DISTANCE: "+ counter.getDistance());
-  setDistance(counter.getDistance());
+  System.out.println("OPEN COUNT : "+chompEncoder.getPosition());
+  System.out.println("RATE: "+ chompEncoder.getVelocity());
+  //System.out.println("DISTANCE: "+ chompEncoder.getPosition());
+  setDistance(chompEncoder.getPosition());
 }
 
 
   @Override
   public void updateInputs(IntakeIOInputs inputs) 
   {
-      inputs.open = isOpen;
+    inputs.getPosition = vaderEncoder.getPosition();
+    inputs.open = isOpen;
 
   }
 
