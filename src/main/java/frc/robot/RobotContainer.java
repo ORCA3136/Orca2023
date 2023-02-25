@@ -20,6 +20,7 @@ import frc.robot.commands.RunChomp;
 import frc.robot.commands.RunIntake;
 import frc.robot.commands.TurnToTarget;
 import frc.robot.commands.auto.AutoMove;
+import frc.robot.commands.auto.ScoreTopCone;
 import frc.robot.commands.auto.SpinAuto;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.DriveIO;
@@ -108,6 +109,7 @@ public class RobotContainer {
     // Set up auto routines
     autoChooser.addOption("Do Nothing", new InstantCommand());
     autoChooser.addOption("Spin", new SpinAuto(drive));
+    autoChooser.addOption("Shoot Cone", new ScoreTopCone(drive, intake, elevator));
     autoChooser.addDefaultOption("Drive", new AutoMove(drive, intake, elevator));
   //  autoChooser.addOption("Drive With Flywheel", new DriveWithFlywheelAuto(drive, flywheel));
 
