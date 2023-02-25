@@ -213,4 +213,12 @@ public void elevatorDown(double elevatorspeed){
   elevatorMotor2.set(-1 * elevatorspeed);
   }
 
+  @Override
+  public void updateInputs(ElevatorIOInputs inputs) 
+  {
+    inputs.rightPosition = rightEncoder.getPosition();
+    inputs.leftPosition = leftEncoder.getPosition();
+
+  }
+
 };
