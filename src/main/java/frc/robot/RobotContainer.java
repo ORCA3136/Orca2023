@@ -129,6 +129,7 @@ public class RobotContainer {
  
     JoystickButton joystickButton1 = new JoystickButton(joystick, 1); 
     JoystickButton joystickButton2 = new JoystickButton(joystick, 2); 
+    JoystickButton joystickButton3 = new JoystickButton(joystick, 3);
 
     //BUTTONS FOR XBOX
 
@@ -174,7 +175,9 @@ public class RobotContainer {
     joystickButton2.onTrue(new PowerElevator(Constants.ElevatorConstants.elevatorSpeed, elevator));
     joystickButton2.onFalse(new PowerElevator(0, elevator));
 
-    
+    //B Button
+    joystickButton3.onTrue(new RunChomp(-1 * Constants.IntakeConstants.chompSpeed, intake));
+    joystickButton3.onFalse(new RunChomp(0, intake));
 
   }
 

@@ -36,4 +36,8 @@ public interface ElevatorIO {
   public default void notElevator(double speed) {
   }
 
+  public default double getDistance(){
+    return 0.0;
+  }
+
 }

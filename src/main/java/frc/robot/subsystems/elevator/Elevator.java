@@ -35,6 +35,13 @@ public class Elevator extends SubsystemBase{
   public void periodic() {
     io.updateInputs(inputs);
     Logger.getInstance().processInputs("Elevator", inputs);
+
+
+  }
+
+  public double getDistance()
+  {
+      return io.getDistance();
   }
 
 }

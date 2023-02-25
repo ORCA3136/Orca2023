@@ -17,7 +17,6 @@ public class ScoreTopCone extends SequentialCommandGroup{
     {
         addCommands(
             new PowerElevator(Constants.ElevatorConstants.elevatorSpeed, elevator),
-            new WaitCommand(5),
             new PowerElevator(0, elevator),     
             new RunChomp(-1 * Constants.IntakeConstants.chompSpeed, intake),
             new RunIntake(Constants.IntakeConstants.intakeSloth, intake),
