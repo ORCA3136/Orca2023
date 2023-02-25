@@ -16,15 +16,6 @@ public class ScoreTopCone extends SequentialCommandGroup{
     public ScoreTopCone(Drive drivetrain, Intake intake, Elevator elevator)
     {
         addCommands(
-            new PowerElevator(Constants.ElevatorConstants.elevatorSpeed, elevator),
-            new PowerElevator(0, elevator),     
-            new RunChomp(-1 * Constants.IntakeConstants.chompSpeed, intake),
-            new RunIntake(Constants.IntakeConstants.intakeSloth, intake),
-            new RunChomp(0, intake),
-            new RunIntake(0, intake)
-
-     
-
 
 
 

@@ -84,15 +84,10 @@ public void teleopPeriodic(){
 }
 
 
-public void elevatorUp(double elevatorspeed){
+public void elevatorPower(double elevatorspeed){
   elevatorMotor1.set(elevatorspeed);
   elevatorMotor2.set(elevatorspeed);
 }
-
-public void elevatorDown(double elevatorspeed){
-  elevatorMotor1.set (elevatorspeed);
-  elevatorMotor2.set(-1 * elevatorspeed);
-  }
 
   @Override
   public void updateInputs(ElevatorIOInputs inputs) 

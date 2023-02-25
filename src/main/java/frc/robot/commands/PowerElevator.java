@@ -20,7 +20,7 @@ public class PowerElevator extends CommandBase{
     @Override
     public void initialize(){
         System.out.println("POWERELEATOR: INITIALIZED");
-        m_elevator.elevatorUp(m_power);
+        m_elevator.elevatorPower(m_power);
     }
 
     @Override

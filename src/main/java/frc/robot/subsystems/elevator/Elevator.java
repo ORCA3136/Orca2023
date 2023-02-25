@@ -19,12 +19,8 @@ public class Elevator extends SubsystemBase{
 
   }
 
-  public void elevatorUp(double speed){
-    io.elevatorUp(speed);
-  }
-
-  public void elevatorDown(double speed){
-    io.elevatorDown(speed);
+  public void elevatorPower(double speed){
+    io.elevatorPower(speed);
   }
 
   public void notElevator(){

@@ -14,7 +14,6 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.Minivader;
 
 public class IntakeIOReal implements IntakeIO {
-  //  private static final double GEAR_RATIO = 1.5;
     private boolean isOpen = false;
 
     private double distance;

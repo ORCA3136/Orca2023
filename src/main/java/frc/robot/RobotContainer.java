@@ -127,11 +127,6 @@ public class RobotContainer {
   private void configureButtonBindings() {
     drive.setDefaultCommand(
         new RunCommand(() -> drive.drivePercent(-controller.getLeftY(), controller.getRightY()), drive));
- 
-    JoystickButton joystickButton1 = new JoystickButton(joystick, 1); 
-    JoystickButton joystickButton2 = new JoystickButton(joystick, 2); 
-    JoystickButton joystickButton3 = new JoystickButton(joystick, 3);
-    JoystickButton joystickButton4 = new JoystickButton(joystick, 4);
 
     //BUTTONS FOR XBOX
 
@@ -169,8 +164,14 @@ public class RobotContainer {
 
     
     //BUTTONS FOR JOYSTICK
+    JoystickButton joystickButton1 = new JoystickButton(joystick, 1); 
+    JoystickButton joystickButton2 = new JoystickButton(joystick, 2); 
+    JoystickButton joystickButton3 = new JoystickButton(joystick, 3);
+    JoystickButton joystickButton4 = new JoystickButton(joystick, 4);
 
-    
+    //UNKNOWN Button
+    joystickButton4.onTrue(new ElevatorPID(0.5, elevator));
+    joystickButton4.onFalse(new ElevatorPID(0, elevator));
 
     //X Button
     joystickButton1.onTrue(new PowerElevator(-1 * Constants.ElevatorConstants.downelElevatorSpeed, elevator));
@@ -183,11 +184,6 @@ public class RobotContainer {
     //UNKOWN Button
     joystickButton3.onTrue(new RunChomp(-1 * Constants.IntakeConstants.chompSpeed, intake));
     joystickButton3.onFalse(new RunChomp(0, intake));
-
-    //UNKNOWN Button
-    joystickButton4.onTrue(new ElevatorPID(0.2, elevator));
-    joystickButton4.onFalse(new ElevatorPID(0, elevator));
-
 
   }
 
