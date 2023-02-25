@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.commands.ElevatorPID;
 import frc.robot.commands.Minivader;
 import frc.robot.commands.OpenIntake;
 import frc.robot.commands.PowerElevator;
@@ -130,6 +131,7 @@ public class RobotContainer {
     JoystickButton joystickButton1 = new JoystickButton(joystick, 1); 
     JoystickButton joystickButton2 = new JoystickButton(joystick, 2); 
     JoystickButton joystickButton3 = new JoystickButton(joystick, 3);
+    JoystickButton joystickButton4 = new JoystickButton(joystick, 4);
 
     //BUTTONS FOR XBOX
 
@@ -161,6 +163,9 @@ public class RobotContainer {
     controller.leftBumper().onTrue(new RunChomp(-1 * Constants.IntakeConstants.chompSpeed,intake));
     controller.leftBumper().onFalse(new RunChomp(0,intake));
 
+    controller.rightBumper().onTrue(new OpenIntake(0.2,intake));
+
+
 
     
     //BUTTONS FOR JOYSTICK
@@ -175,9 +180,14 @@ public class RobotContainer {
     joystickButton2.onTrue(new PowerElevator(Constants.ElevatorConstants.elevatorSpeed, elevator));
     joystickButton2.onFalse(new PowerElevator(0, elevator));
 
-    //B Button
+    //UNKOWN Button
     joystickButton3.onTrue(new RunChomp(-1 * Constants.IntakeConstants.chompSpeed, intake));
     joystickButton3.onFalse(new RunChomp(0, intake));
+
+    //UNKNOWN Button
+    joystickButton4.onTrue(new ElevatorPID(0.2, elevator));
+    joystickButton4.onFalse(new ElevatorPID(0, elevator));
+
 
   }
 

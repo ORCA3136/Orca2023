@@ -42,9 +42,11 @@ public static final class ElevatorConstants
   public static final double elevatorSpeed = 0.3;
   public static final double downelElevatorSpeed = 0.1;
 
-  public static final double elevatorkP = 0.1; 
-  public static final double elevatorkI = 1e-1;
-  public static final double elevatorkD = .01; 
+  public static final double elevatorkP = 0.001; 
+  public static final double elevatorkI = 0;
+  public static final double elevatorkD = 0; 
+  public static final double kOpenTolerance = 0.1;
+
 }
 
 //INTAKE CONSTANTS
