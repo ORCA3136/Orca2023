@@ -29,6 +29,11 @@ public class Intake extends SubsystemBase {
         io.open(speed);
     }
 
+    public void open1(double speed)
+    {
+        io.open(speed);
+    }
+
     public void close(double speed)
     {
         io.close(speed);

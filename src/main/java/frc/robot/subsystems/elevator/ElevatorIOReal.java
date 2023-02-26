@@ -85,7 +85,7 @@ public void teleopPeriodic(){
 
 
 public void elevatorPower(double elevatorspeed){
-  elevatorMotor1.set(elevatorspeed);
+  elevatorMotor1.set(-1 * (elevatorspeed));
   elevatorMotor2.set(elevatorspeed);
 }
 

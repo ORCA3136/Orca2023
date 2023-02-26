@@ -158,8 +158,6 @@ public class RobotContainer {
     controller.leftBumper().onTrue(new RunChomp(-1 * Constants.IntakeConstants.chompSpeed,intake));
     controller.leftBumper().onFalse(new RunChomp(0,intake));
 
-    controller.rightBumper().onTrue(new OpenIntake(0.2,intake));
-
 
 
     

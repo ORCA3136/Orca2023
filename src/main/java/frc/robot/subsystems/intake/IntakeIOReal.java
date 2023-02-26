@@ -134,6 +134,10 @@ public void open(double speed)
   setDistance(chompEncoder.getPosition());
 }
 
+public void open1 (double speed){
+  chomp.set(speed);
+}
+
 public void close(double speed)
 {
   chomp.set(speed);
