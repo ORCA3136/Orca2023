@@ -182,6 +182,25 @@ public class DriveIOSparkMax implements DriveIO {
       return complete;
 }
 
+    public boolean specificDrive1(double distance){
+      int perRev =  getLeftEncoder().getCountsPerRevolution();
+      double totalRevolutions = distance*perRev;
+      double currentRevolutions = 0;
+      boolean complete = false;
+      
+      while(currentRevolutions<totalRevolutions)
+      {
+        drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
+        currentRevolutions = (-1*getLeftEncoder().getPosition()) * perRev;
+        currentRev = currentRevolutions;
+      }
+
+      complete = true;
+
+      return complete;
+      
+    }
+
     public boolean autoBalancing(){
         getAngle = gyro.getPitch();
         boolean complete = true;

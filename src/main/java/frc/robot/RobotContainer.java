@@ -129,9 +129,7 @@ public class RobotContainer {
         new RunCommand(() -> drive.drivePercent(-controller.getLeftY(), controller.getRightY()), drive));
     //elevator.setDefaultCommand(new PowerElevator(0, elevator));
     //BUTTONS FOR XBOX
-
-    controller.start().onTrue(new TurnToTarget(drive));
-
+    
     controller.a().onTrue(new Minivader(-1 * Constants.IntakeConstants.miniVaderSpeed, intake));
     controller.a().onFalse(new Minivader(0, intake));
 

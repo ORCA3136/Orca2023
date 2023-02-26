@@ -36,18 +36,16 @@ public class DrivetrainAuto extends CommandBase {
 
   public void execute() {
     System.out.println("AUTODRIVE: EXECUTING");
-    driveTrain.drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
+    driveTrain.specificDrive1(driveDist);
   }
 
   public void end(boolean interrupted) {
     System.out.println("AUTODRIVE: END");
-    new InstantCommand(driveTrain::stop, driveTrain);
-
   }
 
   
   public boolean isFinished() {
-    new InstantCommand(driveTrain::stop, driveTrain);
+    driveTrain.stop();
     System.out.println("AUTODRIVE: END");
     return complete;
   }

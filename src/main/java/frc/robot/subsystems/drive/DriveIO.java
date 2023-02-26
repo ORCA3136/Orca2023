@@ -37,6 +37,10 @@ public interface DriveIO {
     return false;
   }
 
+  public default boolean specificDrive1(double distance){
+    return false;
+  }
+
   public default void drivePercent(double leftPercent, double rightPercent){
 
   }
