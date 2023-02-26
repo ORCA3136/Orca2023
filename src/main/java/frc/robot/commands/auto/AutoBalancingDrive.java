@@ -34,6 +34,7 @@ public class AutoBalancingDrive extends CommandBase {
   }
   
   public void initialize() {
+    //get the defult pitch - and capture it for an offset. then we will be able to work with degrees off 
 
   }
 

@@ -14,6 +14,7 @@ public interface ElevatorIO {
     public double targetPosition = 0.0;
     public double leftPosition = 0.0;
     public double rightPosition = 0.0;
+    public double distance = 0.0;
   }
 
   /** Updates the set of loggable inputs. */

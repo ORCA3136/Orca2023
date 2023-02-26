@@ -22,7 +22,7 @@ public class ElevatorPID extends PIDCommand {
         // This uses the output
         output-> elevator.elevatorPower(output),
         elevator);
-        getController().setTolerance(ElevatorConstants.kOpenTolerance);
+        getController().setTolerance(ElevatorConstants.kPositionTolerance);
           // Use the output here
         }
     // Use addRequirements() here to declare subsystem dependencies.

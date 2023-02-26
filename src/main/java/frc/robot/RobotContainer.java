@@ -127,7 +127,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     drive.setDefaultCommand(
         new RunCommand(() -> drive.drivePercent(-controller.getLeftY(), controller.getRightY()), drive));
-
+    //elevator.setDefaultCommand(new PowerElevator(0, elevator));
     //BUTTONS FOR XBOX
 
     controller.start().onTrue(new TurnToTarget(drive));
@@ -158,7 +158,8 @@ public class RobotContainer {
     controller.leftBumper().onTrue(new RunChomp(-1 * Constants.IntakeConstants.chompSpeed,intake));
     controller.leftBumper().onFalse(new RunChomp(0,intake));
 
-
+    controller.start().onTrue(new ElevatorPID(40, elevator));
+    controller.start().onFalse(new PowerElevator(0,elevator));
 
     
     //BUTTONS FOR JOYSTICK

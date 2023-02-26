@@ -50,10 +50,17 @@ public class ElevatorIOReal implements ElevatorIO{
 
     elevatorMotor1.enableVoltageCompensation(12.0);
     elevatorMotor2.enableVoltageCompensation(12.0);
-    elevatorMotor1.setSmartCurrentLimit(20,40);
-    elevatorMotor2.setSmartCurrentLimit(20,40);
+    elevatorMotor1.setSmartCurrentLimit(30,50);
+    elevatorMotor2.setSmartCurrentLimit(30,50);
+    //set the mode??
+    //setting to coast for now - as I want that for pid testing.
+    elevatorMotor1.setIdleMode(IdleMode.kCoast);
+    elevatorMotor2.setIdleMode(IdleMode.kCoast);
 
-
+    elevatorMotor1.burnFlash();
+    elevatorMotor2.burnFlash();
+    
+    robotInit();
 
   }
 
@@ -76,6 +83,9 @@ public void robotInit() {
   //not sure why this is here? - commenting it out as I don't think it does what you think it does
   //leftEncoder.setPosition(1.0 / 360.0 * 2.0 * Math.PI * 1.5); 
   //rightEncoder.setPosition(1.0 / 360.0 * 2.0 * Math.PI * 1.5);
+  //set these to 0 at bottom
+  leftEncoder.setPosition(0.0);
+  rightEncoder.setPosition(0.0);
   }
 
 public void teleopPeriodic(){
@@ -105,13 +115,16 @@ public void elevatorPower(double elevatorspeed){
   {
     inputs.rightPosition = rightEncoder.getPosition();
     inputs.leftPosition = leftEncoder.getPosition();
+    inputs.distance = getDistance();
 
   }
 
   @Override
   public double getDistance()
   {
-    return distance;
+    double currentRightPosition = Math.abs(rightEncoder.getPosition());
+    double currentLeftPosition = Math.abs(leftEncoder.getPosition());
+    return (currentLeftPosition+currentRightPosition)/2;
   }
 
   @Override

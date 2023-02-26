@@ -40,12 +40,12 @@ public static final class ElevatorConstants
   public static final int kElevator2=7;
 
   public static final double elevatorSpeed = 0.3;
-  public static final double downelElevatorSpeed = 0.1;
+  public static final double downelElevatorSpeed = 0.2;
 
-  public static final double elevatorkP = 0.001; 
-  public static final double elevatorkI = 0;
-  public static final double elevatorkD = 0; 
-  public static final double kOpenTolerance = 0.1;
+  public static final double elevatorkP = 0.07; 
+  public static final double elevatorkI = 1e-2;
+  public static final double elevatorkD = .0; 
+  public static final double kPositionTolerance = 1;
 
 }
 
