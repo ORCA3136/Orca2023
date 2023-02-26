@@ -38,9 +38,6 @@ public class IntakeIOReal implements IntakeIO {
         
 
     public IntakeIOReal() {
-       // leftSide = new CANSparkMax(IntakeConstants.intakeLeft, MotorType.kBrushless);
-       // rightSide = new CANSparkMax(IntakeConstants.intakeRight, MotorType.kBrushless);
-      //  miniVader = new CANSparkMax(IntakeConstants.miniVader, MotorType.kBrushless);
         chomp = new CANSparkMax(IntakeConstants.intakeChomp, MotorType.kBrushless);
         miniVader = new CANSparkMax(IntakeConstants.miniVader, MotorType.kBrushless);
         intakeMotor1 = new CANSparkMax(IntakeConstants.intakeLeft, MotorType.kBrushless);
@@ -58,12 +55,15 @@ public class IntakeIOReal implements IntakeIO {
     
         intakeMotor1.enableVoltageCompensation(12.0);
         intakeMotor2.enableVoltageCompensation(12.0);
-        intakeMotor1.setSmartCurrentLimit(30);
-        intakeMotor2.setSmartCurrentLimit(30);
+
+        intakeMotor1.setSmartCurrentLimit(10,40);
+        intakeMotor2.setSmartCurrentLimit(10,40);
+
         miniVader.enableVoltageCompensation(12.0);
-        miniVader.setSmartCurrentLimit(30);
+        miniVader.setSmartCurrentLimit(10,30);
+
         chomp.enableVoltageCompensation(12.0);
-        chomp.setSmartCurrentLimit(30);
+        chomp.setSmartCurrentLimit(10,30);
 
         chomp.burnFlash();
         intakeMotor1.burnFlash();

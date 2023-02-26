@@ -50,8 +50,8 @@ public class ElevatorIOReal implements ElevatorIO{
 
     elevatorMotor1.enableVoltageCompensation(12.0);
     elevatorMotor2.enableVoltageCompensation(12.0);
-    elevatorMotor1.setSmartCurrentLimit(30);
-    elevatorMotor2.setSmartCurrentLimit(30);
+    elevatorMotor1.setSmartCurrentLimit(20,40);
+    elevatorMotor2.setSmartCurrentLimit(20,40);
 
 
 
@@ -73,20 +73,31 @@ new ProfiledPIDController(1.3, 0.0, 0.7, m_constraints, kDt);
   
     
 public void robotInit() {
-  leftEncoder.setPosition(1.0 / 360.0 * 2.0 * Math.PI * 1.5); 
-  rightEncoder.setPosition(1.0 / 360.0 * 2.0 * Math.PI * 1.5);
+  //not sure why this is here? - commenting it out as I don't think it does what you think it does
+  //leftEncoder.setPosition(1.0 / 360.0 * 2.0 * Math.PI * 1.5); 
+  //rightEncoder.setPosition(1.0 / 360.0 * 2.0 * Math.PI * 1.5);
   }
 
 public void teleopPeriodic(){
   // Run controller and update motor output
-  elevatorMotor1.set(m_controller.calculate(leftEncoder.getPosition()));
-  elevatorMotor2.set(m_controller.calculate(rightEncoder.getPosition()));
+  //Again not sure why - I assume it is because of the PID controller, but is that what 
+  //we really plan to use?
+ // elevatorMotor1.set(m_controller.calculate(leftEncoder.getPosition()));
+ // elevatorMotor2.set(m_controller.calculate(rightEncoder.getPosition()));
 }
 
 
 public void elevatorPower(double elevatorspeed){
+  
   elevatorMotor1.set(-1 * (elevatorspeed));
   elevatorMotor2.set(elevatorspeed);
+
+  //So we need to set the distance - so we can use it in the PID command, a few tests need to be done first
+  // rely on just one of the encoders - as I expect the values from left and right elevator to be close but probably 
+  //not exctly the same - Since they are difference sensors, also one is going forwrd and one backward
+  //so we can take just 1 and use that as the distance / position or maybe average the 2 (would need to take the 
+  //absolute value since one will be negative)
+  
 }
 
   @Override
@@ -101,6 +112,12 @@ public void elevatorPower(double elevatorspeed){
   public double getDistance()
   {
     return distance;
+  }
+
+  @Override
+  public void setDistance(double dist)
+  {
+    distance = dist;
   }
 
 };

@@ -38,4 +38,8 @@ public interface ElevatorIO {
     return 0.0;
   }
 
+  public default void setDistance(double dist){
+
+  }
+
 }

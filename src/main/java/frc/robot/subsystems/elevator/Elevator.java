@@ -40,4 +40,9 @@ public class Elevator extends SubsystemBase{
       return io.getDistance();
   }
 
+  public void setDistance(double dist)
+  {
+     io.setDistance(dist);
+  }
+
 }
