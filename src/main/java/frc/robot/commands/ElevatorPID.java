@@ -20,7 +20,7 @@ public class ElevatorPID extends PIDCommand {
         // This should return the setpoint (can also be a constant)
         distance,
         // This uses the output
-        output-> elevator.elevatorPower(output),
+        output-> elevator.elevatorPower(output*ElevatorConstants.pidThrottle),
         elevator);
         getController().setTolerance(ElevatorConstants.kPositionTolerance);
           // Use the output here

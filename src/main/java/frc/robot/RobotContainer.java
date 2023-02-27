@@ -161,27 +161,49 @@ public class RobotContainer {
 
     
     //BUTTONS FOR JOYSTICK
-    JoystickButton joystickButton1 = new JoystickButton(joystick, 1); 
-    JoystickButton joystickButton2 = new JoystickButton(joystick, 2); 
-    JoystickButton joystickButton3 = new JoystickButton(joystick, 3);
-    JoystickButton joystickButton4 = new JoystickButton(joystick, 4);
+    JoystickButton joyX = new JoystickButton(joystick, 1); 
+    JoystickButton joyA = new JoystickButton(joystick, 2); 
+    JoystickButton joyY = new JoystickButton(joystick, 4);
+    JoystickButton joyB = new JoystickButton(joystick, 5);
+    JoystickButton joyRB = new JoystickButton(joystick, 3);
+    JoystickButton joyRT = new JoystickButton(joystick, 6);
+    JoystickButton joyLB = new JoystickButton(joystick, 7);
+    JoystickButton joyLT = new JoystickButton(joystick, 8);
+    JoystickButton joyStart = new JoystickButton(joystick, 12);
 
-    //UNKNOWN Button
-    joystickButton4.onTrue(new ElevatorPID(0.5, elevator));
-    joystickButton4.onFalse(new ElevatorPID(0, elevator));
 
-    //X Button
-    joystickButton1.onTrue(new PowerElevator(-1 * Constants.ElevatorConstants.downelElevatorSpeed, elevator));
-    joystickButton1.onFalse(new PowerElevator(0, elevator));
+    //High Cube
+    joyX.onTrue(new ElevatorPID(48, elevator));
+    joyX.onFalse(new PowerElevator(0,elevator));
 
-    //A Button
-    joystickButton2.onTrue(new PowerElevator(Constants.ElevatorConstants.elevatorSpeed, elevator));
-    joystickButton2.onFalse(new PowerElevator(0, elevator));
+    //Mid Cube
+    joyA.onTrue(new ElevatorPID(37, elevator));
+    joyA.onFalse(new PowerElevator(0,elevator));
 
-    //UNKNOWN Button
-    joystickButton3.onTrue(new RunChomp(-1 * Constants.IntakeConstants.chompSpeed, intake));
-    joystickButton3.onFalse(new RunChomp(0, intake));
+    //High Cone lay
+    joyY.onTrue(new ElevatorPID(55, elevator));
+    joyY.onFalse(new PowerElevator(0,elevator));
 
+    //Mid Cone lay
+    joyRT.onTrue(new ElevatorPID(37.5, elevator));
+    joyRT.onFalse(new PowerElevator(0,elevator));
+
+    //Mid Cone Stand
+    joyB.onTrue(new ElevatorPID(45, elevator));
+    joyB.onFalse(new PowerElevator(0,elevator));
+
+    //Shelf
+    joyLT.onTrue(new ElevatorPID(55, elevator));
+    joyLT.onFalse(new PowerElevator(0,elevator));
+
+    //Elevator down
+    joyLB.onTrue(new PowerElevator(-1 * Constants.ElevatorConstants.downelElevatorSpeed, elevator));
+    joyLB.onFalse(new PowerElevator(0, elevator));
+   
+    //Elevator Up
+    joyRB.onTrue(new PowerElevator(Constants.ElevatorConstants.elevatorSpeed, elevator));
+    joyRB.onFalse(new PowerElevator(0, elevator));
+    
   }
 
   

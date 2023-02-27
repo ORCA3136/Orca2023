@@ -46,6 +46,7 @@ public static final class ElevatorConstants
   public static final double elevatorkI = 1e-2;
   public static final double elevatorkD = .0; 
   public static final double kPositionTolerance = 1;
+  public static final double pidThrottle = 0.6; //use this to cap speed for pid controller
 
 }
 
