@@ -8,6 +8,8 @@ import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.DriveIOSparkMax;
 
+import javax.swing.text.AbstractDocument.LeafElement;
+
 import edu.wpi.first.wpilibj.XboxController;
 
 
@@ -31,7 +33,7 @@ public class DrivetrainAuto extends CommandBase {
   }
   
   public void initialize() {
-
+    driveTrain.setPosition0();
   }
 
   public void execute() {

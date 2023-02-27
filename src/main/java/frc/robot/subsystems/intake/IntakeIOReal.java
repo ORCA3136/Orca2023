@@ -56,14 +56,14 @@ public class IntakeIOReal implements IntakeIO {
         intakeMotor1.enableVoltageCompensation(12.0);
         intakeMotor2.enableVoltageCompensation(12.0);
 
-        intakeMotor1.setSmartCurrentLimit(10,40);
-        intakeMotor2.setSmartCurrentLimit(10,40);
+        intakeMotor1.setSmartCurrentLimit(30,40);
+        intakeMotor2.setSmartCurrentLimit(30,40);
 
         miniVader.enableVoltageCompensation(12.0);
-        miniVader.setSmartCurrentLimit(10,30);
+        miniVader.setSmartCurrentLimit(30,40);
 
         chomp.enableVoltageCompensation(12.0);
-        chomp.setSmartCurrentLimit(10,30);
+        chomp.setSmartCurrentLimit(30,40);
 
         chomp.burnFlash();
         intakeMotor1.burnFlash();

@@ -37,6 +37,10 @@ public interface DriveIO {
     return false;
   }
 
+  public default void setPosition0(){
+    
+  }
+
   public default boolean specificDrive1(double distance){
     return false;
   }

@@ -54,8 +54,8 @@ public class ElevatorIOReal implements ElevatorIO{
     elevatorMotor2.setSmartCurrentLimit(30,50);
     //set the mode??
     //setting to coast for now - as I want that for pid testing.
-    elevatorMotor1.setIdleMode(IdleMode.kCoast);
-    elevatorMotor2.setIdleMode(IdleMode.kCoast);
+    elevatorMotor1.setIdleMode(IdleMode.kBrake);
+    elevatorMotor2.setIdleMode(IdleMode.kBrake);
 
     elevatorMotor1.burnFlash();
     elevatorMotor2.burnFlash();

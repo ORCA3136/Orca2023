@@ -129,12 +129,12 @@ public class RobotContainer {
         new RunCommand(() -> drive.drivePercent(-controller.getLeftY(), controller.getRightY()), drive));
     //elevator.setDefaultCommand(new PowerElevator(0, elevator));
     //BUTTONS FOR XBOX
-    
-    controller.a().onTrue(new Minivader(-1 * Constants.IntakeConstants.miniVaderSpeed, intake));
-    controller.a().onFalse(new Minivader(0, intake));
 
-    controller.b().onTrue(new Minivader(Constants.IntakeConstants.miniVaderSpeed, intake));
+    controller.b().onTrue(new Minivader(-1 * Constants.IntakeConstants.miniVaderSpeed, intake));
     controller.b().onFalse(new Minivader(0, intake));
+
+    controller.a().onTrue(new Minivader(Constants.IntakeConstants.miniVaderSpeed, intake));
+    controller.a().onFalse(new Minivader(0, intake));
 
     controller.x().onTrue(new PowerElevator(Constants.ElevatorConstants.elevatorSpeed, elevator));
     controller.x().onFalse(new PowerElevator(0, elevator));
@@ -178,7 +178,7 @@ public class RobotContainer {
     joystickButton2.onTrue(new PowerElevator(Constants.ElevatorConstants.elevatorSpeed, elevator));
     joystickButton2.onFalse(new PowerElevator(0, elevator));
 
-    //UNKOWN Button
+    //UNKNOWN Button
     joystickButton3.onTrue(new RunChomp(-1 * Constants.IntakeConstants.chompSpeed, intake));
     joystickButton3.onFalse(new RunChomp(0, intake));
 

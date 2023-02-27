@@ -118,7 +118,7 @@ public class DriveIOSparkMax implements DriveIO {
   }
 
   public void drivePercent(double leftPercent, double rightPercent) {
-    setVoltage(((leftPercent) * 12.0) * 0.3, (((rightPercent) * 12.0 )) * 0.3 ) ;
+    setVoltage(((leftPercent) * 12.0) * 0.7, (((rightPercent) * 12.0 )) * 0.7 ) ;
     //if you want to use slew rate uncomment below
     //io.slewRate((trueLeft(leftPercent) * 12.0), ((trueRight(rightPercent) * 12.0 ))  ) ;
   }
@@ -184,6 +184,7 @@ public class DriveIOSparkMax implements DriveIO {
 
     public boolean specificDrive1(double distance){
       int perRev =  getLeftEncoder().getCountsPerRevolution();
+      
       double totalRevolutions = distance*perRev;
       double currentRevolutions = 0;
       boolean complete = false;
@@ -199,6 +200,12 @@ public class DriveIOSparkMax implements DriveIO {
 
       return complete;
       
+    }
+
+    public void setPosition0(){
+      leftEncoder.setPosition(0);
+      rightEncoder.setPosition(0);
+
     }
 
     public boolean autoBalancing(){
