@@ -181,8 +181,8 @@ public class RobotContainer {
     joyA.onFalse(new PowerElevator(0,elevator));
 
     //High Cone lay
-    joyY.onTrue(new ElevatorPID(55, elevator));
-    joyY.onFalse(new PowerElevator(0,elevator));
+    joyLT.onTrue(new ElevatorPID(55, elevator));
+    joyLT.onFalse(new PowerElevator(0,elevator));
 
     //Mid Cone lay
     joyRT.onTrue(new ElevatorPID(37.5, elevator));
@@ -193,8 +193,8 @@ public class RobotContainer {
     joyB.onFalse(new PowerElevator(0,elevator));
 
     //Shelf
-    joyLT.onTrue(new ElevatorPID(55, elevator));
-    joyLT.onFalse(new PowerElevator(0,elevator));
+    joyY.onTrue(new ElevatorPID(55, elevator));
+    joyY.onFalse(new PowerElevator(0,elevator));
 
     //Elevator down
     joyLB.onTrue(new PowerElevator(-1 * Constants.ElevatorConstants.downelElevatorSpeed, elevator));
