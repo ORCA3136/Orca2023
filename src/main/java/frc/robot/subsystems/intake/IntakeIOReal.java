@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.MotorCommutation;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Counter;
@@ -64,6 +65,8 @@ public class IntakeIOReal implements IntakeIO {
 
         chomp.enableVoltageCompensation(12.0);
         chomp.setSmartCurrentLimit(40,40);
+
+        chomp.setIdleMode(IdleMode.kBrake);
 
         chomp.burnFlash();
         intakeMotor1.burnFlash();
