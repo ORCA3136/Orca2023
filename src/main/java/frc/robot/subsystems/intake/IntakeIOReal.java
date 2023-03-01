@@ -1,11 +1,15 @@
 package frc.robot.subsystems.intake;
 
 
+import javax.lang.model.util.ElementScanner14;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.MotorCommutation;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.REVLibError;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -29,7 +33,8 @@ public class IntakeIOReal implements IntakeIO {
     private final RelativeEncoder chompEncoder;
     private final CANSparkMax chomp;
     private double getPosition;
-
+    private SparkMaxPIDController chompPID;
+    private double chompP, chompI, chompD, chompFF, chompIz, chompMinOutput, chompMaxOutput, chompMaxVel, chompMaxAccel, chompError;
 
         /**
      * In order to use PID functionality for a controller, a SparkMaxPIDController object
@@ -44,10 +49,6 @@ public class IntakeIOReal implements IntakeIO {
         intakeMotor1 = new CANSparkMax(IntakeConstants.intakeLeft, MotorType.kBrushless);
         intakeMotor2 = new CANSparkMax(IntakeConstants.intakeRight, MotorType.kBrushless);
     
-        chompEncoder = chomp.getEncoder();
-        leftEncoder = intakeMotor1.getEncoder();
-        rightEncoder = intakeMotor2.getEncoder();
-        vaderEncoder = miniVader.getEncoder();
             
         chomp.restoreFactoryDefaults();
         miniVader.restoreFactoryDefaults();
@@ -64,7 +65,7 @@ public class IntakeIOReal implements IntakeIO {
         miniVader.setSmartCurrentLimit(30,40);
 
         chomp.enableVoltageCompensation(12.0);
-        chomp.setSmartCurrentLimit(40,40);
+        chomp.setSmartCurrentLimit(20,40);
 
         chomp.setIdleMode(IdleMode.kBrake);
 
@@ -73,10 +74,45 @@ public class IntakeIOReal implements IntakeIO {
         intakeMotor2.burnFlash();
         miniVader.burnFlash();
 
+        chompEncoder = chomp.getEncoder();
+        leftEncoder = intakeMotor1.getEncoder();
+        rightEncoder = intakeMotor2.getEncoder();
+        vaderEncoder = miniVader.getEncoder();
+
+
+        chompPID = chomp.getPIDController();
+
+       // chompPID.setSmartMotionMaxVelocity(chompMaxVel, smartMotionSlot);
+       // chompPID.setSmartMotionMaxAccel(chompMaxAccel, smartMotionSlot);
+
+        robotInit();
+        
+    }
+    public void robotInit() {
+        chompEncoder.setPosition(0.0);
+        vaderEncoder.setPosition(0.0);
+      }
     
 
-    }
-
+public double setChomper(double position)
+{
+  chompP =0.03;
+  chompI = 0;
+  chompD = 0;;
+  chompMaxOutput=.3;
+  chompMinOutput = -.3;
+        
+  
+  chompPID.setP(chompP);
+  chompPID.setI(chompI);
+  chompPID.setD(chompD);
+//chompPID.setIZone(chompIz);
+  //chompPID.setFF(chompFF);
+  chompPID.setOutputRange(chompMinOutput, chompMaxOutput);
+  REVLibError error = chompPID.setReference(position,CANSparkMax.ControlType.kPosition);
+  System.out.print("ERROR: "+error.toString());
+  return chompEncoder.getPosition();
+}
         
 public boolean isMiniVaderIn(){
   getPosition = vaderEncoder.getPosition();
@@ -138,7 +174,23 @@ public void open(double speed)
 }
 
 public void open1 (double speed){
-  chomp.set(speed);
+  //check the chomp encoder position- if it becomes positive stop!
+  double currentPosition = chompEncoder.getPosition();
+  if(currentPosition >0 && speed <0)
+  {
+    chomp.set(speed);
+  }
+  else if(currentPosition<=0) {//allow it to open or close as it is negative
+    chomp.set(speed);
+  }
+  else if(currentPosition>0 && speed>0)
+  {
+    chomp.set(0.0);
+  }
+  else{
+    System.out.println("NOT SURE WHAT IS HAPPENING: CURRENT POSITION: "+currentPosition+" SPEED: "+speed);
+    chomp.set(0.0);
+  }
 }
 
 public void close(double speed)
@@ -157,6 +209,7 @@ public void close(double speed)
   {
     inputs.getPosition = vaderEncoder.getPosition();
     inputs.open = isOpen;
+    inputs.chompPosition = chompEncoder.getPosition();
 
   }
 

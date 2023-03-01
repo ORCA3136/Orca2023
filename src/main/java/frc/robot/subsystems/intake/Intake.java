@@ -19,6 +19,11 @@ public class Intake extends SubsystemBase {
       Logger.getInstance().processInputs("Intake", inputs);
   
     }
+    public double setChomper(double position)
+    {
+       return io.setChomper(position);
+    }
+
     public void intakeWheelPower(double speed)
     {
         io.intakeWheelPower(speed);
@@ -31,7 +36,7 @@ public class Intake extends SubsystemBase {
 
     public void open1(double speed)
     {
-        io.open(speed);
+        io.open1(speed);
     }
 
     public void close(double speed)

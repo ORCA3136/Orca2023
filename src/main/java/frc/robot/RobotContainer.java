@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.commands.ChompPID;
 import frc.robot.commands.ElevatorPID;
 import frc.robot.commands.Minivader;
 import frc.robot.commands.OpenIntake;
@@ -156,8 +157,8 @@ public class RobotContainer {
     controller.leftBumper().onTrue(new RunChomp(-1 * Constants.IntakeConstants.chompSpeed,intake));
     controller.leftBumper().onFalse(new RunChomp(0,intake));
 
-    controller.start().onTrue(new ElevatorPID(40, elevator));
-    controller.start().onFalse(new PowerElevator(0,elevator));
+    controller.start().onTrue(new ChompPID(0, intake));
+    controller.start().onFalse(new RunChomp(0,intake));
 
     
     //BUTTONS FOR JOYSTICK

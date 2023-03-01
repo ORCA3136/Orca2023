@@ -8,11 +8,15 @@ public interface IntakeIO {
   public static class IntakeIOInputs {
     public double getPosition = 0.0;
     public boolean open = false;
+    public double chompPosition = 0.0;
   }
 
 /** Updates the set of loggable inputs. */
 public default void updateInputs(IntakeIOInputs inputs) {
 
+}
+public default double setChomper(double position){
+  return 0.0;
 }
 
 public default boolean isMiniVaderIn(){
