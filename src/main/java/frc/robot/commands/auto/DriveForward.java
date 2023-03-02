@@ -52,3 +52,4 @@ public class DriveForward extends CommandBase {
     System.out.println("AUTODRIVE: END");
     return complete;
   }
+}
