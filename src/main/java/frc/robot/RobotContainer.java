@@ -150,7 +150,7 @@ public class RobotContainer {
     controller.leftTrigger().onFalse(new RunIntake(0, intake));
 
     //CLOSE CHOMPER
-    controller.rightBumper().onTrue(new RunChomp(Constants.IntakeConstants.chompSpeed,intake));
+    controller.rightBumper().onTrue(new RunChomp(Constants.IntakeConstants.closeChompSpeed,intake));
     controller.rightBumper().onFalse(new RunChomp(0,intake));
 
     //OPEN CHOMPER
@@ -207,7 +207,10 @@ public class RobotContainer {
     
   }
 
-  
+  public void resetIntakeEncoders()
+  {
+    intake.intakeEncoderReset();
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

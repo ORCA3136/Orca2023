@@ -11,6 +11,10 @@ public interface IntakeIO {
     public double chompPosition = 0.0;
   }
 
+public default void intakeEncoderReset(){
+  
+}
+
 /** Updates the set of loggable inputs. */
 public default void updateInputs(IntakeIOInputs inputs) {
 

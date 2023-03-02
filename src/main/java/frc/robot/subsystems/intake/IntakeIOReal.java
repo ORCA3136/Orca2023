@@ -85,10 +85,11 @@ public class IntakeIOReal implements IntakeIO {
        // chompPID.setSmartMotionMaxVelocity(chompMaxVel, smartMotionSlot);
        // chompPID.setSmartMotionMaxAccel(chompMaxAccel, smartMotionSlot);
 
-        robotInit();
+       intakeEncoderReset();
         
     }
-    public void robotInit() {
+
+    public void intakeEncoderReset() {
         chompEncoder.setPosition(0.0);
         vaderEncoder.setPosition(0.0);
       }
@@ -175,15 +176,44 @@ public void open(double speed)
 
 public void open1 (double speed){
   //check the chomp encoder position- if it becomes positive stop!
+  //negative is open, negative speed is opening
+  //positive speed is closing
   double currentPosition = chompEncoder.getPosition();
-  if(currentPosition >0 && speed <0)
+  if(currentPosition >0 && speed <0) //open and opening
   {
     chomp.set(speed);
   }
   else if(currentPosition<=0) {//allow it to open or close as it is negative
-    chomp.set(speed);
+    //add a check now for if speed positive which means it is closing, as we want to ramp it down as it gets closer
+    if(speed>0){
+      if(currentPosition>-25 && currentPosition<=-15)
+      {
+        System.out.println("Between -25 and -15");
+        chomp.set(speed*.5); //cut the speed in half
+      }
+      else if(currentPosition>-15 && currentPosition<=-10)
+      {
+        System.out.println("Between -15 and 10");
+
+        chomp.set(speed*.2); //cut the speed in to 20% of what was provided
+      }
+      else if(currentPosition>-10)
+      {
+        System.out.println("Between -10 and 0");
+
+        chomp.set(speed*.1);
+      }
+      else{
+        System.out.println("Between -25 and -15");
+
+        chomp.set(speed);
+      }
+    }
+    else{
+      chomp.set(speed);
+    }
   }
-  else if(currentPosition>0 && speed>0)
+  else if(currentPosition>0 && speed>0) //already closed when at 0, so STOP
   {
     chomp.set(0.0);
   }

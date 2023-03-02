@@ -19,6 +19,9 @@ public class Intake extends SubsystemBase {
       Logger.getInstance().processInputs("Intake", inputs);
   
     }
+    public void intakeEncoderReset(){
+         io.intakeEncoderReset();
+    }
     public double setChomper(double position)
     {
        return io.setChomper(position);
