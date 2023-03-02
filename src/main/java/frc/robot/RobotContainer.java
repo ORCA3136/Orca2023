@@ -18,6 +18,7 @@ import frc.robot.commands.ElevatorPID;
 import frc.robot.commands.Minivader;
 import frc.robot.commands.OpenIntake;
 import frc.robot.commands.PowerElevator;
+import frc.robot.commands.ResetEncoder;
 import frc.robot.commands.RunChomp;
 import frc.robot.commands.RunIntake;
 import frc.robot.commands.TurnToTarget;
@@ -170,8 +171,12 @@ public class RobotContainer {
     JoystickButton joyRT = new JoystickButton(joystick, 6);
     JoystickButton joyLB = new JoystickButton(joystick, 7);
     JoystickButton joyLT = new JoystickButton(joystick, 8);
+    JoystickButton joyHome = new JoystickButton(joystick, 10);
+    JoystickButton joyBack = new JoystickButton(joystick, 11);
     JoystickButton joyStart = new JoystickButton(joystick, 12);
 
+    //Reset Encoders
+    joyHome.onTrue(new ResetEncoder(intake));
 
     //High Cube
     joyX.onTrue(new ElevatorPID(48, elevator));

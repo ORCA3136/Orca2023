@@ -21,10 +21,15 @@ public class ScoreTopCone extends SequentialCommandGroup{
     {
         addCommands(
             new ElevatorPID(55, elevator),
+            new PowerElevator(0, elevator),
             new Minivader(Constants.IntakeConstants.miniVaderSpeed, intake),
+            new Minivader(0, intake),
             new RunIntake(Constants.IntakeConstants.intakeSloth, intake),
+            new RunIntake(0, intake),
             new Minivader(-1 * Constants.IntakeConstants.miniVaderSpeed, intake),
+            new Minivader(0, intake),
             new ElevatorPID(0, elevator),
+            new PowerElevator(0, elevator),
             new DriveForward(drivetrain, 10)
 
 
@@ -35,7 +40,7 @@ public class ScoreTopCone extends SequentialCommandGroup{
 
 
 
-
+            
         
         );
 

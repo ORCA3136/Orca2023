@@ -114,6 +114,7 @@ public double setChomper(double position)
   System.out.print("ERROR: "+error.toString());
   return chompEncoder.getPosition();
 }
+
         
 public boolean isMiniVaderIn(){
   getPosition = vaderEncoder.getPosition();
