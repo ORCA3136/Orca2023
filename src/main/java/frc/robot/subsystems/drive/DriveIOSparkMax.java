@@ -131,6 +131,8 @@ public class DriveIOSparkMax implements DriveIO {
     //io.slewRate((trueLeft(leftPercent) * 12.0), ((trueRight(rightPercent) * 12.0 ))  ) ;
   }
   
+
+  //DONT USE
   public boolean specificDrive(double distance) 
   {
       System.out.println("SpecificDrive>>");
@@ -195,7 +197,6 @@ public class DriveIOSparkMax implements DriveIO {
       
       double totalRevolutions = distance;
       double currentRevolutions = 0;
-      boolean complete = false;
       
       while(currentRevolutions<totalRevolutions)
       {
@@ -204,9 +205,7 @@ public class DriveIOSparkMax implements DriveIO {
         currentRev = currentRevolutions;
       }
 
-      complete = true;
-
-      return complete;
+      return true;
       
     }
 
