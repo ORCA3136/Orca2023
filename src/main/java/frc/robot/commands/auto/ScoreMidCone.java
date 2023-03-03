@@ -16,13 +16,13 @@ import frc.robot.commands.PowerElevator;
 import frc.robot.commands.RunChomp;
 import frc.robot.commands.RunIntake;
 
-public class ScoreTopCone extends SequentialCommandGroup{
+public class ScoreMidCone extends SequentialCommandGroup{
  
-    public ScoreTopCone(Drive drivetrain, Intake intake, Elevator elevator)
+    public ScoreMidCone(Drive drivetrain, Intake intake, Elevator elevator)
     {
         addCommands(
-            new AutoPowerElevator(0.4, elevator),
-            new WaitCommand(2),
+            new AutoPowerElevator(0.3, elevator),
+            new WaitCommand(1.5),
             new AutoPowerElevator(0, elevator),
             new AutoMinivader(Constants.IntakeConstants.miniVaderSpeed, intake),
             new WaitCommand(1),
@@ -34,7 +34,7 @@ public class ScoreTopCone extends SequentialCommandGroup{
             new WaitCommand(.5),
             new AutoMinivader(0, intake),
             new AutoPowerElevator(- 0.3, elevator),
-            new WaitCommand(2),
+            new WaitCommand(1),
             new AutoPowerElevator(0, elevator),
             new DrivetrainAuto(drivetrain, Constants.DrivetrainConstants.kAutoConeDistance)   
         
