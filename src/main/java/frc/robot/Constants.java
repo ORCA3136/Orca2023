@@ -29,12 +29,18 @@ public final class Constants {
     public static final double kLeftAuto = .3;
     public static final double kRightAuto = -.3;
 
+    public static final double kLeftChargeAuto = .5;
+    public static final double kRightChargeAuto = -.5;
+
+
     public static final double LeftAuto = -.5;
     public static final double RightAuto = .5;
 
     public static final double kAutoDistance = 85;
     public static final double kAutoConeDistance = 75;
     public static final double kAutoMidConeDistance = 70;
+    public static final double kAutoShootThenBack = 30;
+
 
   }
 
