@@ -10,19 +10,19 @@ public class ResetEncoder extends CommandBase{
 
     public ResetEncoder(Intake intake ){
         m_intake = intake;
-        System.out.println("POWERELEVATOR");
+        System.out.println("RESET ENCODER");
         addRequirements(m_intake);
     } 
 
     @Override
-    public void initialize(){
-        System.out.println("POWERELEATOR: INITIALIZED");
+    public void execute(){
+        System.out.println("RESET CHOMP ENCODER: EXECUTE");
         m_intake.intakeEncoderReset();
     }
 
     @Override
     public boolean isFinished() {
-        System.out.println("POWERELEATOR: FINISHED");
+        System.out.println("RESET ENCODER: FINISHED");
         // TODO Auto-generated method stub
         return true;
     }
