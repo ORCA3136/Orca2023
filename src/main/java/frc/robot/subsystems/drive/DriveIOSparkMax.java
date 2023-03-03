@@ -105,7 +105,15 @@ public class DriveIOSparkMax implements DriveIO {
   public void slewRate(double left, double right){
 
     // Slew-rate limits the forward/backward input, limiting forward/backward acceleration
-    setVoltage(leftFilter.calculate(left), rightFilter.calculate(right));
+    if(left>=0 && right >=0)
+    {   
+      setVoltage(leftFilter.calculate(left), rightFilter.calculate(right));
+    }
+    else{
+      setVoltage(left, right);
+      leftFilter.reset(0.0);
+      rightFilter.reset(0.0);
+    }
   }
 
   public RelativeEncoder getRightEncoder()
@@ -183,16 +191,16 @@ public class DriveIOSparkMax implements DriveIO {
 }
 
     public boolean specificDrive1(double distance){
-      int perRev =  getLeftEncoder().getCountsPerRevolution();
+     // int perRev =  getLeftEncoder().getCountsPerRevolution();
       
-      double totalRevolutions = distance*perRev;
+      double totalRevolutions = distance;
       double currentRevolutions = 0;
       boolean complete = false;
       
       while(currentRevolutions<totalRevolutions)
       {
-        drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
-        currentRevolutions = (-1*getLeftEncoder().getPosition()) * perRev;
+        drivePercent(-1*DrivetrainConstants.kLeftAuto, -1*DrivetrainConstants.kRightAuto);
+        currentRevolutions = (getLeftEncoder().getPosition()) ;
         currentRev = currentRevolutions;
       }
 
