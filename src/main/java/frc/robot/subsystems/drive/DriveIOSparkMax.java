@@ -130,6 +130,11 @@ public class DriveIOSparkMax implements DriveIO {
     //if you want to use slew rate uncomment below
     //io.slewRate((trueLeft(leftPercent) * 12.0), ((trueRight(rightPercent) * 12.0 ))  ) ;
   }
+
+  public void driveCreep(double speed)
+  {
+    drivePercent(-speed,speed ) ;
+  }
   
 
   //DONT USE
@@ -208,6 +213,23 @@ public class DriveIOSparkMax implements DriveIO {
       return true;
       
     }
+
+    public boolean specificDriveCharge(double distance){
+      // int perRev =  getLeftEncoder().getCountsPerRevolution();
+       
+       double totalRevolutions = distance;
+       double currentRevolutions = 0;
+       
+       while(currentRevolutions<totalRevolutions)
+       {
+         drivePercent(-1*DrivetrainConstants.ChargeAutoLeft, -1*DrivetrainConstants.ChargeAutoRight);
+         currentRevolutions = (getLeftEncoder().getPosition()) ;
+         currentRev = currentRevolutions;
+       }
+ 
+       return true;
+       
+     }
 
     public void setPosition0(){
       leftEncoder.setPosition(0);

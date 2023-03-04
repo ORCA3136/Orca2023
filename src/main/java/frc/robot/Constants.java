@@ -32,14 +32,18 @@ public final class Constants {
     public static final double kLeftChargeAuto = .5;
     public static final double kRightChargeAuto = -.5;
 
+    public static final double LeftCreep = -.15;
 
     public static final double LeftAuto = -.5;
     public static final double RightAuto = .5;
 
+    public static final double ChargeAutoLeft = .6;
+    public static final double ChargeAutoRight = -.6;
+
     public static final double kAutoDistance = 85;
     public static final double kAutoConeDistance = 75;
     public static final double kAutoMidConeDistance = 70;
-    public static final double kAutoShootThenBack = 30;
+    public static final double kAutoShootThenBack = 43.;
 
 
   }
@@ -50,7 +54,7 @@ public final class Constants {
     public static final int kElevator2 = 7;
 
     public static final double elevatorSpeed = 0.3;
-    public static final double downelElevatorSpeed = 0.2;
+    public static final double downelElevatorSpeed = 0.25;
 
     public static final double elevatorkP = 0.07;
     public static final double elevatorkI = 1e-2;

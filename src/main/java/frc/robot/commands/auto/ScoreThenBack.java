@@ -35,7 +35,7 @@ public class ScoreThenBack extends SequentialCommandGroup{
             new AutoPowerElevator(- 0.3, elevator),
             new WaitCommand(2),
             new AutoPowerElevator(0, elevator),
-            new DrivetrainAuto(drivetrain, Constants.DrivetrainConstants.kAutoShootThenBack),
+            new ChargeAutoDrove(drivetrain, Constants.DrivetrainConstants.kAutoShootThenBack),
             new AutoMinivader(0, intake)
         );
 

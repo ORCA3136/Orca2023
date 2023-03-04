@@ -38,9 +38,19 @@ public class Drive extends SubsystemBase implements DriveIO {
     //if you want to use slew rate uncomment below
     //io.slewRate((trueLeft(leftPercent) * 12.0), ((trueRight(rightPercent) * 12.0 ))  ) ;
   }
+
+  public void driveCreep(double speed)
+  {
+    io.driveCreep(speed);
+  }
   
   public boolean specificDrive(double distance){
     io.specificDrive(distance);
+    return false;
+  }
+
+  public boolean specificDriveCharge(double distance){
+    io.specificDriveCharge(distance);
     return false;
   }
 

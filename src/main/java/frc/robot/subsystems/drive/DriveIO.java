@@ -25,6 +25,8 @@ public interface DriveIO {
   public default void setVoltage(double leftVolts, double rightVolts) {
   }
 
+  public default void driveCreep(double speed){};
+
   public default void slewRate(double forward, double turn){
 
   }
@@ -34,6 +36,11 @@ public interface DriveIO {
   } 
 
   public default boolean specificDrive(double distance){
+    return false;
+  }
+
+
+  public default boolean specificDriveCharge(double distance){
     return false;
   }
 

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.ChompPID;
@@ -22,9 +23,12 @@ import frc.robot.commands.ResetElevatorEncoder;
 import frc.robot.commands.ResetEncoder;
 import frc.robot.commands.RunChomp;
 import frc.robot.commands.RunIntake;
+import frc.robot.commands.StopDrive;
+import frc.robot.commands.StraightForward;
 import frc.robot.commands.TurnToTarget;
 import frc.robot.commands.auto.AutoMove;
 import frc.robot.commands.auto.ScoreMidCone;
+import frc.robot.commands.auto.ScoreThenBack;
 import frc.robot.commands.auto.ScoreTopCone;
 import frc.robot.commands.auto.SpinAuto;
 import frc.robot.subsystems.drive.Drive;
@@ -113,11 +117,12 @@ public class RobotContainer {
 
     // Set up auto routines
     autoChooser.addOption("Do Nothing", new InstantCommand());
-    autoChooser.addOption("Spin", new SpinAuto(drive));
+    //autoChooser.addOption("Spin", new SpinAuto(drive));
     autoChooser.addOption("Shoot Top Cone", new ScoreTopCone(drive, intake, elevator));
-    autoChooser.addOption("Shoot Mid Cone", new ScoreMidCone(drive, intake, elevator));
+    //autoChooser.addOption("Shoot Mid Cone", new ScoreMidCone(drive, intake, elevator));
     autoChooser.addDefaultOption("Drive", new AutoMove(drive, intake, elevator));
   //  autoChooser.addOption("Drive With Flywheel", new DriveWithFlywheelAuto(drive, flywheel));
+    autoChooser.addDefaultOption("Score Charge", new ScoreThenBack(drive, intake, elevator));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -178,6 +183,11 @@ public class RobotContainer {
     JoystickButton joyBack = new JoystickButton(joystick, 11);
     JoystickButton joyStart = new JoystickButton(joystick, 12);
 
+    //Creep Button 
+    joyStart.onTrue(new StraightForward(drive));
+    joyStart.onFalse(new RunCommand(() -> drive.drivePercent(-controller.getLeftY(), controller.getRightY()), drive));
+
+
     //Reset Encoders Elevator
     joyBack.onTrue(new ResetElevatorEncoder(elevator));
 
@@ -205,7 +215,7 @@ public class RobotContainer {
     joyB.onFalse(new PowerElevator(0,elevator));
 
     //Shelf
-    joyY.onTrue(new ElevatorPID(55, elevator));
+    joyY.onTrue(new ElevatorPID(50, elevator));
     joyY.onFalse(new PowerElevator(0,elevator));
 
     //Elevator down
