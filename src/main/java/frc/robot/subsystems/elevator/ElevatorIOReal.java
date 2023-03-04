@@ -78,7 +78,11 @@ new TrapezoidProfile.Constraints(1.75, 0.75);
 private final ProfiledPIDController m_controller =
 new ProfiledPIDController(1.3, 0.0, 0.7, m_constraints, kDt);
   
-    
+public void elevatorEncoderReset() {
+  leftEncoder.setPosition(0.0);
+  rightEncoder.setPosition(0.0);
+}    
+
 public void robotInit() {
   //not sure why this is here? - commenting it out as I don't think it does what you think it does
   //leftEncoder.setPosition(1.0 / 360.0 * 2.0 * Math.PI * 1.5); 

@@ -18,6 +18,7 @@ import frc.robot.commands.ElevatorPID;
 import frc.robot.commands.Minivader;
 import frc.robot.commands.OpenIntake;
 import frc.robot.commands.PowerElevator;
+import frc.robot.commands.ResetElevatorEncoder;
 import frc.robot.commands.ResetEncoder;
 import frc.robot.commands.RunChomp;
 import frc.robot.commands.RunIntake;
@@ -177,7 +178,10 @@ public class RobotContainer {
     JoystickButton joyBack = new JoystickButton(joystick, 11);
     JoystickButton joyStart = new JoystickButton(joystick, 12);
 
-    //Reset Encoders
+    //Reset Encoders Elevator
+    joyBack.onTrue(new ResetElevatorEncoder(elevator));
+
+    //Reset Encoders Minivader and Chomp
     joyHome.onTrue(new ResetEncoder(intake));
 
     //High Cube
@@ -211,6 +215,8 @@ public class RobotContainer {
     //Elevator Up
     joyRB.onTrue(new PowerElevator(Constants.ElevatorConstants.elevatorSpeed, elevator));
     joyRB.onFalse(new PowerElevator(0, elevator));
+
+
     
   }
 

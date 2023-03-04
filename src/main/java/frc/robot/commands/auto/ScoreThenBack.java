@@ -32,12 +32,11 @@ public class ScoreThenBack extends SequentialCommandGroup{
             new AutoRunIntake(0, intake),
             new AutoMinivader(-1 * Constants.IntakeConstants.miniVaderSpeed, intake),
             new WaitCommand(.5),
-            new AutoMinivader(0, intake),
             new AutoPowerElevator(- 0.3, elevator),
             new WaitCommand(2),
             new AutoPowerElevator(0, elevator),
-            new DrivetrainAuto(drivetrain, Constants.DrivetrainConstants.kAutoConeDistance)   
-        
+            new DrivetrainAuto(drivetrain, Constants.DrivetrainConstants.kAutoShootThenBack),
+            new AutoMinivader(0, intake)
         );
 
         

@@ -35,6 +35,10 @@ public class Elevator extends SubsystemBase{
 
   }
 
+  public void elevatorEncoderReset(){
+    io.elevatorEncoderReset();
+}
+
   public double getDistance()
   {
       return io.getDistance();
