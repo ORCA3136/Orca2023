@@ -32,7 +32,7 @@ public final class Constants {
     public static final double kLeftChargeAuto = .5;
     public static final double kRightChargeAuto = -.5;
 
-    public static final double LeftCreep = -.15;
+    public static final double LeftCreep = -.3;
 
     public static final double LeftAuto = -.5;
     public static final double RightAuto = .5;
@@ -41,11 +41,9 @@ public final class Constants {
     public static final double ChargeAutoRight = -.6;
 
     public static final double kAutoDistance = 85;
-    public static final double kAutoConeDistance = 75;
+    public static final double kAutoConeDistance = 85;
     public static final double kAutoMidConeDistance = 70;
-    public static final double kAutoShootThenBack = 43.;
-
-
+    public static final double kAutoShootThenBack = 47;
   }
 
   // ELEVATOR
@@ -54,7 +52,7 @@ public final class Constants {
     public static final int kElevator2 = 7;
 
     public static final double elevatorSpeed = 0.3;
-    public static final double downelElevatorSpeed = 0.25;
+    public static final double downelElevatorSpeed = 0.35;
 
     public static final double elevatorkP = 0.07;
     public static final double elevatorkI = 1e-2;
@@ -74,8 +72,8 @@ public final class Constants {
     public static final int intakeChomp = 10;
 
     public static final int miniVader = 5;
-    public static final double chompSpeed = .5;
-    public static final double closeChompSpeed = .3;
+    public static final double chompSpeed = .7;
+    public static final double closeChompSpeed = .5;
 
     public static final double miniVaderSpeed = .5;
     public static final double intakeSpeed = .1;
@@ -86,6 +84,7 @@ public final class Constants {
     public static final double kOpenTolerance = 0.1;
 
     public static final double intakeSloth = 0.4;
+    public static final double intakeInSloth = 0.3;
     public static final double intakeZoom = 0.5;
 
   }

@@ -220,13 +220,19 @@ public class DriveIOSparkMax implements DriveIO {
        double totalRevolutions = distance;
        double currentRevolutions = 0;
        
-       while(currentRevolutions<totalRevolutions)
+       while(currentRevolutions<totalRevolutions+1)
        {
          drivePercent(-1*DrivetrainConstants.ChargeAutoLeft, -1*DrivetrainConstants.ChargeAutoRight);
          currentRevolutions = (getLeftEncoder().getPosition()) ;
          currentRev = currentRevolutions;
        }
- 
+       
+       while(currentRevolutions>totalRevolutions+2)
+       {
+         drivePercent(DrivetrainConstants.ChargeAutoLeft*.5, DrivetrainConstants.ChargeAutoRight*.5);
+         currentRevolutions = (getLeftEncoder().getPosition()) ;
+         currentRev = currentRevolutions;
+       }
        return true;
        
      }

@@ -155,7 +155,7 @@ public class RobotContainer {
     controller.rightBumper().onTrue(new RunIntake(Constants.IntakeConstants.intakeSloth, intake));
     controller.rightBumper().onFalse(new RunIntake(0, intake));
     //intake in
-    controller.leftBumper().onTrue(new RunIntake(-1 * Constants.IntakeConstants.intakeSloth, intake));
+    controller.leftBumper().onTrue(new RunIntake(-1 * Constants.IntakeConstants.intakeInSloth, intake));
     controller.leftBumper().onFalse(new RunIntake(0, intake));
 
     //CLOSE CHOMPER
@@ -215,7 +215,7 @@ public class RobotContainer {
     joyB.onFalse(new PowerElevator(0,elevator));
 
     //Shelf
-    joyY.onTrue(new ElevatorPID(50, elevator));
+    joyY.onTrue(new ElevatorPID(47, elevator));
     joyY.onFalse(new PowerElevator(0,elevator));
 
     //Elevator down
