@@ -52,7 +52,7 @@ public final class Constants {
     public static final int kElevator2 = 7;
 
     public static final double elevatorSpeed = 0.3;
-    public static final double downelElevatorSpeed = 0.35;
+    public static final double downelElevatorSpeed = 0.3;
 
     public static final double elevatorkP = 0.07;
     public static final double elevatorkI = 1e-2;
