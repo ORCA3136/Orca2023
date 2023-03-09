@@ -43,19 +43,14 @@ public class Drive extends SubsystemBase implements DriveIO {
   {
     io.driveCreep(speed);
   }
-  
-  public boolean specificDrive(double distance){
-    io.specificDrive(distance);
-    return false;
-  }
 
   public boolean specificDriveCharge(double distance){
     io.specificDriveCharge(distance);
     return false;
   }
 
-  public boolean specificDrive1(double distance){
-    return io.specificDrive1(distance);
+  public boolean specificDrive(double distance){
+    return io.specificDrive(distance);
   }
 
   public void setPosition0(){

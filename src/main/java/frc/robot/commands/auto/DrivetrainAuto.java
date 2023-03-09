@@ -38,7 +38,7 @@ public class DrivetrainAuto extends CommandBase {
 
   public void execute() {
     System.out.println("AUTODRIVE: EXECUTING");
-    driveTrain.specificDrive1(driveDist);
+    driveTrain.specificDrive(driveDist);
   }
 
   public void end(boolean interrupted) {

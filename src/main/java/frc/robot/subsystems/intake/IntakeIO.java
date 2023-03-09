@@ -12,7 +12,7 @@ public interface IntakeIO {
   }
 
 public default void intakeEncoderReset(){
-  
+
 }
 
 /** Updates the set of loggable inputs. */
@@ -32,9 +32,6 @@ public default boolean isMiniVaderOut(){
 }
 
 public default void open(double speed) {
-}
-
-public default void open1(double speed) {
 }
 
 public default void close(double speed) {

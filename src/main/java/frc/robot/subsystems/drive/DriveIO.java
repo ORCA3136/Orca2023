@@ -27,10 +27,6 @@ public interface DriveIO {
 
   public default void driveCreep(double speed){};
 
-  public default void slewRate(double forward, double turn){
-
-  }
-
   public default boolean autoBalancing(double distance){
     return true;
   } 
@@ -46,10 +42,6 @@ public interface DriveIO {
 
   public default void setPosition0(){
     
-  }
-
-  public default boolean specificDrive1(double distance){
-    return false;
   }
 
   public default void drivePercent(double leftPercent, double rightPercent){

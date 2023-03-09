@@ -20,7 +20,7 @@ public class RunChomp extends CommandBase{
     @Override
     public void initialize(){
         System.out.println("RUNINTAKE: INITIALIZED : "+m_power);
-        m_intake.open1(m_power);
+        m_intake.open(m_power);
     }
 
     @Override

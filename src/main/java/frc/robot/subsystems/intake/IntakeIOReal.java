@@ -165,17 +165,7 @@ public void stop(){
  intakeMotor2.set(0);
 }
 
-public void open(double speed)
-{
-  chomp.set(speed);
-  isOpen = true;
-  System.out.println("OPEN COUNT : "+chompEncoder.getPosition());
-  System.out.println("RATE: "+ chompEncoder.getVelocity());
-  //System.out.println("DISTANCE: "+ chompEncoder.getPosition());
-  setDistance(chompEncoder.getPosition());
-}
-
-public void open1 (double speed){
+public void open (double speed){
   //check the chomp encoder position- if it becomes positive stop!
   //negative is open, negative speed is opening
   //positive speed is closing

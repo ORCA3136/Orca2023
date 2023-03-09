@@ -17,7 +17,7 @@ import frc.robot.subsystems.drive.Drive;
 
 
 public class DriveIOSparkMax implements DriveIO {
-  private static final double GEAR_RATIO = 10.96;
+  private static final double GEAR_RATIO = 9.40;
 
   private final CANSparkMax leftLeader;
   private final CANSparkMax rightLeader;
@@ -44,9 +44,6 @@ public class DriveIOSparkMax implements DriveIO {
     leftFollower = new CANSparkMax(DrivetrainConstants.kLeftFollower, MotorType.kBrushless);
     rightFollower = new CANSparkMax(DrivetrainConstants.kRightFollower, MotorType.kBrushless);
 
-    boolean autoBalanceXMode;
-    boolean autoBalanceYMode;
-
     leftEncoder = leftLeader.getEncoder();
     rightEncoder = rightLeader.getEncoder();
 
@@ -59,7 +56,6 @@ public class DriveIOSparkMax implements DriveIO {
     rightLeader.setInverted(true);
     leftFollower.follow(leftLeader, false);
     rightFollower.follow(rightLeader, false);
-
     
     leftLeader.setOpenLoopRampRate(.3);
     rightLeader.setOpenLoopRampRate(.3);
@@ -75,8 +71,6 @@ public class DriveIOSparkMax implements DriveIO {
     rightFollower.burnFlash();
 
     getAngle = gyro.getPitch();
-
-   // gyro = new Pigeon2(0);
   }
 
   @Override
@@ -105,21 +99,6 @@ public class DriveIOSparkMax implements DriveIO {
     rightLeader.setVoltage(0);
   }
 
-  @Override
-  public void slewRate(double left, double right){
-
-    // Slew-rate limits the forward/backward input, limiting forward/backward acceleration
-    if(left>=0 && right >=0)
-    {   
-      setVoltage(leftFilter.calculate(left), rightFilter.calculate(right));
-    }
-    else{
-      setVoltage(left, right);
-      leftFilter.reset(0.0);
-      rightFilter.reset(0.0);
-    }
-  }
-
   public RelativeEncoder getRightEncoder()
   {
       return leftEncoder;
@@ -131,79 +110,14 @@ public class DriveIOSparkMax implements DriveIO {
 
   public void drivePercent(double leftPercent, double rightPercent) {
     setVoltage(((leftPercent) * 12.0) * 0.7, (((rightPercent) * 12.0 )) * 0.7 ) ;
-    //if you want to use slew rate uncomment below
-    //io.slewRate((trueLeft(leftPercent) * 12.0), ((trueRight(rightPercent) * 12.0 ))  ) ;
   }
 
   public void driveCreep(double speed)
   {
     drivePercent(-speed,speed ) ;
   }
-  
 
-  //DONT USE
-  public boolean specificDrive(double distance) 
-  {
-      System.out.println("SpecificDrive>>");
-      double kP = 0.05;
-      double startHeading = gyro.getAngle();
-      
-      //double error = startHeading - gyro.getAngle();
-      double error = 0; //set this for now so it only drives
-      boolean complete = false;
-      getLeftEncoder().setPosition(0); //set the position to 0
-      Double leftPosition = getLeftEncoder().getPosition();
-      SmartDashboard.putNumber("Left Enc Pos: ", leftPosition);
-      SmartDashboard.putNumber("Start Heading ", startHeading);
-
-      //really only need to get this once...
-      int perRev =  getLeftEncoder().getCountsPerRevolution();
-      double totalRevolutions = distance*perRev;
-      double currentRevolutions = 0;
-      System.out.println("SpecificDrive -beforewhile");
-      while(currentRevolutions<totalRevolutions)
-      {
-          totalRev = totalRevolutions;
-          System.out.println("SpecificDrive -inwhile");
-          SmartDashboard.putNumber("Current Heading: ", gyro.getAngle());
-          SmartDashboard.putNumber("Heading eror: ", error);
-          System.out.println("SpecificDrive -beforeif");
-/*           if(error<0)
-          {
-            System.out.println("SpecificDrive -error<0: "+error);
-              drivePercent(DrivetrainConstants.kLeftAuto-(kP*error), DrivetrainConstants.kLeftAuto+(kP*error));
-
-          }
-          else if(error>0)
-          {
-            System.out.println("SpecificDrive -error>0: "+error);
-              drivePercent(DrivetrainConstants.kLeftAuto+(kP*error), DrivetrainConstants.kRightAuto-(kP*error));
-
-          }
-          else
-          {*/
-          System.out.println("SpecificDrive -else: "+error);
-            drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
-          //}
-          //set the motors to running - comment out for a bit
-          //error = startHeading - gyro.getAngle();
-          currentRevolutions = (-1*getLeftEncoder().getPosition()) * perRev;
-          currentRev = currentRevolutions;
-          SmartDashboard.putNumber("Current Revs", currentRevolutions);
-          
-          SmartDashboard.putNumber("Total Revs", totalRevolutions);
-          
-      }
-      System.out.println("SpecificDrive<<");
-
-      complete = true;
-
-      return complete;
-}
-
-    public boolean specificDrive1(double distance){
-     // int perRev =  getLeftEncoder().getCountsPerRevolution();
-      
+    public boolean specificDrive(double distance){
       double totalRevolutions = distance;
       double currentRevolutions = 0;
       
@@ -244,26 +158,27 @@ public class DriveIOSparkMax implements DriveIO {
     public void setPosition0(){
       leftEncoder.setPosition(0);
       rightEncoder.setPosition(0);
+   }
 
-    }
+   
+   public boolean autoBalancing(){
+    getAngle = gyro.getPitch();
+    boolean complete = true;
+        if(getAngle > 2)
+        { 
+          drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
+        }
+        if (getAngle < 2)
+        {
+          drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
+        }
+        else
+        {
+           stopDrive(0, 0);
+        }
 
-    public boolean autoBalancing(){
-        getAngle = gyro.getPitch();
-        boolean complete = true;
-            if(getAngle > 2)
-            { 
-              drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
-            }
-            if (getAngle < 2)
-            {
-              drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
-            }
-            else
-            {
-               stopDrive(0, 0);
-            }
+        return complete;
+} 
 
-            return complete;
-    } 
 
 }
