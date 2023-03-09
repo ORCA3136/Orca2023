@@ -52,7 +52,7 @@ public class DriveIOSparkMax implements DriveIO {
     leftFollower.restoreFactoryDefaults();
     rightFollower.restoreFactoryDefaults();
 
-    leftLeader.setInverted(true);
+    leftLeader.setInverted(false);
     rightLeader.setInverted(true);
     leftFollower.follow(leftLeader, false);
     rightFollower.follow(rightLeader, false);
@@ -114,7 +114,7 @@ public class DriveIOSparkMax implements DriveIO {
 
   public void driveCreep(double speed)
   {
-    drivePercent(-speed,speed ) ;
+    drivePercent(DrivetrainConstants.kCreepForwardLeft, DrivetrainConstants.kCreepForwardRight);
   }
 
     public boolean specificDrive(double distance){
@@ -123,7 +123,7 @@ public class DriveIOSparkMax implements DriveIO {
       
       while(currentRevolutions<totalRevolutions)
       {
-        drivePercent(-1*DrivetrainConstants.kLeftAuto, -1*DrivetrainConstants.kRightAuto);
+        drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
         currentRevolutions = (getLeftEncoder().getPosition()) ;
         currentRev = currentRevolutions;
       }
@@ -140,7 +140,7 @@ public class DriveIOSparkMax implements DriveIO {
        
        while(currentRevolutions<totalRevolutions+1)
        {
-         drivePercent(-1*DrivetrainConstants.ChargeAutoLeft, -1*DrivetrainConstants.ChargeAutoRight);
+         drivePercent(DrivetrainConstants.ChargeAutoLeft, DrivetrainConstants.ChargeAutoRight);
          currentRevolutions = (getLeftEncoder().getPosition()) ;
          currentRev = currentRevolutions;
        }

@@ -35,7 +35,7 @@ public class StraightForward extends CommandBase {
 
   public void execute() {
     System.out.println("STRAIGHTFORWARD: EXECUTING");
-    driveTrain.driveCreep(DrivetrainConstants.LeftCreep);
+    driveTrain.driveCreep(DrivetrainConstants.kCreepButton);
   }
 
   public void end(boolean interrupted) {

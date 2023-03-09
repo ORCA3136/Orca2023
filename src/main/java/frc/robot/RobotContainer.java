@@ -136,7 +136,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     drive.setDefaultCommand(
-        new RunCommand(() -> drive.drivePercent(-controller.getLeftY(), controller.getRightY()), drive));
+        new RunCommand(() -> drive.drivePercent(controller.getLeftY(), controller.getRightY()), drive));
     //elevator.setDefaultCommand(new PowerElevator(0, elevator));
     //BUTTONS FOR XBOX
     //Minidvader in
@@ -185,7 +185,7 @@ public class RobotContainer {
 
     //Creep Button 
     joyStart.onTrue(new StraightForward(drive));
-    joyStart.onFalse(new RunCommand(() -> drive.drivePercent(-controller.getLeftY(), controller.getRightY()), drive));
+    joyStart.onFalse(new RunCommand(() -> drive.drivePercent(controller.getLeftY(), controller.getRightY()), drive));
 
 
     //Reset Encoders Elevator
