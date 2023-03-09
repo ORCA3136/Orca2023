@@ -60,6 +60,10 @@ public class DriveIOSparkMax implements DriveIO {
     leftFollower.follow(leftLeader, false);
     rightFollower.follow(rightLeader, false);
 
+    
+    leftLeader.setOpenLoopRampRate(.3);
+    rightLeader.setOpenLoopRampRate(.3);
+
     leftLeader.enableVoltageCompensation(12.0);
     rightLeader.enableVoltageCompensation(12.0);
     leftLeader.setSmartCurrentLimit(30);
