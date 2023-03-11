@@ -6,6 +6,8 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -32,9 +34,6 @@ public class DriveIOSparkMax implements DriveIO {
   private final AHRS gyro = new AHRS(SPI.Port.kMXP);
 
 
-  //Creates a SlewRateLimiter that limits the rate of change of the signal to X units per second
-  SlewRateLimiter leftFilter = new SlewRateLimiter(DrivetrainConstants.slewRate); 
-  SlewRateLimiter rightFilter = new SlewRateLimiter(DrivetrainConstants.slewRate); 
 
   //private final Pigeon2 gyro;
 
@@ -84,7 +83,6 @@ public class DriveIOSparkMax implements DriveIO {
     inputs.currentRevs = currentRev;
     inputs.totalRevs = totalRev;
     inputs.getPitch = gyro.getPitch();
-    
     inputs.gyroYawRad = gyro.getYaw();
   }
 
@@ -116,8 +114,10 @@ public class DriveIOSparkMax implements DriveIO {
   {
     drivePercent(DrivetrainConstants.kCreepForwardLeft, DrivetrainConstants.kCreepForwardRight);
   }
-
-    public boolean specificDrive(double distance){
+  /**
+   * Basic drive for a specified number of rotations on the field
+   */
+  public boolean specificDrive(double distance){
       double totalRevolutions = distance;
       double currentRevolutions = 0;
       
@@ -132,7 +132,10 @@ public class DriveIOSparkMax implements DriveIO {
       
     }
 
-    public boolean specificDriveCharge(double distance){
+  /**
+   * Basic drive for a specified number of rotations when crossing over the charge station.
+   */  
+  public boolean specificDriveCharge(double distance){
       // int perRev =  getLeftEncoder().getCountsPerRevolution();
        
        double totalRevolutions = distance;

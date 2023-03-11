@@ -1,13 +1,27 @@
 package frc.robot.subsystems.drive;
 
+import java.util.List;
+
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DrivetrainConstants;
 
 public class Drive extends SubsystemBase implements DriveIO {
   public static final double WHEEL_RADIUS_METERS = Units.inchesToMeters(6.0);
@@ -16,6 +30,7 @@ public class Drive extends SubsystemBase implements DriveIO {
   private final DriveIOInputsAutoLogged inputs = new DriveIOInputsAutoLogged();
   private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(new Rotation2d(), 0.0, 0.0);
 
+  
   /** Creates a new Drive. */
   public Drive(DriveIO io) {
     this.io = io;
@@ -65,6 +80,15 @@ public class Drive extends SubsystemBase implements DriveIO {
   public void driveArcade(double xSpeed, double zRotation) {
     var speeds = DifferentialDrive.arcadeDriveIK(xSpeed, zRotation, true);
     io.setVoltage(speeds.left * 12.0, speeds.right * 12.0);
+  }
+
+  public void setVoltage(double left, double right)
+  {
+     io.setVoltage(left, right);
+  }
+
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(getLeftVelocityMeters(),getRightVelocityMeters());
   }
 
   /** Stops the drive. */
@@ -127,4 +151,12 @@ public class Drive extends SubsystemBase implements DriveIO {
         return stick;
 
     }
+
+    /**
+     * Sample trajectory based on the example
+     * @return
+     */
+
+
+
 }

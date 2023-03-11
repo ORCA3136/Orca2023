@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -48,6 +50,20 @@ public final class Constants {
     public static final double kAutoConeDistance = 85;
     public static final double kAutoMidConeDistance = 70;
     public static final double kAutoShootThenBack = 47;
+
+    public static final double ksVolts = 0.36099;
+    public static final double kvVoltSecondsPerMeter = 4.9929;
+    public static final double kaVoltSecondsSquaredPerMeter = 2.7487;
+    public static final double kPDriveVel = 0.000009487;
+    public static final double trackWidthMeters = .514;
+
+    //Theoretical Max drivetrain velocity is 15.81 ft/s or 4.818 m/s
+    public static final double kMaxSpeedMetersPerSecond = 3;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 1;
+    public static final double kRamseteB = 2;
+    public static final double kRamseteZeta = 0.7;
+    public static final DifferentialDriveKinematics kDriveKinematics =new DifferentialDriveKinematics(DrivetrainConstants.trackWidthMeters);
+
   }
 
   // ELEVATOR
