@@ -13,6 +13,7 @@ public interface DriveIO {
     public double currentRevs = 0.0;
     public double totalRevs = 0.0;
     public double getPitch = 0.0;
+    public double targetRevolutions = 0;
     
   }
 
@@ -41,6 +42,10 @@ public interface DriveIO {
 
 
   public default boolean specificDriveCharge(double distance){
+    return false;
+  }
+
+  public default boolean testSpecificDriveCharge(double distance) {
     return false;
   }
 

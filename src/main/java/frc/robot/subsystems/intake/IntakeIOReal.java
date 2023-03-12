@@ -91,7 +91,9 @@ public class IntakeIOReal implements IntakeIO {
 
     public void intakeEncoderReset() {
         chompEncoder.setPosition(0.0);
-        vaderEncoder.setPosition(0.0);
+      }
+    public void intakeEncoderOpenReset() {
+        chompEncoder.setPosition(-90.0);
       }
     
 
@@ -165,6 +167,7 @@ public void stop(){
  intakeMotor2.set(0);
 }
 
+//Not used
 public void open(double speed)
 {
   chomp.set(speed);
@@ -175,14 +178,21 @@ public void open(double speed)
   setDistance(chompEncoder.getPosition());
 }
 
+//Using this function
 public void open1 (double speed){
   //check the chomp encoder position- if it becomes positive stop!
   //negative is open, negative speed is opening
   //positive speed is closing
   double currentPosition = chompEncoder.getPosition();
-  if(currentPosition >0 && speed <0) //open and opening
+  if(currentPosition > -80 && speed <0) //closed and opening
   {
     chomp.set(speed);
+  }
+  else if(currentPosition > -100 && speed <0){
+    chomp.set(speed * 0.25);
+  }
+  else if(currentPosition <= -100 && speed <0){
+    chomp.set(0);
   }
   else if(currentPosition<=0) {//allow it to open or close as it is negative
     //add a check now for if speed positive which means it is closing, as we want to ramp it down as it gets closer
@@ -205,7 +215,7 @@ public void open1 (double speed){
         chomp.set(speed*.1);
       }
       else{
-        System.out.println("Between -25 and -15");
+        System.out.println("More than -25");
 
         chomp.set(speed);
       }

@@ -22,6 +22,9 @@ public class Intake extends SubsystemBase {
     public void intakeEncoderReset(){
          io.intakeEncoderReset();
     }
+    public void intakeEncoderOpenReset(){
+        io.intakeEncoderOpenReset();
+    }
     public double setChomper(double position)
     {
        return io.setChomper(position);

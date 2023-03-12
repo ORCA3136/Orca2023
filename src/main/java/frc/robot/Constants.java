@@ -37,8 +37,11 @@ public final class Constants {
     public static final double LeftAuto = -.5;
     public static final double RightAuto = .5;
 
-    public static final double ChargeAutoLeft = .6;
-    public static final double ChargeAutoRight = -.6;
+    public static final double ChargeAuto = .6;
+    public static final double ChargeAutoTest = .4;
+    public static final double SlowChargeAutoTest = .2;
+    public static final double ChargeRevolutions = 1;
+    public static final double kTestAutoDistance = 80;
 
     public static final double kAutoDistance = 85;
     public static final double kAutoConeDistance = 85;

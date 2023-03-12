@@ -54,6 +54,11 @@ public class Drive extends SubsystemBase implements DriveIO {
     return false;
   }
 
+  public boolean testSpecificDriveCharge(double distance){
+    io.testSpecificDriveCharge(distance);
+    return false;
+  }
+
   public boolean specificDrive1(double distance){
     return io.specificDrive1(distance);
   }

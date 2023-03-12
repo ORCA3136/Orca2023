@@ -21,6 +21,7 @@ import frc.robot.commands.OpenIntake;
 import frc.robot.commands.PowerElevator;
 import frc.robot.commands.ResetElevatorEncoder;
 import frc.robot.commands.ResetEncoder;
+import frc.robot.commands.ResetEncoderOpen;
 import frc.robot.commands.RunChomp;
 import frc.robot.commands.RunIntake;
 import frc.robot.commands.StopDrive;
@@ -31,6 +32,7 @@ import frc.robot.commands.auto.ScoreMidCone;
 import frc.robot.commands.auto.ScoreThenBack;
 import frc.robot.commands.auto.ScoreTopCone;
 import frc.robot.commands.auto.SpinAuto;
+import frc.robot.commands.auto.TestChargeAutoDrive;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.DriveIO;
 import frc.robot.subsystems.drive.DriveIOSim;
@@ -166,9 +168,10 @@ public class RobotContainer {
     controller.b().onTrue(new RunChomp(-1 * Constants.IntakeConstants.chompSpeed,intake));
     controller.b().onFalse(new RunChomp(0,intake));
 
-    controller.start().onTrue(new ChompPID(0, intake));
-    controller.start().onFalse(new RunChomp(0,intake));
+    controller.start().onTrue(new ResetEncoderOpen(intake));
 
+    controller.back().onTrue(new TestChargeAutoDrive(drive, 0));
+    controller.back().onFalse(new RunCommand(() -> drive.drivePercent(-controller.getLeftY(), controller.getRightY()), drive));
     
     //BUTTONS FOR JOYSTICK
     JoystickButton joyX = new JoystickButton(joystick, 1); 

@@ -15,6 +15,10 @@ public default void intakeEncoderReset(){
   
 }
 
+public default void intakeEncoderOpenReset(){
+  
+}
+
 /** Updates the set of loggable inputs. */
 public default void updateInputs(IntakeIOInputs inputs) {
 

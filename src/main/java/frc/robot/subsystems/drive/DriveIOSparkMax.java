@@ -10,6 +10,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DrivetrainConstants;
+import frc.robot.commands.StopDrive;
 import frc.robot.commands.auto.DrivetrainAuto;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.subsystems.drive.Drive;
@@ -28,9 +29,9 @@ public class DriveIOSparkMax implements DriveIO {
   private double totalRev = 0.0;
   private double currentRev = 0.0;
   private double getAngle;
+  private double targetRevolutions;
 
   private final AHRS gyro = new AHRS(SPI.Port.kMXP);
-
 
   //Creates a SlewRateLimiter that limits the rate of change of the signal to X units per second
   SlewRateLimiter leftFilter = new SlewRateLimiter(DrivetrainConstants.slewRate); 
@@ -61,8 +62,8 @@ public class DriveIOSparkMax implements DriveIO {
     rightFollower.follow(rightLeader, false);
 
     
-    leftLeader.setOpenLoopRampRate(.3);
-    rightLeader.setOpenLoopRampRate(.3);
+    leftLeader.setOpenLoopRampRate(.15);
+    rightLeader.setOpenLoopRampRate(.15);
 
     leftLeader.enableVoltageCompensation(12.0);
     rightLeader.enableVoltageCompensation(12.0);
@@ -75,6 +76,8 @@ public class DriveIOSparkMax implements DriveIO {
     rightFollower.burnFlash();
 
     getAngle = gyro.getPitch();
+
+    targetRevolutions = DrivetrainConstants.ChargeRevolutions;
 
    // gyro = new Pigeon2(0);
   }
@@ -92,6 +95,8 @@ public class DriveIOSparkMax implements DriveIO {
     inputs.getPitch = gyro.getPitch();
     
     inputs.gyroYawRad = gyro.getYaw();
+
+    inputs.targetRevolutions = targetRevolutions;
   }
 
   @Override
@@ -226,17 +231,75 @@ public class DriveIOSparkMax implements DriveIO {
        
        while(currentRevolutions<totalRevolutions+1)
        {
-         drivePercent(-1*DrivetrainConstants.ChargeAutoLeft, -1*DrivetrainConstants.ChargeAutoRight);
+         drivePercent(-1*DrivetrainConstants.ChargeAuto, DrivetrainConstants.ChargeAuto);
          currentRevolutions = (getLeftEncoder().getPosition()) ;
          currentRev = currentRevolutions;
        }
        
        while(currentRevolutions>totalRevolutions+2)
        {
-         drivePercent(DrivetrainConstants.ChargeAutoLeft*.5, DrivetrainConstants.ChargeAutoRight*.5);
+         drivePercent(DrivetrainConstants.ChargeAuto*.5, -1*DrivetrainConstants.ChargeAuto*.5);
          currentRevolutions = (getLeftEncoder().getPosition()) ;
          currentRev = currentRevolutions;
        }
+       return true;
+       
+     }
+
+     public boolean testSpecificDriveCharge(double distance){
+      // int perRev =  getLeftEncoder().getCountsPerRevolution();
+
+       double totalRevolutions = distance;
+       double currentRevolutions = 0;
+
+       targetRevolutions = DrivetrainConstants.ChargeRevolutions;
+       double currentAngle = gyro.getPitch();
+       
+
+       while (currentAngle < -2 || currentAngle > 2){
+        currentAngle = gyro.getPitch();
+        //while 0 < 1
+        while(currentRevolutions<totalRevolutions + targetRevolutions)
+        {
+          //System.out.println("TestCharge: Less than  CurRev: " + currentRevolutions + "  TarRev: " + targetRevolutions);
+          if (currentAngle > 3 || currentAngle < -3){
+            drivePercent(-1*DrivetrainConstants.ChargeAutoTest*0.5, DrivetrainConstants.ChargeAutoTest*0.5);
+          }
+          else{
+            drivePercent(-1*DrivetrainConstants.SlowChargeAutoTest*0.5, DrivetrainConstants.SlowChargeAutoTest*0.5);
+          }
+          
+          currentRevolutions = (getLeftEncoder().getPosition()) ;
+          currentRev = currentRevolutions;
+          currentAngle = gyro.getPitch();
+
+          if (currentAngle > 3) {
+            System.out.println("TestCharge: Less than angle");
+            targetRevolutions -= 0.5;
+          }
+        }
+        
+        //while 0 > 2
+        while(currentRevolutions>totalRevolutions + targetRevolutions + 1)
+        {
+          //System.out.println("TestCharge: More than  CurRev: " + currentRevolutions + "  TarRev: " + targetRevolutions);
+          if (currentAngle < -3 || currentAngle > 3){
+          drivePercent(DrivetrainConstants.ChargeAutoTest*.5, -1*DrivetrainConstants.ChargeAutoTest*.5);
+          }
+          else {
+            drivePercent(DrivetrainConstants.SlowChargeAutoTest*.5, -1*DrivetrainConstants.SlowChargeAutoTest*.5);
+          }
+          currentRevolutions = (getLeftEncoder().getPosition()) ;
+          currentRev = currentRevolutions;
+          currentAngle = gyro.getPitch();
+
+          if (currentAngle < -3) {
+            System.out.println("TestCharge: More than angle");
+            targetRevolutions += 0.5;
+          }
+        }
+        System.out.println("TESTCHARGE: Finished Moving");
+      }
        return true;
        
      }
