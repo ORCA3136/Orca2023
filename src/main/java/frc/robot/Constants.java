@@ -56,7 +56,7 @@ public final class Constants {
 
     public static double loopPeriodSecs = 0.02;
     public static double WHEEL_RADIUS_METERS =  Units.inchesToMeters(3.0);
-    public static double MAX_VELOCITY_MPS = Units.inchesToMeters(80.0); //15feet/second converted to meters
+    public static double MAX_VELOCITY_MPS = Units.inchesToMeters(40.0); //15feet/second converted to meters
 
 
 

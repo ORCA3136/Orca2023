@@ -21,7 +21,7 @@ import frc.robot.subsystems.drive.Drive;
 
 
 public class DriveIOSparkMax implements DriveIO {
-  private static final double GEAR_RATIO = 10.96;
+  private static final double GEAR_RATIO = 9.4;
 
   private final CANSparkMax leftLeader;
   private final CANSparkMax rightLeader;
@@ -44,7 +44,7 @@ public class DriveIOSparkMax implements DriveIO {
   
   private double lastLeftVelocityMPS = 0.0;
   private double lastRightVelocityMPS = 0.0;
-  private double afterEncoderReduction = 6.0; // Internal encoders'
+  private double afterEncoderReduction = 1.0; // Internal encoders'
 
   //private final Pigeon2 gyro;
 
@@ -57,8 +57,11 @@ public class DriveIOSparkMax implements DriveIO {
     boolean autoBalanceXMode;
     boolean autoBalanceYMode;
 
+    //Old
     leftModel = new SimpleMotorFeedforward(0.36099, 4.9929, 2.7487);  //kP = 9.4847e-6
     rightModel = new SimpleMotorFeedforward(0.2352, 4.8568, 1.203); //kP = 7.0467E-06
+    //leftModel = new SimpleMotorFeedforward(0.2352, 4.8568, 1.203);  //kP = 9.4847e-6
+    //rightModel = new SimpleMotorFeedforward(0.2352, 4.8568, 1.203); //kP = 7.0467E-06
 
     leftEncoder = leftLeader.getEncoder();
     rightEncoder = rightLeader.getEncoder();
@@ -281,7 +284,7 @@ public class DriveIOSparkMax implements DriveIO {
         SmartDashboard.putNumber("LEFT MPS", leftVelocityMPS);
         SmartDashboard.putNumber("RIGHT MPS", rightVelocityMPS);
         SmartDashboard.putNumber("GYRO ANGLE", gyro.getAngle());
-        double maxAccelerationPerCycle = Double.POSITIVE_INFINITY * DrivetrainConstants.loopPeriodSecs;
+        double maxAccelerationPerCycle = 0.03 * DrivetrainConstants.loopPeriodSecs;
 
         double leftAcceleration = lastLeftVelocityMPS > 0 
         ? leftVelocityMPS - lastLeftVelocityMPS 
