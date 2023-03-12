@@ -22,9 +22,11 @@ public class ElevatorPID extends PIDCommand {
         // This uses the output
         output-> elevator.elevatorPower(output*ElevatorConstants.pidThrottle),
         elevator);
+
         getController().setTolerance(ElevatorConstants.kPositionTolerance);
           // Use the output here
         }
+        
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
   
@@ -32,6 +34,14 @@ public class ElevatorPID extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if(getController().atSetpoint())
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+
   }
 }
