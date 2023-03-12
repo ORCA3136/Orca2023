@@ -34,6 +34,7 @@ import frc.robot.commands.StopDrive;
 import frc.robot.commands.StraightForward;
 import frc.robot.commands.TurnToTarget;
 import frc.robot.commands.auto.AutoMove;
+import frc.robot.commands.auto.ChargeStationTest;
 import frc.robot.commands.auto.ScoreMidCone;
 import frc.robot.commands.auto.ScoreThenBack;
 import frc.robot.commands.auto.ScoreTopCone;
@@ -130,6 +131,8 @@ public class RobotContainer {
     autoChooser.addDefaultOption("Drive", new AutoMove(drive, intake, elevator));
     //  autoChooser.addOption("Drive With Flywheel", new DriveWithFlywheelAuto(drive, flywheel));
     autoChooser.addDefaultOption("Score Charge", new ScoreThenBack(drive, intake, elevator));
+    autoChooser.addDefaultOption("Score Charge Test", new ChargeStationTest(drive, intake, elevator));
+
 
     // Configure the button bindings
     configureButtonBindings();

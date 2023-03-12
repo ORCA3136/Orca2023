@@ -66,6 +66,8 @@ public final class Constants {
     public static final double kAutoConeDistance = 85;
     public static final double kAutoMidConeDistance = 70;
     public static final double kAutoShootThenBack = 47;
+    public static final double kAutoChargeTest = 44;
+
 
     public static final double ksVolts = 0.36099;
     public static final double kvVoltSecondsPerMeter = 4.9929;

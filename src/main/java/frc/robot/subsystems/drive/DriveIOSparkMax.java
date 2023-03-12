@@ -133,7 +133,7 @@ public class DriveIOSparkMax implements DriveIO {
     drivePercent(speed, speed);
   }
 
-    public boolean specificDrive(double distance){
+  public boolean specificDrive(double distance){
       double totalRevolutions = distance;
       double currentRevolutions = 0;
       
