@@ -5,12 +5,23 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPRamseteCommand;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.commands.auto.DrivetrainAuto;
 import edu.wpi.first.wpilibj.SPI;
@@ -30,10 +41,17 @@ public class DriveIOSparkMax implements DriveIO {
   private double totalRev = 0.0;
   private double currentRev = 0.0;
   private double getAngle;
+  private double error;
+
 
   private final AHRS gyro = new AHRS(SPI.Port.kMXP);
 
+  DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(DrivetrainConstants.trackWidthMeters);
 
+
+  //Creates a SlewRateLimiter that limits the rate of change of the signal to X units per second
+  SlewRateLimiter leftFilter = new SlewRateLimiter(DrivetrainConstants.slewRate); 
+  SlewRateLimiter rightFilter = new SlewRateLimiter(DrivetrainConstants.slewRate); 
 
   //private final Pigeon2 gyro;
 
@@ -56,8 +74,8 @@ public class DriveIOSparkMax implements DriveIO {
     leftFollower.follow(leftLeader, false);
     rightFollower.follow(rightLeader, false);
     
-    leftLeader.setOpenLoopRampRate(.3);
-    rightLeader.setOpenLoopRampRate(.3);
+    leftLeader.setOpenLoopRampRate(.2);
+    rightLeader.setOpenLoopRampRate(.2);
 
     leftLeader.enableVoltageCompensation(12.0);
     rightLeader.enableVoltageCompensation(12.0);
@@ -112,12 +130,10 @@ public class DriveIOSparkMax implements DriveIO {
 
   public void driveCreep(double speed)
   {
-    drivePercent(DrivetrainConstants.kCreepForwardLeft, DrivetrainConstants.kCreepForwardRight);
+    drivePercent(speed, speed);
   }
-  /**
-   * Basic drive for a specified number of rotations on the field
-   */
-  public boolean specificDrive(double distance){
+
+    public boolean specificDrive(double distance){
       double totalRevolutions = distance;
       double currentRevolutions = 0;
       
@@ -132,10 +148,7 @@ public class DriveIOSparkMax implements DriveIO {
       
     }
 
-  /**
-   * Basic drive for a specified number of rotations when crossing over the charge station.
-   */  
-  public boolean specificDriveCharge(double distance){
+    public boolean specificDriveCharge(double distance){
       // int perRev =  getLeftEncoder().getCountsPerRevolution();
        
        double totalRevolutions = distance;
@@ -163,25 +176,40 @@ public class DriveIOSparkMax implements DriveIO {
       rightEncoder.setPosition(0);
    }
 
-   
-   public boolean autoBalancing(){
+   @Override
+   public boolean autoBalancing(double speed){
     getAngle = gyro.getPitch();
     boolean complete = true;
-        if(getAngle > 2)
+    System.out.println("AUTOBALANCING");
+    error = Math.abs(getAngle) - 0;
+
+        while(getAngle > 2)
         { 
-          drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
+          getAngle = gyro.getPitch();
+          System.out.println("> 2");
+          driveCreep(-1 * DrivetrainConstants.kBalanceSpeed * getAngle);
         }
-        if (getAngle < 2)
+        //while(getAngle < -2)
+        //{
+        //  System.out.println("< -2");
+        //  driveCreep(0.3);
+        //}
+        if(getAngle <= 2)
         {
-          drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
-        }
-        else
-        {
+          getAngle = gyro.getPitch();
+          System.out.println("STOP DRIVE");
            stopDrive(0, 0);
         }
 
         return complete;
 } 
 
+  public double getPitch(){
+    return gyro.getPitch();
+  }
+
+  public double getYaw(){
+    return gyro.getYaw();
+  }
 
 }

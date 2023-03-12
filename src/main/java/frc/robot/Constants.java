@@ -4,7 +4,20 @@
 
 package frc.robot;
 
+import java.util.List;
+
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -40,6 +53,9 @@ public final class Constants {
 
     public static final double kCreepButton = .3;
 
+    public static final double kBalanceDampener = 0.1;
+    public static final double kBalanceSpeed = 0.02;
+
     public static final double LeftAuto = .5;
     public static final double RightAuto = .5;
 
@@ -58,11 +74,40 @@ public final class Constants {
     public static final double trackWidthMeters = .514;
 
     //Theoretical Max drivetrain velocity is 15.81 ft/s or 4.818 m/s
-    public static final double kMaxSpeedMetersPerSecond = 3;
+    public static final double kMaxSpeedMetersPerSecond = 0.25;
     public static final double kMaxAccelerationMetersPerSecondSquared = 1;
     public static final double kRamseteB = 2;
     public static final double kRamseteZeta = 0.7;
     public static final DifferentialDriveKinematics kDriveKinematics =new DifferentialDriveKinematics(DrivetrainConstants.trackWidthMeters);
+
+    public static final PathPlannerTrajectory traj = PathPlanner.loadPath("New Path", 2, 2);
+
+    public static final DifferentialDriveVoltageConstraint autoVoltageConstraint =
+    new DifferentialDriveVoltageConstraint(
+        new SimpleMotorFeedforward(
+            DrivetrainConstants.ksVolts,
+            DrivetrainConstants.kvVoltSecondsPerMeter,
+            DrivetrainConstants.kaVoltSecondsSquaredPerMeter),
+            DrivetrainConstants.kDriveKinematics,
+        10);
+
+        public static final TrajectoryConfig config =
+    new TrajectoryConfig(
+              DrivetrainConstants.kMaxSpeedMetersPerSecond,
+              DrivetrainConstants.kMaxAccelerationMetersPerSecondSquared)
+          // Add kinematics to ensure max speed is actually obeyed
+          .setKinematics(DrivetrainConstants.kDriveKinematics)
+          // Apply the voltage constraint
+          .addConstraint(autoVoltageConstraint);
+
+    public static final Trajectory exampleTrajectory =
+    TrajectoryGenerator.generateTrajectory(
+              new Pose2d(0, 0, new Rotation2d(0)),
+              List.of(),
+              new Pose2d(4, 0, new Rotation2d(0)),
+          // Pass config
+          config);
+
 
   }
 
@@ -104,9 +149,10 @@ public final class Constants {
     public static final double kOpenTolerance = 0.1;
 
     public static final double intakeSloth = 0.4;
+    public static final double fastAsPossible = 1;
+
     public static final double intakeInSloth = 0.3;
     public static final double intakeZoom = 0.5;
-
   }
 
   public static enum Mode {

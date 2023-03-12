@@ -17,42 +17,13 @@ import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.subsystems.drive.Drive;
 
 public class ExampleTrajectory extends RamseteCommand{
-    
-    DifferentialDriveVoltageConstraint autoVoltageConstraint =
-        new DifferentialDriveVoltageConstraint(
-            new SimpleMotorFeedforward(
-                DrivetrainConstants.ksVolts,
-                DrivetrainConstants.kvVoltSecondsPerMeter,
-                DrivetrainConstants.kaVoltSecondsSquaredPerMeter),
-                DrivetrainConstants.kDriveKinematics,
-            10);
 
-      TrajectoryConfig config =
-          new TrajectoryConfig(
-                    DrivetrainConstants.kMaxSpeedMetersPerSecond,
-                    DrivetrainConstants.kMaxAccelerationMetersPerSecondSquared)
-                // Add kinematics to ensure max speed is actually obeyed
-                .setKinematics(DrivetrainConstants.kDriveKinematics)
-                // Apply the voltage constraint
-                .addConstraint(autoVoltageConstraint);
-
-      Trajectory exampleTrajectory =
-          TrajectoryGenerator.generateTrajectory(
-                // Start at the origin facing the +X direction
-                new Pose2d(0, 0, new Rotation2d(0)),
-                // Pass through these two interior waypoints, making an 's' curve path
-                List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-                // End 3 meters straight ahead of where we started, facing forward
-                new Pose2d(3, 0, new Rotation2d(0)),
-                // Pass config
-                config);
-        
        Drive m_drive;
 
-       public ExampleTrajectory(Drive drive, Trajectory exampleTrajectory)
+       public ExampleTrajectory(Drive drive)
        {
          super(
-               exampleTrajectory,
+               DrivetrainConstants.exampleTrajectory,
                drive::getPose,
                new RamseteController(DrivetrainConstants.kRamseteB, DrivetrainConstants.kRamseteZeta),
                new SimpleMotorFeedforward(

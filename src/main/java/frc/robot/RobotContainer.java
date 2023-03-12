@@ -7,6 +7,11 @@ package frc.robot;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -14,8 +19,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.commands.Balance;
 import frc.robot.commands.ChompPID;
 import frc.robot.commands.ElevatorPID;
+import frc.robot.commands.ExampleTrajectory;
 import frc.robot.commands.Minivader;
 import frc.robot.commands.OpenIntake;
 import frc.robot.commands.PowerElevator;
@@ -119,9 +126,9 @@ public class RobotContainer {
     autoChooser.addOption("Do Nothing", new InstantCommand());
     //autoChooser.addOption("Spin", new SpinAuto(drive));
     autoChooser.addOption("Shoot Top Cone", new ScoreTopCone(drive, intake, elevator));
-    //autoChooser.addOption("Shoot Mid Cone", new ScoreMidCone(drive, intake, elevator));
+    autoChooser.addOption("Shoot Mid Cone", new ScoreMidCone(drive, intake, elevator));
     autoChooser.addDefaultOption("Drive", new AutoMove(drive, intake, elevator));
-  //  autoChooser.addOption("Drive With Flywheel", new DriveWithFlywheelAuto(drive, flywheel));
+    //  autoChooser.addOption("Drive With Flywheel", new DriveWithFlywheelAuto(drive, flywheel));
     autoChooser.addDefaultOption("Score Charge", new ScoreThenBack(drive, intake, elevator));
 
     // Configure the button bindings
@@ -166,8 +173,12 @@ public class RobotContainer {
     controller.b().onTrue(new RunChomp(-1 * Constants.IntakeConstants.chompSpeed,intake));
     controller.b().onFalse(new RunChomp(0,intake));
 
-    controller.start().onTrue(new ChompPID(0, intake));
-    controller.start().onFalse(new RunChomp(0,intake));
+    
+    controller.start().onTrue(new Balance(drive, DrivetrainConstants.kCreepButton));
+    controller.start().onFalse(new RunCommand(() -> drive.drivePercent(controller.getLeftY(), controller.getRightY()), drive));
+    
+  
+
 
     
     //BUTTONS FOR JOYSTICK
@@ -207,9 +218,9 @@ public class RobotContainer {
     joyLT.onFalse(new PowerElevator(0,elevator));
 
     //Mid Cone lay
-    joyRT.onTrue(new ElevatorPID(37.5, elevator));
-    joyRT.onFalse(new PowerElevator(0,elevator));
-
+    joyRT.onTrue(new RunIntake(Constants.IntakeConstants.fastAsPossible, intake));
+    joyRT.onFalse(new RunIntake(0, intake));
+    
     //Mid Cone Stand
     joyB.onTrue(new ElevatorPID(45, elevator));
     joyB.onFalse(new PowerElevator(0,elevator));

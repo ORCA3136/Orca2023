@@ -72,8 +72,17 @@ public class Drive extends SubsystemBase implements DriveIO {
     io.setPosition0();
   }
 
-  public boolean autoBalance(double distance){
-    return io.autoBalancing(distance);
+  public double getPitch(){
+    return io.getPitch();
+  }
+
+    public double getYaw(){
+    return io.getYaw();
+  }
+
+  public boolean autoBalance(double speed){
+    System.out.println("AUTOBALANCE");
+    return io.autoBalancing(speed);
   }
 
     /** Run open loop based on stick positions. */

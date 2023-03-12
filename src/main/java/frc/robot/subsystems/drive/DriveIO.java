@@ -27,8 +27,8 @@ public interface DriveIO {
 
   public default void driveCreep(double speed){};
 
-  public default boolean autoBalancing(double distance){
-    return true;
+  public default boolean autoBalancing(double speed){
+    return false;
   } 
 
   public default boolean specificDrive(double distance){
@@ -46,6 +46,14 @@ public interface DriveIO {
 
   public default void drivePercent(double leftPercent, double rightPercent){
 
+  }
+
+  public default double getPitch(){
+    return 0.0;
+  }
+
+  public default double getYaw(){
+    return 0.0;
   }
 
   
