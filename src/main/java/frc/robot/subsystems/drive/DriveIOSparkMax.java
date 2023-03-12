@@ -57,8 +57,8 @@ public class DriveIOSparkMax implements DriveIO {
     boolean autoBalanceXMode;
     boolean autoBalanceYMode;
 
-    leftModel = new SimpleMotorFeedforward(0.20554, 0.10965, 0.016329);
-    rightModel = new SimpleMotorFeedforward(0.20231, 0.11768, 0.0085871);
+    leftModel = new SimpleMotorFeedforward(0.36099, 4.9929, 2.7487);  //kP = 9.4847e-6
+    rightModel = new SimpleMotorFeedforward(0.2352, 4.8568, 1.203); //kP = 7.0467E-06
 
     leftEncoder = leftLeader.getEncoder();
     rightEncoder = rightLeader.getEncoder();
