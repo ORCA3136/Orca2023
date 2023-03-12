@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.util.Units;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -44,6 +46,20 @@ public final class Constants {
     public static final double kAutoConeDistance = 85;
     public static final double kAutoMidConeDistance = 70;
     public static final double kAutoShootThenBack = 47;
+
+    //from sysid....
+    public static final double ksVolts = 0.36099;
+    public static final double kvVoltSecondsPerMeter = 4.9929;
+    public static final double kaVoltSecondsSquaredPerMeter = 2.7487;
+    public static final double kPDriveVel = 0.000009487;
+    public static final double trackWidthMeters = .514;
+
+    public static double loopPeriodSecs = 0.02;
+    public static double WHEEL_RADIUS_METERS =  Units.inchesToMeters(3.0);
+    public static double MAX_VELOCITY_MPS = Units.inchesToMeters(80.0); //15feet/second converted to meters
+
+
+
   }
 
   // ELEVATOR

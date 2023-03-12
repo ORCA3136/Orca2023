@@ -3,8 +3,12 @@ package frc.robot.subsystems.drive;
 import com.google.flatbuffers.Constants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
 import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
@@ -31,10 +35,16 @@ public class DriveIOSparkMax implements DriveIO {
 
   private final AHRS gyro = new AHRS(SPI.Port.kMXP);
 
+  private final SimpleMotorFeedforward leftModel, rightModel;
 
   //Creates a SlewRateLimiter that limits the rate of change of the signal to X units per second
   SlewRateLimiter leftFilter = new SlewRateLimiter(DrivetrainConstants.slewRate); 
   SlewRateLimiter rightFilter = new SlewRateLimiter(DrivetrainConstants.slewRate); 
+  
+  
+  private double lastLeftVelocityMPS = 0.0;
+  private double lastRightVelocityMPS = 0.0;
+  private double afterEncoderReduction = 6.0; // Internal encoders'
 
   //private final Pigeon2 gyro;
 
@@ -46,6 +56,9 @@ public class DriveIOSparkMax implements DriveIO {
 
     boolean autoBalanceXMode;
     boolean autoBalanceYMode;
+
+    leftModel = new SimpleMotorFeedforward(0.20554, 0.10965, 0.016329);
+    rightModel = new SimpleMotorFeedforward(0.20231, 0.11768, 0.0085871);
 
     leftEncoder = leftLeader.getEncoder();
     rightEncoder = rightLeader.getEncoder();
@@ -218,6 +231,9 @@ public class DriveIOSparkMax implements DriveIO {
       
     }
 
+    /**
+     * For the charge station 
+     */
     public boolean specificDriveCharge(double distance){
       // int perRev =  getLeftEncoder().getCountsPerRevolution();
        
@@ -247,23 +263,83 @@ public class DriveIOSparkMax implements DriveIO {
 
     }
 
-    public boolean autoBalancing(){
-        getAngle = gyro.getPitch();
-        boolean complete = true;
-            if(getAngle > 2)
-            { 
-              drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
-            }
-            if (getAngle < 2)
-            {
-              drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
-            }
-            else
-            {
-               stopDrive(0, 0);
-            }
+    @Override
+    public void drivePercentPID(double leftPercent, double rightPercent){
+      driveVelocity(leftPercent * DrivetrainConstants.MAX_VELOCITY_MPS, rightPercent * DrivetrainConstants.MAX_VELOCITY_MPS);
 
-            return complete;
-    } 
+    }
+     /**
+     * takes the speed and works to conver it all to volts since volts is what we really need / want for kinematics.
+     * TODO - get the output values on shuffleboard so I can understand what is going on!!!!
+     * 
+     * @param leftVelocityMPS
+     * @param rightVelocityMPS
+     */
+    public void driveVelocity(double leftVelocityMPS, double rightVelocityMPS)
+    {
+
+        SmartDashboard.putNumber("LEFT MPS", leftVelocityMPS);
+        SmartDashboard.putNumber("RIGHT MPS", rightVelocityMPS);
+        SmartDashboard.putNumber("GYRO ANGLE", gyro.getAngle());
+        double maxAccelerationPerCycle = Double.POSITIVE_INFINITY * DrivetrainConstants.loopPeriodSecs;
+
+        double leftAcceleration = lastLeftVelocityMPS > 0 
+        ? leftVelocityMPS - lastLeftVelocityMPS 
+        : lastLeftVelocityMPS - leftVelocityMPS;
+        //Shuffleboard.getTab("Drive Details").add("LEFT ACCELERATION", leftAcceleration);
+
+        if(leftAcceleration> maxAccelerationPerCycle)
+        {
+            lastLeftVelocityMPS += leftVelocityMPS > 0 ? maxAccelerationPerCycle : -maxAccelerationPerCycle;
+        }
+        else
+        {
+            lastLeftVelocityMPS = leftVelocityMPS;
+        }
+
+        double rightAcceleration = lastRightVelocityMPS > 0 
+        ? rightVelocityMPS - lastRightVelocityMPS 
+        : lastRightVelocityMPS - rightVelocityMPS;
+       // Shuffleboard.getTab("Drive Details").add("RIGHT ACCELERATION", rightAcceleration);
+
+        if(rightAcceleration> maxAccelerationPerCycle)
+        {
+            lastRightVelocityMPS += rightVelocityMPS > 0 ? maxAccelerationPerCycle : -maxAccelerationPerCycle;
+        }
+        else
+        {
+            lastRightVelocityMPS = rightVelocityMPS;
+        }
+
+        //calculate the setpoint and the feed forward voltage
+        double leftVelocityRPS = lastLeftVelocityMPS / DrivetrainConstants.WHEEL_RADIUS_METERS;
+        double rightVelocityRPS = lastRightVelocityMPS / DrivetrainConstants.WHEEL_RADIUS_METERS;
+       // Shuffleboard.getTab("Drive Details").add("LEFT VELOCITY RPS", leftVelocityRPS);
+      //  Shuffleboard.getTab("Drive Details").add("RIGHT VELOCITY RPS", rightVelocityRPS);
+
+        double leftFFVolts = leftModel.calculate(leftVelocityRPS);
+        double rightFFVolts = rightModel.calculate(rightVelocityRPS);
+
+     //   Shuffleboard.getTab("Drive Details").add("LEFT FF Volts", leftFFVolts);
+    //    Shuffleboard.getTab("Drive Details").add("RIGHT FF Volts", rightFFVolts);
+        SmartDashboard.putNumber("LEFT FF VOLTS", leftFFVolts);
+        SmartDashboard.putNumber(" RIGHT FF VOLTS", rightFFVolts);
+
+        //this is just a basic drive -
+        //leftLeader.setVoltage(leftFFVolts);
+        //rightLeader.setVoltage(rightFFVolts);
+
+        //this is a pid drive
+        double leftRPM = Units.radiansPerSecondToRotationsPerMinute(leftVelocityRPS) * afterEncoderReduction;
+        double rightRPM = Units.radiansPerSecondToRotationsPerMinute(rightVelocityRPS) * afterEncoderReduction;
+        SmartDashboard.putNumber("LEFT RPM", leftRPM);
+        SmartDashboard.putNumber("RIGHT RPM", rightRPM);
+
+        //   Shuffleboard.getTab("Drive Details").add("LEFT RPM", leftRPM);
+     //   Shuffleboard.getTab("Drive Details").add("RIGHT RPM", rightRPM);
+
+        leftLeader.getPIDController().setReference(leftRPM, ControlType.kVelocity, 0, leftFFVolts,ArbFFUnits.kVoltage);
+        rightLeader.getPIDController().setReference(rightRPM, ControlType.kVelocity, 0, rightFFVolts,ArbFFUnits.kVoltage);
+    }
 
 }

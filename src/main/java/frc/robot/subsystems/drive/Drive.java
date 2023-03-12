@@ -39,6 +39,10 @@ public class Drive extends SubsystemBase implements DriveIO {
     //io.slewRate((trueLeft(leftPercent) * 12.0), ((trueRight(rightPercent) * 12.0 ))  ) ;
   }
 
+  public void drivePercentPID(double leftPercent, double rightPercent){
+    io.drivePercentPID(trueLeft(leftPercent), trueRight(rightPercent));
+  }
+
   public void driveCreep(double speed)
   {
     io.driveCreep(speed);
