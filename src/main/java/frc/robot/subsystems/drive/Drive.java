@@ -8,6 +8,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DrivetrainConstants;
 
 public class Drive extends SubsystemBase implements DriveIO {
   public static final double WHEEL_RADIUS_METERS = Units.inchesToMeters(6.0);
@@ -34,7 +35,7 @@ public class Drive extends SubsystemBase implements DriveIO {
 
   /** Run open loop at the specified percentage. */
   public void drivePercent(double leftPercent, double rightPercent) {
-    io.setVoltage((trueLeft(leftPercent) * 12.0) * 0.7, ((trueRight(rightPercent) * 12.0 )) * 0.7 ) ;
+    io.setVoltage((trueLeft(leftPercent) * 12.0) * DrivetrainConstants.driveSpeed, ((trueRight(rightPercent) * 12.0 )) * DrivetrainConstants.driveSpeed) ;
     //if you want to use slew rate uncomment below
     //io.slewRate((trueLeft(leftPercent) * 12.0), ((trueRight(rightPercent) * 12.0 ))  ) ;
   }

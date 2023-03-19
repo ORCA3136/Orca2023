@@ -18,38 +18,34 @@ import edu.wpi.first.wpilibj.XboxController;
  * explicitly for pedagogical purposes. Actual code should inline a command this
  * simple with {@link edu.wpi.first.wpilibj2.command.InstantCommand}.
  */
-public class DriveForward extends CommandBase {
+public class DriveQuickLeft extends CommandBase {
   // The subsystem the command runs on
   private Drive driveTrain;
   private DriveIOSparkMax driveSpark;
   private boolean complete = false;
-  private double driveDist = DrivetrainConstants.kAutoDistance;
 
-  public DriveForward(Drive subsystem, double distance) {
-    SmartDashboard.putNumber("Drive Distance", DrivetrainConstants.kAutoDistance);
-    driveDist = distance;
+  public DriveQuickLeft(Drive subsystem) {
     driveTrain = subsystem;
     addRequirements(driveTrain);
   }
   
   public void initialize() {
     driveTrain.setPosition0();
+    driveTrain.drivePercent(-0.1, 0);
   }
 
   public void execute() {
-    System.out.println("AUTODRIVE: EXECUTING");
-    driveTrain.drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
+    System.out.println("Quickleft: EXECUTING");
+    
   }
 
   public void end(boolean interrupted) {
-    driveTrain.stop();
-    System.out.println("AUTODRIVE: END");
+    System.out.println("quickleft: END");
   }
 
   
   public boolean isFinished() {
-  
-    System.out.println("AUTODRIVE: END");
+    System.out.println("quickleft: END");
     return complete;
   }
 }

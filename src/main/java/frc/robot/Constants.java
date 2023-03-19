@@ -25,6 +25,7 @@ public final class Constants {
     public static final int kRightFollower = 4;
 
     public static final double slewRate = 4.0;
+    public static final double driveSpeed = 0.8;
 
     public static final double kLeftAuto = .3;
     public static final double kRightAuto = -.3;
@@ -46,7 +47,10 @@ public final class Constants {
     public static final double kAutoDistance = 85;
     public static final double kAutoConeDistance = 85;
     public static final double kAutoMidConeDistance = 70;
-    public static final double kAutoShootThenBack = 47;
+    //public static final double kAutoShootThenBack = 43;
+    public static final double kAutoShootThenBack = 49.5;
+
+    public static final double QuickTurnPwr = .2;
   }
 
   // ELEVATOR
@@ -63,7 +67,7 @@ public final class Constants {
     public static final double kPositionTolerance = 1;
     public static final double pidThrottle = 0.5; // use this to cap speed for pid controller
 
-    public static final double autoPIDThrottle = 0.3; // use this to cap speed for pid controller
+    public static final double autoPIDThrottle = 0.5; // use this to cap speed for pid controller
 
 
   }
@@ -89,6 +93,8 @@ public final class Constants {
     public static final double intakeSloth = 0.4;
     public static final double intakeInSloth = 0.3;
     public static final double intakeZoom = 0.5;
+
+    public static final double kHighConeSpit = 0.6;
 
   }
 

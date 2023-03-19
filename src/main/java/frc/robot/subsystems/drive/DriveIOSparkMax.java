@@ -135,7 +135,7 @@ public class DriveIOSparkMax implements DriveIO {
   }
 
   public void drivePercent(double leftPercent, double rightPercent) {
-    setVoltage(((leftPercent) * 12.0) * 0.7, (((rightPercent) * 12.0 )) * 0.7 ) ;
+    setVoltage(((leftPercent) * 12.0) * DrivetrainConstants.driveSpeed, (((rightPercent) * 12.0 )) * DrivetrainConstants.driveSpeed) ;
     //if you want to use slew rate uncomment below
     //io.slewRate((trueLeft(leftPercent) * 12.0), ((trueRight(rightPercent) * 12.0 ))  ) ;
   }
@@ -228,19 +228,35 @@ public class DriveIOSparkMax implements DriveIO {
        
        double totalRevolutions = distance;
        double currentRevolutions = 0;
+
+       //int flat = 0;
        
        while(currentRevolutions<totalRevolutions+1)
        {
          drivePercent(-1*DrivetrainConstants.ChargeAuto, DrivetrainConstants.ChargeAuto);
          currentRevolutions = (getLeftEncoder().getPosition()) ;
          currentRev = currentRevolutions;
+         /*
+         if (currentRevolutions >= totalRevolutions && (gyro.getAngle() > -3 && gyro.getAngle() < 3)) {
+          flat++;
+          if (flat >= 10){
+           return true;
+          }
+         }*/
        }
-       
+
        while(currentRevolutions>totalRevolutions+2)
        {
          drivePercent(DrivetrainConstants.ChargeAuto*.5, -1*DrivetrainConstants.ChargeAuto*.5);
          currentRevolutions = (getLeftEncoder().getPosition()) ;
          currentRev = currentRevolutions;
+         /*
+         if (currentRevolutions >= totalRevolutions && (gyro.getAngle() > -3 && gyro.getAngle() < 3)) {
+          flat++;
+          if (flat >= 10){
+           return true;
+          }
+         }*/
        }
        return true;
        

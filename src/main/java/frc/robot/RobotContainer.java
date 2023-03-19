@@ -31,6 +31,7 @@ import frc.robot.commands.auto.AutoMove;
 import frc.robot.commands.auto.ScoreMidCone;
 import frc.robot.commands.auto.ScoreThenBack;
 import frc.robot.commands.auto.ScoreTopCone;
+import frc.robot.commands.auto.ScoreTopConeStayStill;
 import frc.robot.commands.auto.SpinAuto;
 import frc.robot.commands.auto.TestChargeAutoDrive;
 import frc.robot.subsystems.drive.Drive;
@@ -121,7 +122,8 @@ public class RobotContainer {
     autoChooser.addOption("Do Nothing", new InstantCommand());
     //autoChooser.addOption("Spin", new SpinAuto(drive));
     autoChooser.addOption("Shoot Top Cone", new ScoreTopCone(drive, intake, elevator));
-    //autoChooser.addOption("Shoot Mid Cone", new ScoreMidCone(drive, intake, elevator));
+    autoChooser.addOption("Shoot Top Cone: Stay Still", new ScoreTopConeStayStill(drive, intake, elevator));
+    autoChooser.addOption("Shoot Mid Cone", new ScoreMidCone(drive, intake, elevator));
     autoChooser.addDefaultOption("Drive", new AutoMove(drive, intake, elevator));
   //  autoChooser.addOption("Drive With Flywheel", new DriveWithFlywheelAuto(drive, flywheel));
     autoChooser.addDefaultOption("Score Charge", new ScoreThenBack(drive, intake, elevator));

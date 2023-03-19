@@ -21,8 +21,7 @@ public class ScoreMidCone extends SequentialCommandGroup{
     public ScoreMidCone(Drive drivetrain, Intake intake, Elevator elevator)
     {
         addCommands(
-            new AutoPowerElevator(0.3, elevator),
-            new WaitCommand(1.5),
+            new AutoElevatorPID(39, elevator),
             new AutoPowerElevator(0, elevator),
             new AutoMinivader(Constants.IntakeConstants.miniVaderSpeed, intake),
             new WaitCommand(1),
@@ -30,12 +29,12 @@ public class ScoreMidCone extends SequentialCommandGroup{
             new AutoRunIntake(Constants.IntakeConstants.intakeSloth, intake),
             new WaitCommand(.5),
             new AutoRunIntake(0, intake),
-            new AutoPowerElevator(- 0.3, elevator),
-            new WaitCommand(1),
+            new AutoPowerElevator(-.3, elevator),
+            new WaitCommand(1.5),
             new AutoPowerElevator(0, elevator),
             new AutoMinivader(-1 * Constants.IntakeConstants.miniVaderSpeed, intake),
             new WaitCommand(.5),
-            new DrivetrainAuto(drivetrain, Constants.DrivetrainConstants.kAutoShootThenBack),
+            new DrivetrainAuto(drivetrain, Constants.DrivetrainConstants.kAutoConeDistance),
             new AutoMinivader(0, intake)
         
         );
