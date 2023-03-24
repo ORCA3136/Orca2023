@@ -155,20 +155,20 @@ public class RobotContainer {
     
     controller.y().onTrue(new PowerElevator(-1 * Constants.ElevatorConstants.downelElevatorSpeed, elevator));
     controller.y().onFalse(new PowerElevator(0, elevator));
-    //intake out
-    controller.rightBumper().onTrue(new RunIntake(Constants.IntakeConstants.intakeSloth, intake));
-    controller.rightBumper().onFalse(new RunIntake(0, intake));
-    //intake in
-    controller.leftBumper().onTrue(new RunIntake(-1 * Constants.IntakeConstants.intakeInSloth, intake));
-    controller.leftBumper().onFalse(new RunIntake(0, intake));
+    //open chomp
+    controller.rightBumper().onTrue(new RunChomp(-1 * Constants.IntakeConstants.chompSpeed,intake));
+    controller.rightBumper().onFalse(new RunChomp(0,intake));
+    //close chomp
+    controller.leftBumper().onTrue(new RunChomp(Constants.IntakeConstants.closeChompSpeed,intake));
+    controller.leftBumper().onFalse(new RunChomp(0,intake));
 
-    //CLOSE CHOMPER + Back left
-    controller.a().onTrue(new RunChomp(Constants.IntakeConstants.closeChompSpeed,intake));
-    controller.a().onFalse(new RunChomp(0,intake));
+    //intake in + Back left
+    controller.a().onTrue(new RunIntake(-1 * Constants.IntakeConstants.intakeInSloth, intake));
+    controller.a().onFalse(new RunIntake(0, intake));
 
-    //OPEN CHOMPER + Back right
-    controller.b().onTrue(new RunChomp(-1 * Constants.IntakeConstants.chompSpeed,intake));
-    controller.b().onFalse(new RunChomp(0,intake));
+    //intake out + Back right
+    controller.b().onTrue(new RunIntake(Constants.IntakeConstants.intakeSloth, intake));
+    controller.b().onFalse(new RunIntake(0, intake));
 
     //a-intakein b-intakeout rb-minivaderout lb-minivaderin rt-openchomp lt-closechomp
 
@@ -240,7 +240,7 @@ public class RobotContainer {
     joyLT.onFalse(new PowerElevator(0,elevator));
 
     //Mid Cone lay
-    joyRT.onTrue(new ElevatorPID(37.5, elevator));
+    joyRT.onTrue(new ElevatorPID(39.5, elevator));
     joyRT.onFalse(new PowerElevator(0,elevator));
 
     //Mid Cone Stand
