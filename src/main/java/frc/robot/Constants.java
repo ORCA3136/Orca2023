@@ -35,7 +35,7 @@ public final class Constants {
 
     public static final double LeftCreep = -.3;
 
-    public static final double LeftAuto = -.5;
+    public static final double LeftAuto = .5;
     public static final double RightAuto = .5;
 
     public static final double ChargeAuto = .6;
@@ -44,13 +44,25 @@ public final class Constants {
     public static final double ChargeRevolutions = 1;
     public static final double kTestAutoDistance = 80;
 
+    public static final double autoBalanceXConstant = 0.65;
+
     public static final double kAutoDistance = 85;
     public static final double kAutoConeDistance = 85;
     public static final double kAutoMidConeDistance = 70;
     //public static final double kAutoShootThenBack = 43;
     public static final double kAutoShootThenBack = 49.5;
+    public static final double kAutoShootThenBackTest = 42.5;
+    public static final double kAutoShootThenBackThenForwardTest = -42;
+
+
+
 
     public static final double QuickTurnPwr = .2;
+    public static final double SpinAutoDistance = 30;
+    public static final double SpinAuto = 20;
+
+    public static final double trackWidthMeters = .514;
+
   }
 
   // ELEVATOR

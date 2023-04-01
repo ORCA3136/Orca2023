@@ -21,46 +21,68 @@ import edu.wpi.first.wpilibj.XboxController;
 public class AutoBalancingDrive extends CommandBase {
   // The subsystem the command runs on
   private Drive driveTrain;
-  private DriveIOSparkMax driveSpark;
-  private boolean complete = false;
-  private double driveDist = DrivetrainConstants.kAutoDistance;
-  private final AHRS gyro = new AHRS(SPI.Port.kMXP);
-  private double getAngle;
+  private double rollTolerance;
+  private double speed;
+  private double currentPitch;
+  private double lastPitch = 0;
+  private static final double Pitch_Treshhold = 0.01;
 
 
-  public AutoBalancingDrive(Drive subsystem, double distance) {
-    getAngle = gyro.getPitch();
+  public AutoBalancingDrive(Drive subsystem, double tolerance) {
+    driveTrain = subsystem;
+    rollTolerance = tolerance;
 
+
+    addRequirements(driveTrain);
   }
   
   public void initialize() {
-    //get the defult pitch - and capture it for an offset. then we will be able to work with degrees off 
+    System.out.println("AUTOBALANCE: INITALIZING");
 
   }
 
   public void execute() {
-    getAngle = gyro.getPitch();
-    if(getAngle > 2){
-        driveTrain.drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto); 
+    //Dashboard numbers
+    //speed, direction, pitch
+    System.out.println("AUTOBALANCE: EXECUTE");
+
+
+    currentPitch = driveTrain.getPitch();
+    speed = Math.sin(Math.toRadians(currentPitch) * DrivetrainConstants.autoBalanceXConstant);
+
+    SmartDashboard.putNumber("Balance Speed", speed);
+
+    //Speed limit
+    if (speed < -0.3) {
+      speed = -0.3;
+    } 
+    else if (speed > 0.3) {
+      speed = 0.3;
     }
 
-    if(getAngle < 2){
-        driveTrain.drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
+    //
+    if (currentPitch > rollTolerance) {
+      System.out.println("AUTOBALANCE: > ROLLTOLERANCE" + speed);
+      driveTrain.setVoltage(((speed) * 12.0) * DrivetrainConstants.driveSpeed, (((speed) * 12.0 )) * DrivetrainConstants.driveSpeed * - 1);         //Change speed
     }
-
-    else{
-        driveTrain.stop();
+    else if (currentPitch < -rollTolerance) {
+      System.out.println("AUTOBALANCE: < ROLLTOLERANCE" + speed);
+      driveTrain.setVoltage(((speed) * 12.0) * DrivetrainConstants.driveSpeed, (((speed) * 12.0) * DrivetrainConstants.driveSpeed  * -1));
     }
-
+    else {
+      System.out.println("AUTOBALANCE: STOP");
+      driveTrain.stop();
+    }
   }
 
   public void end(boolean interrupted) {
+    System.out.println("AUTOBALANCE: END");
+
 
   }
-
   
   public boolean isFinished() {
-
-    return complete;
+    System.out.println("AUTOBALANCE: ISFINISHED");
+    return false;
   }
 }

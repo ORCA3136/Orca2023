@@ -35,6 +35,7 @@ public class Drive extends SubsystemBase implements DriveIO {
 
   /** Run open loop at the specified percentage. */
   public void drivePercent(double leftPercent, double rightPercent) {
+    
     io.setVoltage((trueLeft(leftPercent) * 12.0) * DrivetrainConstants.driveSpeed, ((trueRight(rightPercent) * 12.0 )) * DrivetrainConstants.driveSpeed) ;
     //if you want to use slew rate uncomment below
     //io.slewRate((trueLeft(leftPercent) * 12.0), ((trueRight(rightPercent) * 12.0 ))  ) ;
@@ -60,12 +61,16 @@ public class Drive extends SubsystemBase implements DriveIO {
     return false;
   }
 
-  public boolean specificDrive1(double distance){
-    return io.specificDrive1(distance);
+  public boolean specificDrive1(double distance, double speed){
+    return io.specificDrive1(distance, speed);
   }
 
   public void setPosition0(){
     io.setPosition0();
+  }
+
+  public void setVoltage(double leftVolts, double rightVolts){
+    io.setVoltage(leftVolts, rightVolts);
   }
 
   public boolean autoBalance(double distance){
@@ -137,5 +142,9 @@ public class Drive extends SubsystemBase implements DriveIO {
         }
         return stick;
 
+    }
+
+    public double getPitch(){
+      return io.getPitch();
     }
 }

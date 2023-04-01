@@ -35,7 +35,7 @@ public class ScoreTopCone extends SequentialCommandGroup{
             new AutoPowerElevator(- 0.3, elevator),
             new WaitCommand(2),
             new AutoPowerElevator(0, elevator),
-            new DrivetrainAuto(drivetrain, Constants.DrivetrainConstants.kAutoConeDistance)   
+            new DrivetrainAuto(drivetrain, Constants.DrivetrainConstants.kAutoConeDistance, DrivetrainConstants.kLeftAuto)   
         
         );
 

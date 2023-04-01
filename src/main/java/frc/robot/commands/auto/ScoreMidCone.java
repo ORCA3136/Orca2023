@@ -34,7 +34,7 @@ public class ScoreMidCone extends SequentialCommandGroup{
             new AutoPowerElevator(0, elevator),
             new AutoMinivader(-1 * Constants.IntakeConstants.miniVaderSpeed, intake),
             new WaitCommand(.5),
-            new DrivetrainAuto(drivetrain, Constants.DrivetrainConstants.kAutoConeDistance),
+            new DrivetrainAuto(drivetrain, Constants.DrivetrainConstants.kAutoConeDistance, DrivetrainConstants.kLeftAuto),
             new AutoMinivader(0, intake)
         
         );

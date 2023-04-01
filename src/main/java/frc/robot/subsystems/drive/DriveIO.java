@@ -14,6 +14,14 @@ public interface DriveIO {
     public double totalRevs = 0.0;
     public double getPitch = 0.0;
     public double targetRevolutions = 0;
+    public double leftVoltage = 0.0;
+    public double rightVoltage = 0.0;
+    public double driveRightPercent = 0.0;
+    public double driveLeftPercent = 0.0;
+    public double leftEncoderPosition = 0.0;
+    public double rightEncoderPosition = 0.0;
+
+
     
   }
 
@@ -53,7 +61,7 @@ public interface DriveIO {
     
   }
 
-  public default boolean specificDrive1(double distance){
+  public default boolean specificDrive1(double distance, double speed){
     return false;
   }
 
@@ -61,5 +69,8 @@ public interface DriveIO {
 
   }
 
+  public default double getPitch(){
+    return 0.0;
+  }
   
 }

@@ -12,7 +12,7 @@ public class AutoMove extends SequentialCommandGroup{
     public AutoMove(Drive drivetrain, Intake intake, Elevator elevator)
     {
         addCommands(
-            new DrivetrainAuto(drivetrain, DrivetrainConstants.kAutoDistance)
+            new DrivetrainAuto(drivetrain, DrivetrainConstants.kAutoShootThenBackThenForwardTest, DrivetrainConstants.kLeftAuto)
 
 
 

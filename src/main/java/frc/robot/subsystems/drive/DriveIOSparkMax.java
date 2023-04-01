@@ -18,7 +18,7 @@ import frc.robot.subsystems.drive.Drive;
 
 
 public class DriveIOSparkMax implements DriveIO {
-  private static final double GEAR_RATIO = 10.96;
+  private static final double GEAR_RATIO = 9.40;
 
   private final CANSparkMax leftLeader;
   private final CANSparkMax rightLeader;
@@ -28,6 +28,13 @@ public class DriveIOSparkMax implements DriveIO {
   private final RelativeEncoder rightEncoder;
   private double totalRev = 0.0;
   private double currentRev = 0.0;
+  private double leftVoltage = 0.0;
+  private double rightVoltage = 0.0;
+  private double driveLeftPercent = 0.0;
+  private double driveRightPercent = 0.0;
+  private double leftPosition;
+  private double rightPosition;
+
   private double getAngle;
   private double targetRevolutions;
 
@@ -93,7 +100,13 @@ public class DriveIOSparkMax implements DriveIO {
     inputs.currentRevs = currentRev;
     inputs.totalRevs = totalRev;
     inputs.getPitch = gyro.getPitch();
-    
+    inputs.leftVoltage = leftVoltage;
+    inputs.rightVoltage = rightVoltage;
+    inputs.driveLeftPercent = driveLeftPercent;
+    inputs.driveRightPercent = driveRightPercent;
+    inputs.leftEncoderPosition = leftPosition;
+    inputs.rightEncoderPosition = rightPosition;
+
     inputs.gyroYawRad = gyro.getYaw();
 
     inputs.targetRevolutions = targetRevolutions;
@@ -101,8 +114,13 @@ public class DriveIOSparkMax implements DriveIO {
 
   @Override
   public void setVoltage(double leftVolts, double rightVolts) {
+    leftVoltage = leftVolts;
+    rightVoltage = rightVolts;
+    //System.out.println("SetVoltage SparkMax: LEFT: "+leftVolts+" RIGHT: "+rightVolts);
     leftLeader.setVoltage(leftVolts);
     rightLeader.setVoltage(rightVolts);
+
+
   }
 
   public void stopDrive(double left, double right){
@@ -134,8 +152,13 @@ public class DriveIOSparkMax implements DriveIO {
       return rightEncoder;
   }
 
+  @Override
   public void drivePercent(double leftPercent, double rightPercent) {
-    setVoltage(((leftPercent) * 12.0) * DrivetrainConstants.driveSpeed, (((rightPercent) * 12.0 )) * DrivetrainConstants.driveSpeed) ;
+    driveLeftPercent = leftPercent;
+    driveRightPercent = rightPercent;
+    //System.out.println("DrivePercent SparkMax LEFT: "+((leftPercent) * 12.0) * DrivetrainConstants.driveSpeed+" RIGHT: "+(((rightPercent) * 12.0 )) * DrivetrainConstants.driveSpeed);
+
+    setVoltage(((leftPercent) * 12.0) * DrivetrainConstants.driveSpeed, (((rightPercent) * 12.0 )) * DrivetrainConstants.driveSpeed);
     //if you want to use slew rate uncomment below
     //io.slewRate((trueLeft(leftPercent) * 12.0), ((trueRight(rightPercent) * 12.0 ))  ) ;
   }
@@ -206,22 +229,38 @@ public class DriveIOSparkMax implements DriveIO {
       return complete;
 }
 
-    public boolean specificDrive1(double distance){
+    public boolean specificDrive1(double distance, double speed){
      // int perRev =  getLeftEncoder().getCountsPerRevolution();
       
       double totalRevolutions = distance;
       double currentRevolutions = 0;
-      
-      while(currentRevolutions<totalRevolutions)
-      {
-        drivePercent(-1*DrivetrainConstants.kLeftAuto, -1*DrivetrainConstants.kRightAuto);
-        currentRevolutions = (getLeftEncoder().getPosition()) ;
-        currentRev = currentRevolutions;
-      }
 
-      return true;
+      if(totalRevolutions>0)
+      {
+        while(currentRevolutions<totalRevolutions)
+        {
+          drivePercent(-1*speed, speed);
+          currentRevolutions = (getLeftEncoder().getPosition()) ;
+          currentRev = currentRevolutions;
+        }
+        return true;
+      }
+      else if(totalRevolutions<=0)
+      {
+        while(currentRevolutions>totalRevolutions)
+        {
+          drivePercent(-1*speed, speed);
+          currentRevolutions = (getLeftEncoder().getPosition()) ;
+          currentRev = currentRevolutions;
+        }
+        return true;
+      }
+      else{
+        return true;
+      }
       
     }
+
 
     public boolean specificDriveCharge(double distance){
       // int perRev =  getLeftEncoder().getCountsPerRevolution();
@@ -324,7 +363,11 @@ public class DriveIOSparkMax implements DriveIO {
       leftEncoder.setPosition(0);
       rightEncoder.setPosition(0);
 
+      leftPosition = leftEncoder.getPosition();
+      rightPosition = rightEncoder.getPosition();
     }
+
+
 
     public boolean autoBalancing(){
         getAngle = gyro.getPitch();
@@ -344,5 +387,10 @@ public class DriveIOSparkMax implements DriveIO {
 
             return complete;
     } 
+
+    @Override
+    public double getPitch(){
+      return gyro.getPitch();
+    }
 
 }

@@ -24,10 +24,12 @@ public class DrivetrainAuto extends CommandBase {
   private DriveIOSparkMax driveSpark;
   private boolean complete = false;
   private double driveDist = DrivetrainConstants.kAutoDistance;
+  private double driveSpeed;
 
-  public DrivetrainAuto(Drive subsystem, double distance) {
+  public DrivetrainAuto(Drive subsystem, double distance, double speed) {
     SmartDashboard.putNumber("Drive Distance", DrivetrainConstants.kAutoDistance);
     driveDist = distance;
+    driveSpeed = speed;
     driveTrain = subsystem;
     addRequirements(driveTrain);
   }
@@ -36,9 +38,10 @@ public class DrivetrainAuto extends CommandBase {
     driveTrain.setPosition0();
   }
 
-  public void execute() {
+  public void execute() { 
     System.out.println("AUTODRIVE: EXECUTING");
-    driveTrain.specificDrive1(driveDist);
+    complete = driveTrain.specificDrive1(driveDist, driveSpeed);
+
   }
 
   public void end(boolean interrupted) {
@@ -48,7 +51,6 @@ public class DrivetrainAuto extends CommandBase {
 
   
   public boolean isFinished() {
-    driveTrain.stop();
     System.out.println("AUTODRIVE: END");
     return complete;
   }

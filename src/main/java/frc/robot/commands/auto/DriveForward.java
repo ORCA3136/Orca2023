@@ -38,7 +38,7 @@ public class DriveForward extends CommandBase {
 
   public void execute() {
     System.out.println("AUTODRIVE: EXECUTING");
-    driveTrain.drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
+    driveTrain.drivePercent(-1* DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
   }
 
   public void end(boolean interrupted) {

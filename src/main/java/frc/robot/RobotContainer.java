@@ -27,9 +27,12 @@ import frc.robot.commands.RunIntake;
 import frc.robot.commands.StopDrive;
 import frc.robot.commands.StraightForward;
 import frc.robot.commands.TurnToTarget;
+import frc.robot.commands.auto.AutoBalancingDrive;
+import frc.robot.commands.auto.AutoDriveThenSpinTest;
 import frc.robot.commands.auto.AutoMove;
 import frc.robot.commands.auto.ScoreMidCone;
 import frc.robot.commands.auto.ScoreThenBack;
+import frc.robot.commands.auto.ScoreThenBalance;
 import frc.robot.commands.auto.ScoreTopCone;
 import frc.robot.commands.auto.ScoreTopConeStayStill;
 import frc.robot.commands.auto.SpinAuto;
@@ -120,13 +123,15 @@ public class RobotContainer {
 
     // Set up auto routines
     autoChooser.addOption("Do Nothing", new InstantCommand());
-    //autoChooser.addOption("Spin", new SpinAuto(drive));
+    autoChooser.addOption("Spin", new SpinAuto(drive));
     autoChooser.addOption("Shoot Top Cone", new ScoreTopCone(drive, intake, elevator));
     autoChooser.addOption("Shoot Top Cone: Stay Still", new ScoreTopConeStayStill(drive, intake, elevator));
     autoChooser.addOption("Shoot Mid Cone", new ScoreMidCone(drive, intake, elevator));
     autoChooser.addDefaultOption("Drive", new AutoMove(drive, intake, elevator));
+    autoChooser.addDefaultOption("Spin Test", new AutoDriveThenSpinTest(drive, intake, elevator));
   //  autoChooser.addOption("Drive With Flywheel", new DriveWithFlywheelAuto(drive, flywheel));
     autoChooser.addDefaultOption("Score Charge", new ScoreThenBack(drive, intake, elevator));
+    autoChooser.addOption("Score Top Auto Balance", new ScoreThenBalance(drive, intake, elevator));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -170,34 +175,6 @@ public class RobotContainer {
     controller.b().onTrue(new RunIntake(Constants.IntakeConstants.intakeSloth, intake));
     controller.b().onFalse(new RunIntake(0, intake));
 
-    //a-intakein b-intakeout rb-minivaderout lb-minivaderin rt-openchomp lt-closechomp
-
-    /*controller.rightTrigger().onTrue(new Minivader(-1 * Constants.IntakeConstants.miniVaderSpeed, intake));
-    controller.rightTrigger().onFalse(new Minivader(0, intake));
-    //minivader out
-    controller.leftTrigger().onTrue(new Minivader(Constants.IntakeConstants.miniVaderSpeed, intake));
-    controller.leftTrigger().onFalse(new Minivader(0, intake));
-
-    controller.x().onTrue(new PowerElevator(Constants.ElevatorConstants.elevatorSpeed, elevator));
-    controller.x().onFalse(new PowerElevator(0, elevator));
-    
-    controller.y().onTrue(new PowerElevator(-1 * Constants.ElevatorConstants.downelElevatorSpeed, elevator));
-    controller.y().onFalse(new PowerElevator(0, elevator));
-    //intake out
-    controller.rightBumper().onTrue(new RunIntake(Constants.IntakeConstants.intakeSloth, intake));
-    controller.rightBumper().onFalse(new RunIntake(0, intake));
-    //intake in
-    controller.leftBumper().onTrue(new RunIntake(-1 * Constants.IntakeConstants.intakeInSloth, intake));
-    controller.leftBumper().onFalse(new RunIntake(0, intake));
-
-    //CLOSE CHOMPER + Back left
-    controller.a().onTrue(new RunChomp(Constants.IntakeConstants.closeChompSpeed,intake));
-    controller.a().onFalse(new RunChomp(0,intake));
-
-    //OPEN CHOMPER + Back right
-    controller.b().onTrue(new RunChomp(-1 * Constants.IntakeConstants.chompSpeed,intake));
-    controller.b().onFalse(new RunChomp(0,intake)); */
-
     controller.start().onTrue(new ResetEncoderOpen(intake));
 
     controller.back().onTrue(new TestChargeAutoDrive(drive, 0));
@@ -236,7 +213,7 @@ public class RobotContainer {
     joyA.onFalse(new PowerElevator(0,elevator));
 
     //High Cone lay
-    joyLT.onTrue(new ElevatorPID(55, elevator));
+    joyLT.onTrue(new ElevatorPID(53, elevator));
     joyLT.onFalse(new PowerElevator(0,elevator));
 
     //Mid Cone lay

@@ -183,6 +183,10 @@ public void open1 (double speed){
   //check the chomp encoder position- if it becomes positive stop!
   //negative is open, negative speed is opening
   //positive speed is closing
+
+  chomp.set(speed);
+
+  /*
   double currentPosition = chompEncoder.getPosition();
   if(currentPosition > -80 && speed <0) //closed and opening
   {
@@ -231,7 +235,7 @@ public void open1 (double speed){
   else{
     System.out.println("NOT SURE WHAT IS HAPPENING: CURRENT POSITION: "+currentPosition+" SPEED: "+speed);
     chomp.set(0.0);
-  }
+  }*/
 }
 
 public void close(double speed)
