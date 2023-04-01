@@ -63,11 +63,11 @@ public class AutoBalancingDrive extends CommandBase {
     //
     if (currentPitch > rollTolerance) {
       System.out.println("AUTOBALANCE: > ROLLTOLERANCE" + speed);
-      driveTrain.setVoltage(((speed) * 12.0) * DrivetrainConstants.driveSpeed, (((speed) * 12.0 )) * DrivetrainConstants.driveSpeed * - 1);         //Change speed
+      driveTrain.setVoltage(((speed) * 12.0) * DrivetrainConstants.autoBalanceXConstant, (((speed) * 12.0 )) * DrivetrainConstants.autoBalanceXConstant * - 1);         //Change speed
     }
     else if (currentPitch < -rollTolerance) {
       System.out.println("AUTOBALANCE: < ROLLTOLERANCE" + speed);
-      driveTrain.setVoltage(((speed) * 12.0) * DrivetrainConstants.driveSpeed, (((speed) * 12.0) * DrivetrainConstants.driveSpeed  * -1));
+      driveTrain.setVoltage(((speed) * 12.0) * DrivetrainConstants.autoBalanceXConstant, (((speed) * 12.0) * DrivetrainConstants.autoBalanceXConstant  * -1));
     }
     else {
       System.out.println("AUTOBALANCE: STOP");

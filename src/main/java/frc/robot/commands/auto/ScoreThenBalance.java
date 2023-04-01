@@ -25,27 +25,26 @@ public class ScoreThenBalance extends SequentialCommandGroup{
     public ScoreThenBalance(Drive drivetrain, Intake intake, Elevator elevator)
     {
         addCommands(
-            //new AutoElevatorPID(58, elevator),
-            //new AutoPowerElevator(0, elevator),
-            //new AutoMinivader(Constants.IntakeConstants.miniVaderSpeed, intake),
-            //new WaitCommand(1),
-            //new AutoMinivader(0, intake),
-            //new AutoRunIntake(Constants.IntakeConstants.intakeSloth, intake),
-            //new WaitCommand(.5),
-            //new AutoRunIntake(0, intake),
-            //new AutoMinivader(-1 * Constants.IntakeConstants.miniVaderSpeed, intake),
-            //new WaitCommand(.5),
-            //new AutoPowerElevator(- 0.3, elevator),
-            //new WaitCommand(2),
-            //new AutoPowerElevator(0, elevator),
-            //new DrivetrainAuto(drivetrain, Constants.DrivetrainConstants.kAutoShootThenBackTest),
-            new DrivetrainAuto(drivetrain, Constants.DrivetrainConstants.kAutoConeDistance, Constants.DrivetrainConstants.kLeftAuto),
+            new AutoElevatorPID(58, elevator),
+            new AutoPowerElevator(0, elevator),
+            new AutoMinivader(Constants.IntakeConstants.miniVaderSpeed, intake),
+            new WaitCommand(.5),
+            new AutoMinivader(0, intake),
+            new AutoRunIntake(Constants.IntakeConstants.intakeSloth, intake),
+            new WaitCommand(.5),
+            new AutoRunIntake(0, intake),
+            new AutoMinivader(-1 * Constants.IntakeConstants.miniVaderSpeed, intake),
+            new WaitCommand(.5),
+            new AutoPowerElevator(- 0.3, elevator),
+            new WaitCommand(1.5),
+            new AutoPowerElevator(0, elevator),
+            new DrivetrainAuto(drivetrain, Constants.DrivetrainConstants.kAutoConeBalanceDistance, Constants.DrivetrainConstants.kLeftAuto),
             new ResetEncoderDrivetrain(drivetrain),
             new ResetEncoderDrivetrain(drivetrain),
             new WaitCommand(.5),
             new DrivetrainAuto(drivetrain, Constants.DrivetrainConstants.kAutoShootThenBackThenForwardTest, -1 * Constants.DrivetrainConstants.kLeftAuto),
-            new AutoBalancingDrive(drivetrain, 5)
-            //new AutoMinivader(0, intake)
+            new AutoBalancingDrive(drivetrain, 7),
+            new AutoMinivader(0, intake)
         );
 
         
