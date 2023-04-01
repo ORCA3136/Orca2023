@@ -34,11 +34,12 @@ public class DriveIOSparkMax implements DriveIO {
   private double driveRightPercent = 0.0;
   private double leftPosition;
   private double rightPosition;
-
-  private double getAngle;
   private double targetRevolutions;
 
   private final AHRS gyro = new AHRS(SPI.Port.kMXP);
+
+  private double getAngle = gyro.getAngle();
+
 
   //Creates a SlewRateLimiter that limits the rate of change of the signal to X units per second
   SlewRateLimiter leftFilter = new SlewRateLimiter(DrivetrainConstants.slewRate); 
@@ -152,7 +153,7 @@ public class DriveIOSparkMax implements DriveIO {
       return rightEncoder;
   }
 
-  @Override
+
   public void drivePercent(double leftPercent, double rightPercent) {
     driveLeftPercent = leftPercent;
     driveRightPercent = rightPercent;
@@ -169,66 +170,6 @@ public class DriveIOSparkMax implements DriveIO {
   }
   
 
-  //DONT USE
-  public boolean specificDrive(double distance) 
-  {
-      System.out.println("SpecificDrive>>");
-      double kP = 0.05;
-      double startHeading = gyro.getAngle();
-      
-      //double error = startHeading - gyro.getAngle();
-      double error = 0; //set this for now so it only drives
-      boolean complete = false;
-      getLeftEncoder().setPosition(0); //set the position to 0
-      Double leftPosition = getLeftEncoder().getPosition();
-      SmartDashboard.putNumber("Left Enc Pos: ", leftPosition);
-      SmartDashboard.putNumber("Start Heading ", startHeading);
-
-      //really only need to get this once...
-      int perRev =  getLeftEncoder().getCountsPerRevolution();
-      double totalRevolutions = distance*perRev;
-      double currentRevolutions = 0;
-      System.out.println("SpecificDrive -beforewhile");
-      while(currentRevolutions<totalRevolutions)
-      {
-          totalRev = totalRevolutions;
-          System.out.println("SpecificDrive -inwhile");
-          SmartDashboard.putNumber("Current Heading: ", gyro.getAngle());
-          SmartDashboard.putNumber("Heading eror: ", error);
-          System.out.println("SpecificDrive -beforeif");
-/*           if(error<0)
-          {
-            System.out.println("SpecificDrive -error<0: "+error);
-              drivePercent(DrivetrainConstants.kLeftAuto-(kP*error), DrivetrainConstants.kLeftAuto+(kP*error));
-
-          }
-          else if(error>0)
-          {
-            System.out.println("SpecificDrive -error>0: "+error);
-              drivePercent(DrivetrainConstants.kLeftAuto+(kP*error), DrivetrainConstants.kRightAuto-(kP*error));
-
-          }
-          else
-          {*/
-          System.out.println("SpecificDrive -else: "+error);
-            drivePercent(DrivetrainConstants.kLeftAuto, DrivetrainConstants.kRightAuto);
-          //}
-          //set the motors to running - comment out for a bit
-          //error = startHeading - gyro.getAngle();
-          currentRevolutions = (-1*getLeftEncoder().getPosition()) * perRev;
-          currentRev = currentRevolutions;
-          SmartDashboard.putNumber("Current Revs", currentRevolutions);
-          
-          SmartDashboard.putNumber("Total Revs", totalRevolutions);
-          
-      }
-      System.out.println("SpecificDrive<<");
-
-      complete = true;
-
-      return complete;
-}
-
     public boolean specificDrive1(double distance, double speed){
      // int perRev =  getLeftEncoder().getCountsPerRevolution();
       
@@ -237,6 +178,7 @@ public class DriveIOSparkMax implements DriveIO {
 
       if(totalRevolutions>0)
       {
+        //drives backward since total revolutions are greater than 0, meaning that distance values should be positive
         while(currentRevolutions<totalRevolutions)
         {
           drivePercent(-1*speed, speed);
@@ -247,6 +189,7 @@ public class DriveIOSparkMax implements DriveIO {
       }
       else if(totalRevolutions<=0)
       {
+        //drives forward since total revolutions are less than 0, meaning that distance values should be negative
         while(currentRevolutions>totalRevolutions)
         {
           drivePercent(-1*speed, speed);
@@ -260,7 +203,6 @@ public class DriveIOSparkMax implements DriveIO {
       }
       
     }
-
 
     public boolean specificDriveCharge(double distance){
       // int perRev =  getLeftEncoder().getCountsPerRevolution();
