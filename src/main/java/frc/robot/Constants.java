@@ -51,9 +51,9 @@ public final class Constants {
     public static final double kAutoMidConeDistance = 70;
     //public static final double kAutoShootThenBack = 43;
     public static final double kAutoShootThenBack = 49.5;
-    public static final double kAutoConeBalanceDistance = 75;
+    public static final double kAutoConeBalanceDistance = 72.5;
     public static final double kAutoShootThenBackTest = 42.5;
-    public static final double kAutoShootThenBackThenForwardTest = -40;
+    public static final double kAutoShootThenBackThenForwardTest = -39;
 
 
 

@@ -180,62 +180,24 @@ public void open(double speed)
 
 //Using this function
 public void open1 (double speed){
-  //check the chomp encoder position- if it becomes positive stop!
-  //negative is open, negative speed is opening
-  //positive speed is closing
-
-  chomp.set(speed);
-
-  /*
   double currentPosition = chompEncoder.getPosition();
-  if(currentPosition > -80 && speed <0) //closed and opening
-  {
-    chomp.set(speed);
-  }
-  else if(currentPosition > -100 && speed <0){
-    chomp.set(speed * 0.25);
-  }
-  else if(currentPosition <= -100 && speed <0){
+
+  //Open and opening
+  if(currentPosition < -90 && speed < 0){
     chomp.set(0);
   }
-  else if(currentPosition<=0) {//allow it to open or close as it is negative
-    //add a check now for if speed positive which means it is closing, as we want to ramp it down as it gets closer
-    if(speed>0){
-      if(currentPosition>-25 && currentPosition<=-15)
-      {
-        System.out.println("Between -25 and -15");
-        chomp.set(speed*.5); //cut the speed in half
-      }
-      else if(currentPosition>-15 && currentPosition<=-10)
-      {
-        System.out.println("Between -15 and 10");
-
-        chomp.set(speed*.2); //cut the speed in to 20% of what was provided
-      }
-      else if(currentPosition>-10)
-      {
-        System.out.println("Between -10 and 0");
-
-        chomp.set(speed*.1);
-      }
-      else{
-        System.out.println("More than -25");
-
-        chomp.set(speed);
-      }
-    }
-    else{
-      chomp.set(speed);
-    }
+  //Closed and closing
+  else if (currentPosition > 5 && speed > 0) {
+    chomp.set(0);
   }
-  else if(currentPosition>0 && speed>0) //already closed when at 0, so STOP
-  {
-    chomp.set(0.0);
+  //Almost closed and closing
+  else if (currentPosition > -5 && speed > 0) {
+    chomp.set(speed * 0.5);
   }
-  else{
-    System.out.println("NOT SURE WHAT IS HAPPENING: CURRENT POSITION: "+currentPosition+" SPEED: "+speed);
-    chomp.set(0.0);
-  }*/
+  //Open as normal
+  else {
+    chomp.set(speed);
+  }
 }
 
 public void close(double speed)
