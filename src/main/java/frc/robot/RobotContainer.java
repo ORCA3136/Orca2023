@@ -28,14 +28,11 @@ import frc.robot.commands.StopDrive;
 import frc.robot.commands.StraightForward;
 import frc.robot.commands.TurnToTarget;
 import frc.robot.commands.auto.AutoBalancingDrive;
-import frc.robot.commands.auto.AutoDriveThenSpinTest;
 import frc.robot.commands.auto.AutoMove;
 import frc.robot.commands.auto.ScoreMidCone;
-import frc.robot.commands.auto.ScoreThenBack;
 import frc.robot.commands.auto.ScoreThenBalance;
 import frc.robot.commands.auto.ScoreTopCone;
 import frc.robot.commands.auto.ScoreTopConeStayStill;
-import frc.robot.commands.auto.SpinAuto;
 import frc.robot.commands.auto.TestChargeAutoDrive;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.DriveIO;
@@ -123,14 +120,11 @@ public class RobotContainer {
 
     // Set up auto routines
     autoChooser.addOption("Do Nothing", new InstantCommand());
-    autoChooser.addOption("Spin", new SpinAuto(drive));
-    autoChooser.addOption("Shoot Top Cone", new ScoreTopCone(drive, intake, elevator));
+    autoChooser.addDefaultOption("Shoot Top Cone", new ScoreTopCone(drive, intake, elevator));
     autoChooser.addOption("Shoot Top Cone: Stay Still", new ScoreTopConeStayStill(drive, intake, elevator));
     autoChooser.addOption("Shoot Mid Cone", new ScoreMidCone(drive, intake, elevator));
-    autoChooser.addDefaultOption("Drive", new AutoMove(drive, intake, elevator));
-    autoChooser.addDefaultOption("Spin Test", new AutoDriveThenSpinTest(drive, intake, elevator));
+    autoChooser.addOption("Drive", new AutoMove(drive, intake, elevator));
   //  autoChooser.addOption("Drive With Flywheel", new DriveWithFlywheelAuto(drive, flywheel));
-    autoChooser.addDefaultOption("Score Charge", new ScoreThenBack(drive, intake, elevator));
     autoChooser.addOption("Score Top Auto Balance", new ScoreThenBalance(drive, intake, elevator));
 
     // Configure the button bindings
@@ -177,7 +171,7 @@ public class RobotContainer {
 
     controller.start().onTrue(new ResetEncoderOpen(intake));
 
-    controller.back().onTrue(new TestChargeAutoDrive(drive, 0));
+    controller.back().onTrue(new AutoBalancingDrive(drive, 7));
     controller.back().onFalse(new RunCommand(() -> drive.drivePercent(-controller.getLeftY(), controller.getRightY()), drive));
     
     //BUTTONS FOR JOYSTICK
