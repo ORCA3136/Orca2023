@@ -187,11 +187,11 @@ public void open1 (double speed){
     chomp.set(0);
   }
   //Closed and closing
-  else if (currentPosition > 5 && speed > 0) {
+  else if (currentPosition > 10 && speed > 0) {
     chomp.set(0);
   }
   //Almost closed and closing
-  else if (currentPosition > -5 && speed > 0) {
+  else if (currentPosition > -15 && speed > 0) {
     chomp.set(speed * 0.5);
   }
   //Open as normal
